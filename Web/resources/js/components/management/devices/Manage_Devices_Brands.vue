@@ -38,7 +38,7 @@
                                             </div>
                                             <div class="mb-4 ">
                                                 <label class="form-label">تصویر لوگو</label>
-                                                <input ref="image" class="form-control" type="file">
+                                                <input @change="LogoFileHandler" ref="image" class="form-control" type="file">
                                                 <validation_errors :errors="errors"  :field="'image'"></validation_errors>
                                             </div>
 
@@ -92,7 +92,6 @@
                                 <td>
                                     <button data-bs-toggle="modal" :data-bs-target="'#edit_item'+item.id" title="ویرایش آیتم" type="button" class="btn btn-sm btn-primary waves-effect waves-light me-2"><i class="bx bx-edit font-size-16 align-middle"></i></button>
                                     <button @click="DelItem(item.id)" title="حذف آیتم" type="button" class="btn btn-sm btn-danger waves-effect waves-light me-2"><i class="bx bx-trash font-size-16 align-middle"></i></button>
-
                                     <div class="modal fade" :id="'edit_item'+item.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                                          aria-hidden="true">
                                         <div class="modal-dialog ">
@@ -114,6 +113,10 @@
                                                     </div>
                                                     <div class="mb-4 ">
                                                         <label  class="form-label">تصویر لوگو</label>
+                                                        <div class="alert alert-warning alert-dismissible alert-label-icon label-arrow fade show" role="alert">
+                                                            <i class="mdi mdi-alert-outline label-icon"></i><strong>توجه</strong> : فقط در صورت تغییر تصویر فعلی ، فایل جدید را انتخاب کنید
+                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        </div>
                                                         <input class="form-control" type="file">
                                                         <validation_errors :errors="errors"  :field="'image'"></validation_errors>
                                                     </div>
@@ -150,6 +153,7 @@
 
 <script>
 import Swal from "sweetalert2";
+import Sweet from "../../../helpers/Sweet";
 
 export default {
     name: "Manage_Devices_Brands",
@@ -198,9 +202,16 @@ export default {
 
         CreateItem(){
             this.add_loading=true;
+            let data = new FormData();
+            if (this.add.name !== null){data.append('name',this.add.name)}
+            if (this.add.description !== null){data.append('description',this.add.description)}
+            if (this.add.image !== null){data.append('image',this.add.image,this.add.image.name)}
 
-
-            axios.post('/api/management/device-brands',this.add).then(res => {
+            axios.post('/api/management/device-brands',data,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => {
 
                 $('#new_item').modal('hide');
                 Sweet.SweetEditItem();
@@ -275,6 +286,29 @@ export default {
                 name : null,
                 description : null,
                 image: null,
+
+            }
+        },
+
+        LogoFileHandler(){
+            if (this.$refs.image.files.length){
+                let file = this.$refs.image.files[0];
+                if (file.type !== 'application/pdf' && file.type !== 'image/jpeg' && file.type !== 'image/png'){
+                    return Sweet.SweetFileTypeError('pdf / image');
+                }else {
+                    this.add.image = file;
+                }
+            }
+        },
+        EditLogoFileHandler(id){
+            let name = "image"+id;
+            if (this.$refs[name][0].files.length){
+                let file = this.$refs[name][0].files[0];
+                if (file.type === 'image/jpg' || file.type === 'image/png' || file.type === 'image/jpeg'){
+                    this.editform.logo[id] = file;
+                }else{
+                    return Sweet.SweetToastMessage('فایل انتخابی باید فایلی از نوع ( jpg - png - jpeg ) باشد !','error');
+                }
 
             }
         },

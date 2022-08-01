@@ -46,7 +46,7 @@ class DeviceBrandController extends Controller
             return response()->json($validation->errors(),421);
         }
         $image_url=null;
-        if ($request->hasFile('profile')){
+        if ($request->hasFile('image')){
             $image = Storage::put('public/devices-brands/',$request->file('image'));
             $image_url = asset(Storage::url($image));
         }
