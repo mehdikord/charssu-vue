@@ -38,7 +38,7 @@
     <manage_template_top_bar></manage_template_top_bar>
 
     <!-- ========== Left Sidebar Start ========== -->
-    <manage_template_menu></manage_template_menu>
+    <manage_template_menu v-if="UserAuthCheck()"></manage_template_menu>
     <!-- Left Sidebar End -->
 
 

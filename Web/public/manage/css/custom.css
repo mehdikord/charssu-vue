@@ -5,6 +5,9 @@
 /*
 Fades Css
 */
+.app-pointer{
+    cursor: pointer;
+}
 
 .app-fade-in{
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */

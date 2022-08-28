@@ -13,3 +13,10 @@ function api_serviceman_get_user()
 {
     return Serviceman::where('api_token',request()->header('Authorization'))->with(['province','city','brands','zones'])->first();
 }
+
+//set serviceman to order
+function api_order_set_serviceman($order_id){
+
+
+}
+

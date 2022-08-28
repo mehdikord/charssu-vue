@@ -120,6 +120,18 @@
                         <div class="col-12 mb-4 mt-4">
                             <h6 class="text-danger font-size-14">مدارک و گواهینامه ها</h6>
                         </div>
+
+                        <div class="mb-5 col-md-12">
+                            <label  class="form-label">انتخاب برند های قابل پشتیبانی</label>
+                            <div class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show mt-2 mb-4" role="alert">
+                                <i class="mdi mdi-information label-icon"></i><strong>نکته : </strong> سفارشات قابل دریافت برای سرویس کار، سفارشاتی هستند که برند دستگاه آن قابل پشتیبانی توسط سرویس کار باشد
+                            </div>
+                            <div>
+                                <v-select multiple :options="brands" v-model="add.brands" :label="'name'" :reduce="(option) => option.id" />
+                            </div>
+                            <validation_errors :errors="errors" :field="'city_id'"></validation_errors>
+                        </div>
+
                         <div class="col-12 mb-2">
                             <div class="alert alert-purple alert-dismissible alert-label-icon label-arrow fade show" role="alert">
                                 <i class="mdi mdi-information label-icon"></i><strong>نکته : </strong> فایل ارسالی مدارک و گواهینامه ها باید از نوع pdf یا تصویر باشد
@@ -169,6 +181,7 @@ export default {
 
     created() {
         this.GetProvinces();
+        this.GetBrands();
     },
 
     data(){
@@ -184,6 +197,7 @@ export default {
                 birthday : null,
                 address : null,
                 zones:[],
+                brands:[],
                 work_address : null,
                 tel : null,
                 technical_license : null,
@@ -198,6 +212,7 @@ export default {
             items : [],
             errors:[],
             provinces:[],
+            brands:[],
             cities:[],
             zones:[],
 
@@ -209,9 +224,7 @@ export default {
 
         CreateItem(){
             this.add_loading=true;
-
             let data = new FormData();
-
             if (this.add.phone !== null){data.append('phone',this.NumberToEn(this.add.phone))}
             if (this.add.national_code !== null){data.append('national_code',this.NumberToEn(this.add.national_code))}
             if (this.add.tel !== null){data.append('tel',this.NumberToEn(this.add.tel))}
@@ -227,7 +240,8 @@ export default {
             if (this.add.police_certificate !== null){data.append('police_certificate',this.add.police_certificate,this.add.police_certificate.name)}
             if (this.add.non_addictions !== null){data.append('non_addictions',this.add.non_addictions,this.add.non_addictions.name)}
             if (this.add.profile !== null){data.append('profile',this.add.profile,this.add.profile.name)}
-
+            data.append('zones',this.add.zones)
+            data.append('brands',this.add.brands)
 
             axios.post('/api/management/servicemans',data,
                 {
@@ -237,6 +251,7 @@ export default {
                 }
             ).then( res => {
                 this.add_loading=false;
+                this.$router.push({name : 'manage_servicemans'});
                 Sweet.SweetToastMessage('سرویس کار جدید باموفقیت ایجاد و پذیرفته شد');
 
             }).catch(error => {
@@ -288,6 +303,7 @@ export default {
 
             }
         },
+
         ProfileFile(){
             if (this.$refs.profile.files.length){
                 let file = this.$refs.profile.files[0];
@@ -302,6 +318,14 @@ export default {
         GetProvinces(){
             axios.get('/api/management/helpers/get/provinces').then(res => {
                 this.provinces = res.data;
+            }).catch(e => {
+                Sweet.SweetServerErrorMessage();
+            })
+        },
+
+        GetBrands(){
+            axios.get('/api/management/helpers/get/brands').then(res => {
+                this.brands = res.data;
             }).catch(e => {
                 Sweet.SweetServerErrorMessage();
             })

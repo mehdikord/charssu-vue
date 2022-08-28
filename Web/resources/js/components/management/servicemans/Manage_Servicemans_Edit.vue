@@ -66,6 +66,7 @@
                             <div>
                                 <v-select multiple :options="zones" v-model="add.zones" :label="'name'" :reduce="(option) => option.id" />
                             </div>
+                            {{add.zones}}
                             <validation_errors :errors="errors" :field="'city_id'"></validation_errors>
                         </div>
                         <div class="col-md-6 mb-4">
@@ -155,8 +156,208 @@
 </template>
 
 <script>
+import vSelect from "vue-select";
+
+
 export default {
-    name: "Manage_Servicemans_Edit"
+    name: "Manage_Servicemans_Edit",
+    components:{
+        vSelect,
+    },
+
+    created() {
+        this.GetProvinces();
+        this.GetBrands();
+        this.GetServiceman();
+    },
+
+    data(){
+        return {
+
+            add_loading : false,
+            add : {
+                province_id : null,
+                city_id : null,
+                name : null,
+                phone : null,
+                national_code : null,
+                birthday : null,
+                address : null,
+                zones:[],
+                brands:[],
+                work_address : null,
+                tel : null,
+                technical_license : null,
+                police_certificate : null,
+                non_addictions : null,
+                start_time : null,
+                end_time : null,
+                profile : null,
+
+            },
+            item_loading:false,
+            errors:[],
+            provinces:[],
+            brands:[],
+            cities:[],
+            zones:[],
+
+        }
+    },
+
+
+    methods:{
+
+        GetServiceman(){
+            axios.get('/api/management/servicemans/'+this.$route.params.id).then(res => {
+
+
+            }).catch(e=>{
+                Sweet.SweetServerErrorMessage();
+            })
+
+        },
+
+        CreateItem(){
+            this.add_loading=true;
+
+            let data = new FormData();
+
+            if (this.add.phone !== null){data.append('phone',this.NumberToEn(this.add.phone))}
+            if (this.add.national_code !== null){data.append('national_code',this.NumberToEn(this.add.national_code))}
+            if (this.add.tel !== null){data.append('tel',this.NumberToEn(this.add.tel))}
+            if (this.add.province_id !== null){data.append('province_id',this.add.province_id)}
+            if (this.add.city_id !== null){data.append('city_id',this.add.city_id)}
+            if (this.add.name !== null){data.append('name',this.add.name)}
+            if (this.add.birthday !== null){data.append('birthday',this.add.birthday)}
+            if (this.add.address !== null){data.append('address',this.add.address)}
+            if (this.add.work_address !== null){data.append('work_address',this.add.work_address)}
+            if (this.add.start_time !== null){data.append('start_time',this.add.start_time)}
+            if (this.add.end_time !== null){data.append('end_time',this.add.end_time)}
+            if (this.add.technical_license !== null){data.append('technical_license',this.add.technical_license,this.add.technical_license.name)}
+            if (this.add.police_certificate !== null){data.append('police_certificate',this.add.police_certificate,this.add.police_certificate.name)}
+            if (this.add.non_addictions !== null){data.append('non_addictions',this.add.non_addictions,this.add.non_addictions.name)}
+            if (this.add.profile !== null){data.append('profile',this.add.profile,this.add.profile.name)}
+            data.append('zones',this.add.zones)
+            data.append('brands',this.add.brands)
+
+            axios.post('/api/management/servicemans',data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then( res => {
+                this.add_loading=false;
+                this.$router.push({name : 'manage_servicemans'});
+                Sweet.SweetToastMessage('سرویس کار جدید باموفقیت ایجاد و پذیرفته شد');
+
+            }).catch(error => {
+                this.add_loading=false;
+                if (error.response.status === 421){
+                    this.errors = error.response.data
+                }else {
+                    Sweet.SweetServerErrorMessage()
+                }
+            })
+
+        },
+
+        DocFileHandler(type){
+            if (type==='technical'){
+                if (this.$refs.technical.files.length){
+                    let file = this.$refs.technical.files[0];
+                    if (file.type !== 'application/pdf' && file.type !== 'image/jpeg' && file.type !== 'image/png'){
+                        return Sweet.SweetFileTypeError('pdf / image');
+                    }else {
+                        this.add.technical_license = file;
+                    }
+                }
+
+
+            }
+            if (type==='police'){
+                if (this.$refs.police.files.length){
+                    let file = this.$refs.police.files[0];
+                    if (file.type !== 'application/pdf' && file.type !== 'image/jpeg' && file.type !== 'image/png'){
+                        return Sweet.SweetFileTypeError('pdf / image');
+                    }else {
+                        this.add.police_certificate = file;
+                    }
+                }
+
+
+            }
+            if (type==='addictions'){
+                if (this.$refs.addictions.files.length){
+                    let file = this.$refs.addictions.files[0];
+                    if (file.type !== 'application/pdf' && file.type !== 'image/jpeg' && file.type !== 'image/png'){
+                        return Sweet.SweetFileTypeError('pdf / image');
+                    }else {
+                        this.add.non_addictions = file;
+                    }
+                }
+
+
+            }
+        },
+
+        ProfileFile(){
+            if (this.$refs.profile.files.length){
+                let file = this.$refs.profile.files[0];
+                if (file.type !== 'image/jpeg' && file.type !== 'image/png'){
+                    return Sweet.SweetFileTypeError('png - jpg');
+                }else {
+                    this.add.profile = file;
+                }
+            }
+        },
+
+        GetProvinces(){
+            axios.get('/api/management/helpers/get/provinces').then(res => {
+                this.provinces = res.data;
+            }).catch(e => {
+                Sweet.SweetServerErrorMessage();
+            })
+        },
+
+        GetBrands(){
+            axios.get('/api/management/helpers/get/brands').then(res => {
+                this.brands = res.data;
+            }).catch(e => {
+                Sweet.SweetServerErrorMessage();
+            })
+        },
+
+        SelectCity(){
+
+            if (this.add.province_id !== null){
+                let cities = this.provinces.filter(item => {
+                    return this.add.province_id === item.id;
+                })
+                this.cities = cities[0].cities;
+                this.add.city_id = this.cities[0].id;
+                // this.SelectZone();
+            }
+
+        },
+
+        SelectZone(){
+            if (this.add.province_id !== null && this.add.city_id !== null){
+                let cities = this.provinces.filter(item => {
+                    return this.add.province_id === item.id;
+                })
+                let zones = cities[0].cities.filter(city => {
+                    return this.add.city_id === city.id;
+                })
+                this.zones = zones[0].zones
+                this.add.zones=[];
+
+
+            }
+        },
+
+    }
 }
 </script>
 

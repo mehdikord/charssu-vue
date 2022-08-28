@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\ApiServicemanAuth;
+use App\Http\Middleware\CustomerAuth;
+use App\Http\Middleware\UsersAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,5 +67,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'api_serviceman_auth'=>ApiServicemanAuth::class,
+        'api_user_auth'=>UsersAuth::class,
+        'api_customer_auth'=>CustomerAuth::class,
     ];
 }

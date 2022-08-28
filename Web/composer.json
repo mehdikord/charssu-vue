@@ -28,7 +28,8 @@
         "files": [
             "app/Helpers/engine.php",
             "app/Helpers/helper.php",
-            "app/Helpers/api.php"
+            "app/Helpers/api.php",
+            "app/Helpers/customer.php"
         ]
     },
     "autoload-dev": {

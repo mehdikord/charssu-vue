@@ -7,9 +7,18 @@ import Manage_Serviceman_Create from "../components/management/servicemans/Manag
 import Manage_Servicemans from "../components/management/servicemans/Manage_Servicemans";
 import Manage_Servicemans_Edit from "../components/management/servicemans/Manage_Servicemans_Edit";
 import Manage_Devices_Brands from "../components/management/devices/Manage_Devices_Brands";
+import Manage_Devices from "../components/management/devices/Manage_Devices";
+import Manage_Problems from "../components/management/problems/Manage_Problems";
+import Manage_Servicemans_Waiting from "../components/management/servicemans/Manage_Servicemans_Waiting";
+import Manage_Auth from "../components/management/auth/Manage_Auth";
 
 const routes = [
 
+    {
+        path : '/management/auth',
+        component : Manage_Auth,
+        name : 'manage_auth',
+    },
     {
         path : '/management/dashboard',
         component : Manage_Dashboard,
@@ -40,6 +49,11 @@ const routes = [
         component : Manage_Servicemans_Edit,
         name : 'manage_servicemans_edit',
     },
+    {
+        path : '/management/servicemans/waiting',
+        component : Manage_Servicemans_Waiting,
+        name : 'manage_servicemans_waiting',
+    },
 
     {
         path : '/management/zones',
@@ -53,11 +67,27 @@ const routes = [
         name : 'manage_devices_brands',
     },
 
+    {
+        path : '/management/devices',
+        component : Manage_Devices,
+        name : 'manage_devices',
+    },
+
+    {
+        path : '/management/problems',
+        component : Manage_Problems,
+        name : 'manage_problems',
+    },
+
 
 
 ];
 
-export default createRouter({
+
+export  const router = createRouter({
     history: createWebHistory(),
     routes: routes,
 });
+
+
+

@@ -28,5 +28,10 @@ class Customer extends Model
         return $this->belongsTo(Zone::class,'zone_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'customer_id');
+    }
+
 
 }

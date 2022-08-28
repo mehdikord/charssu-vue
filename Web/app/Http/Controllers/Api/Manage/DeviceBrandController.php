@@ -64,10 +64,10 @@ class DeviceBrandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Device_Brand  $device_Brand
+     * @param  \App\Models\Device_Brand  $device_brand
      * @return \Illuminate\Http\Response
      */
-    public function show(Device_Brand $device_Brand)
+    public function show(Device_Brand $device_brand)
     {
         //
     }
@@ -75,10 +75,10 @@ class DeviceBrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Device_Brand  $device_Brand
+     * @param  \App\Models\Device_Brand  $device_brand
      * @return \Illuminate\Http\Response
      */
-    public function edit(Device_Brand $device_Brand)
+    public function edit(Device_Brand $device_brand)
     {
         //
     }
@@ -87,24 +87,24 @@ class DeviceBrandController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Device_Brand  $device_Brand
+     * @param  \App\Models\Device_Brand  $device_brand
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Device_Brand $device_Brand)
+    public function update(Request $request, Device_Brand $brand)
     {
         $validation = Validator::make($request->all(),[
-            'name' => "required|unique:device_brands,name,$device_Brand->id",
+            'name' => "required|unique:device_brands,name,$brand->id",
             'image' => 'nullable|image'
         ]);
         if ($validation->fails()){
             return response()->json($validation->errors(),421);
         }
-        $image_url=$device_Brand->image;
+        $image_url=$brand->image;
         if ($request->hasFile('profile')){
             $image = Storage::put('public/devices-brands/',$request->file('image'));
             $image_url = asset(Storage::url($image));
         }
-        $device_Brand->update([
+        $brand->update([
             'name' => $request->name,
             'description' => $request->description,
             'image' => $image_url,
@@ -116,12 +116,12 @@ class DeviceBrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Device_Brand  $device_Brand
+     * @param  \App\Models\Device_Brand  $device_brand
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Device_Brand $device_Brand)
+    public function destroy(Device_Brand $device_brand)
     {
-        $device_Brand->forceDelete();
-        return response()->json('Deleted Successful');
+        $device_brand->delete();
+        return response()->json('Delete Successful');
     }
 }

@@ -38,10 +38,18 @@
                     </li>
                     <li>
                         <router-link :to="{name : 'manage_servicemans'}">
-                            <i class="mdi mdi-account-plus"></i>
+                            <i class="mdi mdi-account-check"></i>
                             <span data-key="t-serviceman-active">سرویس کاران فعال</span>
                         </router-link>
                     </li>
+                    <li>
+                        <router-link :to="{name : 'manage_servicemans_waiting'}">
+                            <i class="mdi mdi-timer-sand"></i>
+                            <span class="badge rounded-pill bg-soft-danger text-danger float-end font-size-13">7</span>
+                            <span data-key="t-serviceman-waiting">در انتظار تایید</span>
+                        </router-link>
+                    </li>
+
                     <li class="menu-title text-danger" data-key="t-zones">برند ها و دستگاه ها</li>
 
                     <li>
@@ -51,11 +59,25 @@
                         </router-link>
                     </li>
 
+                    <li>
+                        <router-link :to="{name : 'manage_devices'}">
+                            <i class="mdi mdi-devices"></i>
+                            <span data-key="t-devices-brands">دستگاه ها</span>
+                        </router-link>
+                    </li>
+
                     <li class="menu-title text-danger" data-key="t-zones">مناطق کاری</li>
                     <li>
                         <router-link :to="{name : 'manage_zones'}">
                             <i class="mdi mdi-city"></i>
                             <span data-key="t-zones-manage">منطقه ها</span>
+                        </router-link>
+                    </li>
+                    <li class="menu-title text-danger" data-key="t-zones">مشکلات دستگاه</li>
+                    <li>
+                        <router-link :to="{name : 'manage_problems'}">
+                            <i class="mdi mdi-alert"></i>
+                            <span data-key="t-zones-manage">مشکلات انتخابی</span>
                         </router-link>
                     </li>
 

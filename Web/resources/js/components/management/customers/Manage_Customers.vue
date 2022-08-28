@@ -110,7 +110,7 @@
                             </thead>
                             <tbody>
                             <tr class="app-fade-in" v-for="(item,index) in SearchItem" :key="index">
-                                <td>
+                                <td width="10">
                                     <div class="form-check font-size-16">
                                         <input class="form-check-input" type="checkbox" id="customerlistcheck01">
                                         <label class="form-check-label" for="customerlistcheck01"></label>
@@ -123,13 +123,20 @@
                                     {{ item.phone }}
                                 </td>
                                 <td>
-                                    {{ item.province.name }}
+                                    <template v-if="item.province !== null">
+                                        {{ item.province.name }}
+                                    </template>
+
                                 </td>
                                 <td>
+                                    <template v-if="item.city !== null">
                                     {{ item.city.name }}
+                                    </template>
                                 </td>
                                 <td>
+                                    <template v-if="item.zone !== null">
                                     {{ item.zone.name }}
+                                    </template>
                                 </td>
                                 <td>
                                     <span class="badge rounded-pill badge-soft-danger font-size-12 fw-medium p-2">

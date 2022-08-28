@@ -179,6 +179,7 @@ return [
         'province'              => 'استان',
         'province_id'           => 'استان',
         'city_id'               => 'شهر',
+        'zone_id'               => 'منطقه',
         'mimes'                 => 'نوع فایل های ارسالی',
         'send_status'           => 'تعداد دفعات شرکت برای هرنفر',
         'user_plan_id'          => 'پلن خریداری شده',
@@ -192,8 +193,11 @@ return [
         'zones'                 =>'مناطق',
         'problem'               =>'مشکل',
         'start_time'              =>'زمان شروع',
-        'end_time'              =>'زمان پایان'
-
+        'end_time'              =>'زمان پایان',
+        'code'                  =>'کد',
+        'device_brand_id'       =>'مدل محصول',
+         'device_id'            =>'کد',
+        'problem_id'            =>'مشکل دستگاه',
 
     ],
 ];

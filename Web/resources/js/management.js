@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import './bootstrap';
-import Routes from './routes/manage';
+import {router} from './routes/manage';
 import moment from "moment-jalaali";
 
 const App=createApp({});
@@ -9,7 +9,12 @@ const App=createApp({});
 //Global Helpers
 //----------------------------------------------------------------------------------------------------------------------
 import Sweet from "./helpers/Sweet";
+import Auth from "./helpers/ManagementAuth";
+import AppStorage from "./helpers/AppStorage";
+
 window.Sweet = Sweet;
+window.Auth = Auth;
+window.AppStorage = AppStorage;
 
 //----------------------------------------------------------------------------------------------------------------------
 //Global Component Source
@@ -42,7 +47,6 @@ App.component('date-picker',DatePicker)
 //Global Mixin Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-
 App.mixin({
 
     methods:{
@@ -50,7 +54,6 @@ App.mixin({
         ValidationErrors(errors={},field){
             return errors[field] && errors[field].length ? errors[field] : {};
         },
-
 
         CopyText(text){
             /* Copy the text inside the text field */
@@ -68,18 +71,27 @@ App.mixin({
         },
 
         NumberToEn(number) {
-            let find = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            let replace = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-            let replaceString = number;
-            let regex;
-            for (let i = 0; i < find.length; i++) {
-                regex = new RegExp(find[i], "g");
-                replaceString = replaceString.replace(regex, replace[i]);
+            if (number !== null){
+                let find = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                let replace = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                let replaceString = number;
+                let regex;
+                for (let i = 0; i < find.length; i++) {
+                    regex = new RegExp(find[i], "g");
+                    replaceString = replaceString.replace(regex, replace[i]);
+                }
+                return replaceString;
             }
-            return replaceString;
+            return number;
         },
 
+        UserAuthCheck(){
+            return Auth.AuthCheck();
+        },
 
+        UserAuthGet() {
+            return Auth.AuthGetUser();
+        },
     }
 
 })
@@ -98,7 +110,24 @@ App.config.globalProperties.$filters = {
 }
 //----------------------------------------------------------------------------------------------------------------------
 
+//Axios Config
+axios.defaults.headers.common['Authorization'] =  Auth.AuthGetToken();
+axios.interceptors.response.use(function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+}, function (error) {
+
+    if (error.response.status ===  401){
+        Auth.AuthLogout()
+        Sweet.SweetToastMessage('شما از حساب کاربریتان خارج شده اید، لطفا دوباره وارد شوید','','error');
+        // return Promise.reject(error);
+
+    }else{
+        return Promise.reject(error);
+    }
+});
 
 
-App.use(Routes);
+App.use(router);
 App.mount("#app");

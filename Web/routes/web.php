@@ -18,3 +18,7 @@ Route::get('management/{any}',static function () {
     return view('management');
 
 })->where('any','(.*)');
+
+Route::get('/{any}',static function (){
+    return view('app');
+})->where('any','(.*)');

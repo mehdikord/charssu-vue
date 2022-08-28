@@ -18,6 +18,7 @@ class ServicemanController extends Controller
     public function index()
     {
         return response()->json(Serviceman::with('user')
+            ->where('is_accepted',true)
             ->with('province')
             ->with('city')
             ->with('zones')
@@ -44,10 +45,10 @@ class ServicemanController extends Controller
      */
     public function store(Request $request)
     {
+
         $validation = Validator::make($request->all(),[
             'province_id' => 'required|numeric',
             'city_id' => 'required|numeric',
-            'zones' => 'nullable|array',
             'profile'=>'nullable|image',
             'name' => 'required|min:3|max:225',
             'national_code'=>'required|numeric|unique:servicemans',
@@ -98,13 +99,20 @@ class ServicemanController extends Controller
             'is_accepted' => 1,
 
         ]);
+        //sync zones
+        if ($request->filled('zones')){
+            $zones = explode(',',$request->zones);
+            $result->zones()->sync($zones);
+        }
+        //sync brands
+        if ($request->filled('brands')){
+            $brands = explode(',',$request->brands);
+            $result->device_brands()->sync($brands);
+        }
         //generate code
         $result->update(['code'=>engine_random_code('1'.$result->id)]);
 
-        //sync zones
-        if ($request->filled('zones') && count($request->zones)){
-            $result->zones()->sync($request->zones);
-        }
+
         return response()->json('Create Successful');
     }
 
@@ -116,7 +124,7 @@ class ServicemanController extends Controller
      */
     public function show(Serviceman $serviceman)
     {
-        return response()->json(Serviceman::with('zones')->find($serviceman->id));
+        return response()->json(Serviceman::with(['zones','device_brands'])->find($serviceman->id));
     }
 
     /**
@@ -151,5 +159,18 @@ class ServicemanController extends Controller
     public function destroy(Serviceman $serviceman)
     {
         //
+    }
+
+    public function waiting()
+    {
+        return response()->json(Serviceman::where('is_accepted',false)
+            ->where('is_rejected',false)
+            ->with('user')
+            ->with('province')
+            ->with('city')
+            ->with('zones')
+            ->get()
+        );
+
     }
 }

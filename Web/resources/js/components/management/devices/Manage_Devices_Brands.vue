@@ -17,8 +17,7 @@
                             <div class="text-sm-end">
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#new_item" class="btn btn-primary btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> افزودن آیتم جدید</button>
                             </div>
-                            <div class="modal fade" id="new_item" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-                                 aria-hidden="true">
+                            <div class="modal fade" id="new_item" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog ">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -63,7 +62,6 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>#</th>
                                 <th>نام</th>
                                 <th>دستگاها</th>
                                 <th>توضیحات</th>
@@ -72,23 +70,25 @@
                             </thead>
                             <tbody>
                             <tr class="app-fade-in" v-for="(item,index) in SearchItem" :key="index">
-                                <td>
+                                <td width="10">
                                     <div class="form-check font-size-16">
                                         <input class="form-check-input" type="checkbox" id="customerlistcheck01">
                                         <label class="form-check-label" for="customerlistcheck01"></label>
                                     </div>
                                 </td>
+
                                 <td>
+                                    <img v-if="item.image !== null" :src="item.image" class="img-fluid avatar-md  rounded-circle me-2" alt="">
+                                    <img v-else src="/images/default/no-photo.png" class="img-fluid avatar-md  rounded-circle me-2" alt="">
+                                    <span class="font-size-13">{{item.name}}</span>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill badge-soft-purple font-size-12 fw-medium p-2"> {{item.devices_count}}</span>
 
                                 </td>
                                 <td>
-                                    {{ item.name }}
+                                    {{ item.description }}
                                 </td>
-                                <td>10</td>
-                                <td>
-                                    {{ item.phone }}
-                                </td>
-
                                 <td>
                                     <button data-bs-toggle="modal" :data-bs-target="'#edit_item'+item.id" title="ویرایش آیتم" type="button" class="btn btn-sm btn-primary waves-effect waves-light me-2"><i class="bx bx-edit font-size-16 align-middle"></i></button>
                                     <button @click="DelItem(item.id)" title="حذف آیتم" type="button" class="btn btn-sm btn-danger waves-effect waves-light me-2"><i class="bx bx-trash font-size-16 align-middle"></i></button>
@@ -117,7 +117,7 @@
                                                             <i class="mdi mdi-alert-outline label-icon"></i><strong>توجه</strong> : فقط در صورت تغییر تصویر فعلی ، فایل جدید را انتخاب کنید
                                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                                         </div>
-                                                        <input class="form-control" type="file">
+                                                        <input @change="EditLogoFileHandler(item.id)" :ref="'image'+item.id" class="form-control" type="file">
                                                         <validation_errors :errors="errors"  :field="'image'"></validation_errors>
                                                     </div>
                                                 </div>
@@ -191,7 +191,7 @@ export default {
                 res.data.forEach(item=>{
                     this.edit.name[item.id] = item.name;
                     this.edit.description[item.id] = item.description;
-
+                    this.edit.image[item.id] = null;
                 })
 
             }).catch(error => {
@@ -214,7 +214,7 @@ export default {
             }).then(res => {
 
                 $('#new_item').modal('hide');
-                Sweet.SweetEditItem();
+                Sweet.SweetAddItem();
                 this.EmptyAdd();
                 this.items.push(res.data);
                 this.add_loading=false;
@@ -229,23 +229,23 @@ export default {
 
         },
 
+        //TODO
         EditItem(id){
             this.add_loading=true;
-            if (this.edit.phone[id] !== null){this.edit.phone[id] = this.NumberToEn(this.edit.phone[id])}
-            if (this.edit.national_code[id] !== null){this.edit.national_code[id] = this.NumberToEn(this.edit.national_code[id])}
+            let data = new FormData();
 
-            let data = {
-                name : this.edit.name[id],
-                phone : this.edit.phone[id],
-                national_code : this.edit.national_code[id],
-                email : this.edit.email[id],
-                role : this.edit.role[id],
-            }
+            if (this.edit.name[id] !== null){data.append('name',this.edit.name[id])}
+            if (this.edit.description[id] !== null){data.append('description',this.edit.description[id])}
+            if (this.edit.image[id] !== null){data.append('image',this.edit.image[id],this.edit.image.name[id])}
 
-            axios.put('/api/management/users/'+id,data).then(res => {
+            axios.post('/api/management/device-brands/update/'+id,data,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(res => {
                 this.GetItems();
                 $('#edit_item'+id).modal('hide');
-                Sweet.SweetAddItem();
+                Sweet.SweetEditItem();
                 this.add_loading=false;
             }).catch(error => {
                 this.add_loading=false;
@@ -300,12 +300,13 @@ export default {
                 }
             }
         },
+
         EditLogoFileHandler(id){
             let name = "image"+id;
             if (this.$refs[name][0].files.length){
                 let file = this.$refs[name][0].files[0];
                 if (file.type === 'image/jpg' || file.type === 'image/png' || file.type === 'image/jpeg'){
-                    this.editform.logo[id] = file;
+                    this.edit.image[id] = file;
                 }else{
                     return Sweet.SweetToastMessage('فایل انتخابی باید فایلی از نوع ( jpg - png - jpeg ) باشد !','error');
                 }

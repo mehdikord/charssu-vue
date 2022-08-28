@@ -45,7 +45,7 @@
                             </thead>
                             <tbody>
                             <tr class="app-fade-in" v-for="(item,index) in SearchItem" :key="index">
-                                <td>
+                                <td width="10">
                                     <div class="form-check font-size-16">
                                         <input class="form-check-input" type="checkbox" id="customerlistcheck01">
                                         <label class="form-check-label" for="customerlistcheck01"></label>
