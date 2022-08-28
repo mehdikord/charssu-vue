@@ -1,8 +1,7 @@
 <template>
     <div class="text-center">
-        <img src="/images/default/loading1.gif" :width="width" alt="">
-        <div class="text-center mt-2">
-            {{ text }}
+        <div class="alert alert-warning text-dark p-2">
+            {{text}}
         </div>
     </div>
 
@@ -11,7 +10,7 @@
 <script>
 export default {
     name: "Front_Inc_Loading1",
-    props :['width','text']
+    props :['text']
 }
 </script>
 

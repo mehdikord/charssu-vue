@@ -13,7 +13,7 @@ function token_creator($unique) :string
 //serviceman get user info
 function api_serviceman_get_user()
 {
-    return Serviceman::where('api_token',request()->header('Authorization'))->with(['province','city','brands','zones'])->first();
+    return Serviceman::where('api_token',request()->header('Authorization'))->with(['province','city','device_brands','zones'])->first();
 }
 
 //set serviceman to order
@@ -24,10 +24,10 @@ function api_order_set_serviceman($order_id){
         $serviceman = Serviceman::query();
         $serviceman->where('is_accepted',true)->where('is_active',true)->where('is_online',true);
         $serviceman->whereHas('zones',function($zone)use($order){
-            $zone->where('id',$order->zone_id);
+            $zone->where('zones.id',$order->zone_id);
         });
         $serviceman->whereHas('device_brands',function($brand)use($order){
-            $brand->where('id',$order->device_brand_id);
+            $brand->where('device_brands.id',$order->device_brand_id);
         });
         $serviceman->whereDoesntHave('orders',function($service_order)use($order){
             $service_order->where('order_id',$order->id);
@@ -43,18 +43,14 @@ function api_order_set_serviceman($order_id){
             if(count($final_servicemans)){
                 $final_servicemans[0]->orders()->create([
                     'order_id' => $order->id,
-                    
-
-            
                 ]);
+                return ['find'=>true,'serviceman' => $final_servicemans[0]];
             }
-            return 'notfound';
+            return ['find'=>false,'notfound'];
         }
-        return 'notfound';
+        return ['find'=>false,'notfound'];
     }
-    return 'inactive';
-
-
+    return ['find'=>false,'inactive'];
 }
 
 //check serviceman busy

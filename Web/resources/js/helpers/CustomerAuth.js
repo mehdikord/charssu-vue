@@ -18,12 +18,16 @@ class Auth{
 
     }
 
-    AuthLogout(){
+    AuthLogout(url=null){
         localStorage.removeItem('charssu_customer_auth_user');
         localStorage.removeItem('charssu_customer_auth_token');
         Sweet.SweetToastMessage('از حساب کاربری خود خارج شده اید، در حال انتقال به صفحه ورود ...','info');
+        let redirect = "/management/auth";
+        if (url === 'app'){
+            let redirect = "/auth";
+        }
         setTimeout(() => {
-            window.open('/management/auth','_self');
+            window.open(redirect,'_self');
         }, 2000)
 
     }

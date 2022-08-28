@@ -49,6 +49,7 @@ class OrderController extends Controller
 
         //generate order code
         $order->update(['code' => engine_random_code($order->id,14)]);
+
         //update Customer information
         $customer->update([
             'name' => $request->name,
@@ -58,7 +59,8 @@ class OrderController extends Controller
             'address' => $request->address,
         ]);
 
-        
+        //find serviceman for order
+        api_order_set_serviceman($order->id);
 
         return response()->json('done');
 

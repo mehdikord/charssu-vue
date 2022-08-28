@@ -94,7 +94,6 @@ Route::prefix('customer')->group(function (){
             Route::get('',[\App\Http\Controllers\Api\Customer\ProfileController::class,'get_profile']);
         });
         Route::prefix('orders')->group(function (){
-
             Route::post('new',[\App\Http\Controllers\Api\Customer\OrderController::class,'new']);
 
         });
@@ -115,13 +114,22 @@ Route::group(['prefix' => 'app'],static function(){
 
         Route::post('auth',[\App\Http\Controllers\Api\App\Serviceman\AuthController::class,'auth']);
         Route::post('auth/check',[\App\Http\Controllers\Api\App\Serviceman\AuthController::class,'auth_check']);
-
         Route::middleware('api_serviceman_auth')->group(function (){
+
             Route::get('profile',[\App\Http\Controllers\Api\App\Serviceman\ProfileController::class,'get_profile']);
             Route::post('profile',[\App\Http\Controllers\Api\App\Serviceman\ProfileController::class,'update_profile']);
             Route::get('activation',[\App\Http\Controllers\Api\App\Serviceman\ProfileController::class,'activation']);
+            Route::prefix('orders')->group(function (){
+                Route::get('new',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'new']);
+
+
+
+            });
 
         });
+
+
+
 
 
     });

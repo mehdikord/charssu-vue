@@ -58,7 +58,7 @@
                         <div class="form-row mt-4">
                             <div class="col-md-6 form-group">
                                 <label class="form-label">انتخاب برند محصول</label>
-                                <loading1 v-if="brandsloading" class="mt-3" :width="210"></loading1>
+                                <loading1 v-if="brandsloading" :text="'درحال دریافت برند ها'"></loading1>
                                 <select @change="GetDevice" v-else class="form-control mt-2 is-" v-model="form.device_brand_id" :class="{'is-invalid' : this.ValidationErrors(errors,'device_brand_id').length}">
                                     <option  v-for="(brand,index) in brands" :key="index+'_brand'" :value="brand.id">{{brand.name}}</option>
                                 </select>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="form-label"> انتخاب مدل محصول</label>
-                                <loading1 v-if="devicesloading" class="mt-3" :width="210"></loading1>
+                                <loading1 v-if="devicesloading" class="mt-2" :text="'ابتدا برند محصول را انتخاب کنید'"></loading1>
                                 <select v-else class="form-control mt-2 app-fade-in" v-model="form.device_id" :class="{'is-invalid' : this.ValidationErrors(errors,'device_id').length}">
                                     <option v-for="(device,index) in devices" :key="index+'_device'" :value="device.id">{{device.name}}</option>
                                 </select>
@@ -97,7 +97,7 @@
                         <div class="form-row mt-4">
                             <div class="col-md-12 form-group">
                                 <label class="form-label">پکیج شما چه مشکلی دارد  ؟</label>
-                                <loading1 v-if="problemsloading" class="mt-3" :width="210"></loading1>
+                                <loading1 v-if="problemsloading" :text="'درحال دریافت لیست مشکلات'"></loading1>
                                 <select v-else class="form-control mt-2" v-model="form.problem_id" :class="{'is-invalid' : this.ValidationErrors(errors,'problem_id').length}">
                                     <option v-for="(problem,index) in problems" :key="index+'_problem'" :value="problem.id">{{problem.problem}}</option>
                                 </select>
@@ -112,7 +112,6 @@
                                 <label class="form-label">افزودن تصویر از دستگاه </label>
                                 <input class="form-control" type="file" ref="image" @change="ImageFileHandler"  >
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -135,8 +134,7 @@
 
                             <div class="col-md-6 form-group">
                                 <label class="form-label">استان</label>
-                                <loading1 v-if="provincesloading" class="mt-3" :width="210"></loading1>
-                                <select @change="SelectCity"  v-else class="form-control mt-1" v-model="user.province_id" :class="{'is-invalid' : this.ValidationErrors(errors,'province_id').length}">
+                                <select @change="SelectCity" class="form-control mt-1" v-model="user.province_id" :class="{'is-invalid' : this.ValidationErrors(errors,'province_id').length}">
                                     <option  v-for="(province,index) in provinces" :key="index+'_province'" :value="province.id">{{province.name}}</option>
                                 </select>
                                 <validation_errors :errors="errors" :field="'province_id'"></validation_errors>
@@ -144,8 +142,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="form-label">شهر</label>
-                                <loading1 v-if="user.province_id === null" class="mt-3" :width="210"></loading1>
-                                <select @change="SelectZone" v-else class="form-control mt-1" v-model="user.city_id" :class="{'is-invalid' : this.ValidationErrors(errors,'city_id').length}">
+                                <select @change="SelectZone"  class="form-control mt-1" v-model="user.city_id" :class="{'is-invalid' : this.ValidationErrors(errors,'city_id').length}">
                                     <option   v-for="(city,index) in cities" :key="index+'_city'" :value="city.id">{{city.name}}</option>
                                 </select>
                                 <validation_errors :errors="errors" :field="'city_id'"></validation_errors>
@@ -153,8 +150,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="form-label">منطقه</label>
-                                <loading1 v-if="user.city_id === null" class="mt-3" :width="210"></loading1>
-                                <select  v-else class="form-control mt-1" v-model="user.zone_id" :class="{'is-invalid' : this.ValidationErrors(errors,'zone_id').length}">
+                                <select class="form-control mt-1" v-model="user.zone_id" :class="{'is-invalid' : this.ValidationErrors(errors,'zone_id').length}">
                                     <option  v-for="(zone,index) in zones" :key="index+'_zone'" :value="zone.id">{{zone.name}}</option>
                                 </select>
                                 <validation_errors :errors="errors" :field="'zone_id'"></validation_errors>
@@ -364,9 +360,8 @@ export default {
                     'Content-Type': 'multipart/form-data'
                 }
             }).then(res => {
-
-                Sweet.SweetToastMessage(res.data);
-
+                this.$router.push({name : 'front_index'})
+                return Sweet.SweetAlertMessage('کاربر گرامی سفارش شما باموفقیت ثبت گردید، چارسو در سریع ترین زمان ممکن سرویس کار موردنظر شما را انتخاب میکند، اطلاعات سرویس کار از طریق پیامک برای شما ارسال میشود. همچنین میتوانید اطلاعات کامل و وضعیت سفارش را در پنل کاربری خود مشاهده کنید','','success');
             }).catch( error => {
                 this.confirmloading=false;
                 if (error.response.status === 421){

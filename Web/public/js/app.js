@@ -19951,7 +19951,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Front_Inc_Loading1",
-  props: ['width', 'text']
+  props: ['text']
 });
 
 /***/ }),
@@ -20335,7 +20335,11 @@ __webpack_require__.r(__webpack_exports__);
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (res) {
-        _helpers_Sweet__WEBPACK_IMPORTED_MODULE_1__["default"].SweetToastMessage(res.data);
+        _this9.$router.push({
+          name: 'front_index'
+        });
+
+        return _helpers_Sweet__WEBPACK_IMPORTED_MODULE_1__["default"].SweetAlertMessage('کاربر گرامی سفارش شما باموفقیت ثبت گردید، چارسو در سریع ترین زمان ممکن سرویس کار موردنظر شما را انتخاب میکند، اطلاعات سرویس کار از طریق پیامک برای شما ارسال میشود. همچنین میتوانید اطلاعات کامل و وضعیت سفارش را در پنل کاربری خود مشاهده کنید', '', 'success');
       })["catch"](function (error) {
         _this9.confirmloading = false;
 
@@ -20590,18 +20594,11 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "text-center"
 };
-var _hoisted_2 = ["width"];
-var _hoisted_3 = {
-  "class": "text-center mt-2"
+var _hoisted_2 = {
+  "class": "alert alert-warning text-dark p-2"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    src: "/images/default/loading1.gif",
-    width: $props.width,
-    alt: ""
-  }, null, 8
-  /* PROPS */
-  , _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.text), 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.text), 1
   /* TEXT */
   )]);
 }
@@ -21241,8 +21238,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 1
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, $data.brandsloading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading1, {
     key: 0,
-    "class": "mt-3",
-    width: 210
+    text: 'درحال دریافت برند ها'
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
     key: 1,
     onChange: _cache[2] || (_cache[2] = function () {
@@ -21272,8 +21268,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["errors"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, $data.devicesloading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading1, {
     key: 0,
-    "class": "mt-3",
-    width: 210
+    "class": "mt-2",
+    text: 'ابتدا برند محصول را انتخاب کنید'
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
     key: 1,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control mt-2 app-fade-in", {
@@ -21325,8 +21321,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["errors"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [_hoisted_44, $data.problemsloading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading1, {
     key: 0,
-    "class": "mt-3",
-    width: 210
+    text: 'درحال دریافت لیست مشکلات'
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
     key: 1,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control mt-2", {
@@ -21390,12 +21385,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "form-control mt-1"
   }, null, 8
   /* PROPS */
-  , _hoisted_59)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [_hoisted_61, $data.provincesloading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading1, {
-    key: 0,
-    "class": "mt-3",
-    width: 210
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
-    key: 1,
+  , _hoisted_59)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [_hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     onChange: _cache[11] || (_cache[11] = function () {
       return $options.SelectCity && $options.SelectCity.apply($options, arguments);
     }),
@@ -21416,17 +21406,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 34
   /* CLASS, HYDRATE_EVENTS */
-  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.user.province_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_validation_errors, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.user.province_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_validation_errors, {
     errors: $data.errors,
     field: 'province_id'
   }, null, 8
   /* PROPS */
-  , ["errors"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, $data.user.province_id === null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading1, {
-    key: 0,
-    "class": "mt-3",
-    width: 210
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
-    key: 1,
+  , ["errors"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     onChange: _cache[13] || (_cache[13] = function () {
       return $options.SelectZone && $options.SelectZone.apply($options, arguments);
     }),
@@ -21447,17 +21432,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 34
   /* CLASS, HYDRATE_EVENTS */
-  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.user.city_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_validation_errors, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.user.city_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_validation_errors, {
     errors: $data.errors,
     field: 'city_id'
   }, null, 8
   /* PROPS */
-  , ["errors"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [_hoisted_67, $data.user.city_id === null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading1, {
-    key: 0,
-    "class": "mt-3",
-    width: 210
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
-    key: 1,
+  , ["errors"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [_hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control mt-1", {
       'is-invalid': this.ValidationErrors($data.errors, 'zone_id').length
     }]),
@@ -21475,7 +21455,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 2
   /* CLASS */
-  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.user.zone_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_validation_errors, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.user.zone_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_validation_errors, {
     errors: $data.errors,
     field: 'zone_id'
   }, null, 8
@@ -21849,11 +21829,18 @@ var Auth = /*#__PURE__*/function () {
   }, {
     key: "AuthLogout",
     value: function AuthLogout() {
+      var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       localStorage.removeItem('charssu_customer_auth_user');
       localStorage.removeItem('charssu_customer_auth_token');
       Sweet.SweetToastMessage('از حساب کاربری خود خارج شده اید، در حال انتقال به صفحه ورود ...', 'info');
+      var redirect = "/management/auth";
+
+      if (url === 'app') {
+        var _redirect = "/auth";
+      }
+
       setTimeout(function () {
-        window.open('/management/auth', '_self');
+        window.open(redirect, '_self');
       }, 2000);
     }
   }]);
