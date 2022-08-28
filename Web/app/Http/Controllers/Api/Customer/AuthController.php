@@ -39,7 +39,7 @@ class AuthController extends Controller
     {
         $validation = Validator::make($request->all(),[
             'code'=>'required|numeric',
-            'phone'=>'required|numeric|exists:users,phone',
+            'phone'=>'required|numeric',
         ]);
         if ($validation->fails()){
             return response()->json($validation->errors(),421);

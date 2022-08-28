@@ -42,6 +42,11 @@ class Serviceman extends Model
         return $this->belongsToMany(Device_Brand::class,'device_brands_servicemans','serviceman_id','device_brand_id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order_Serviceman::class,'serviceman_id');
+    }
+
 
 
 }
