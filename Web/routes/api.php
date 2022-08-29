@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('helpers')->group(function (){
     Route::get('get/provinces',[\App\Http\Controllers\Api\HelperController::class,'get_provinces']);
     Route::get('get/brands',[\App\Http\Controllers\Api\HelperController::class,'get_brands']);
+    Route::get('get/zones',[\App\Http\Controllers\Api\HelperController::class,'get_zones']);
     Route::get('get/problems',[\App\Http\Controllers\Api\HelperController::class,'get_problems']);
     Route::get('install-zones',[\App\Http\Controllers\Api\HelperController::class,'install_zone']);
 });
