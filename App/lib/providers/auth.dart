@@ -60,7 +60,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchAndSetDashboardBrands() async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/helper/get/brands");
+    final url = Uri.parse("http://10.0.2.2:8000/api/helpers/get/brands");
 
     try {
       final response = await http.get(url);
@@ -82,7 +82,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> fetchAndSetDashboardZones() async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/helper/get/zones");
+    final url = Uri.parse("http://10.0.2.2:8000/api/helpers/get/zones");
 
     try {
       final response = await http.get(url);
@@ -123,7 +123,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> login(String phone) async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/serviceman/auth");
+    final url = Uri.parse("http://10.0.2.2:8000/api/app/serviceman/auth");
     final body = {"phone": phone};
 
     try {
@@ -138,7 +138,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> loginCheck(String phone, String code) async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/serviceman/auth/check");
+    final url = Uri.parse("http://10.0.2.2:8000/api/app/serviceman/auth/check");
     final body = {
       "phone": phone,
       "code": code,
@@ -281,7 +281,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> updateUser(String id, UserInformation newInfo) async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/serviceman/profile");
+    final url = Uri.parse("http://10.0.2.2:8000/api/app/serviceman/profile");
     int randomNumber = Random().nextInt(100);
     print("====================================================");
     print("id: ${newInfo.id}");
