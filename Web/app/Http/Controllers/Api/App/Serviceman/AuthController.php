@@ -18,13 +18,13 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(),422);
         }
-        if (Auth_Code::where('phone',$request->phone)->exists() && check_auth_sms(Auth_Code::where('phone',$request->phone)->first()->id)){
+        if (Auth_Code::where('phone',$request->phone)->exists() && helper_check_auth_sms(Auth_Code::where('phone',$request->phone)->first()->id)){
             return response()->json(['error'=>'کد ارسال شده قبلی تا دو دقیقه معتبر است !'],409);
         }
         //send auth code with sms to phone number
         $code = random_int(100000,999999);
         Auth_Code::UpdateOrCreate(['phone'=>$request->phone],['code'=>$code]);
-        send_auth_sms($request->phone,$code);
+        helper_send_auth_sms($request->phone,$code);
         return response()->json(['message'=>'کد تایید باموفقیت ارسال شد','status'=>200],200);
 
     }
@@ -40,7 +40,7 @@ class AuthController extends Controller
         }
         $auth_code = Auth_Code::where('phone',$request->phone)->where('code',$request->code)->first();
         if (!empty($auth_code)){
-            if (check_auth_sms($auth_code->id)){
+            if (helper_check_auth_sms($auth_code->id)){
                 $serviceman = Serviceman::where('phone',$request->phone)->first();
                 if (!empty($serviceman)){
                     $auth_code->delete();

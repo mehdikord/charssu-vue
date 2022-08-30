@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Device_Brand;
 use App\Models\Problem;
 use App\Models\Province;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 
 class HelperController extends Controller
@@ -19,6 +20,11 @@ class HelperController extends Controller
     public function get_brands()
     {
         return response()->json(Device_Brand::with('devices')->get());
+    }
+
+    public function get_zones()
+    {
+        return response()->json(Zone::all());
     }
 
     public function get_problems()
