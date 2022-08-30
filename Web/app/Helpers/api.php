@@ -16,6 +16,12 @@ function api_serviceman_get_user()
     return Serviceman::where('api_token',request()->header('Authorization'))->with(['province','city','device_brands','zones'])->first();
 }
 
+function api_serviceman_get_id(){
+
+    return Serviceman::where('api_token',request()->header('Authorization'))->first()->id;
+
+}
+
 //set serviceman to order
 function api_order_set_serviceman($order_id){
 
@@ -44,6 +50,7 @@ function api_order_set_serviceman($order_id){
                 $final_servicemans[0]->orders()->create([
                     'order_id' => $order->id,
                 ]);
+
                 return ['find'=>true,'serviceman' => $final_servicemans[0]];
             }
             return ['find'=>false,'notfound'];

@@ -121,9 +121,10 @@ Route::group(['prefix' => 'app'],static function(){
             Route::get('activation',[\App\Http\Controllers\Api\App\Serviceman\ProfileController::class,'activation']);
             Route::prefix('orders')->group(function (){
                 Route::get('new',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'new']);
-
-
-
+                Route::post('accept',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'accept']);
+                Route::post('cancel',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'cancel']);
+                Route::post('cancel-reason',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'cancel_reason']);
+                Route::get('single/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'single']);
             });
 
         });

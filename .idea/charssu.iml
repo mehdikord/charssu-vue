@@ -41,7 +41,6 @@
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phpunit/php-invoker" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phpunit/php-code-coverage" />
-      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phpspec/prophecy" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phar-io/version" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/myclabs/deep-copy" />
@@ -66,7 +65,6 @@
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/league/commonmark" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/league/config" />
-      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/facade/ignition-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/nette/schema" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/nette/utils" />
@@ -83,9 +81,6 @@
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/graham-campbell/result-type" />
-      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phpdocumentor/reflection-common" />
-      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phpdocumentor/reflection-docblock" />
-      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/dragonmantank/cron-expression" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/tijsverkoyen/css-to-inline-styles" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/nunomaduro/collision" />
@@ -117,6 +112,9 @@
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/Web/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/kavenegar/laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/kavenegar/php" />
+      <excludeFolder url="file://$MODULE_DIR$/Web/vendor/nunomaduro/termwind" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
