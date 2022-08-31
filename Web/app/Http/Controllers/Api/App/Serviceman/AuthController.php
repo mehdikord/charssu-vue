@@ -52,6 +52,9 @@ class AuthController extends Controller
                 $serviceman = Serviceman::create([
                     'phone'=>$request->phone,
                 ]);
+                $serviceman->update([
+                    'code' => engine_random_code("1" . $serviceman->id),
+                ]);
                 $auth_code->delete();
                 $serviceman->update(['api_token'=>token_creator($serviceman->id)]);
                 $serviceman = Serviceman::find($serviceman->id);

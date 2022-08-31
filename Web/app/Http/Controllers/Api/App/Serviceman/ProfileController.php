@@ -58,7 +58,7 @@ class ProfileController extends Controller
             'province_id'=>$request->province_id,
             'city_id'=>$request->city_id,
             'name'=>$request->name,
-            'phone'=>$request->phone,
+            'email'=>$request->email,
             'national_code'=>$request->national_code,
             'birthday'=>$request->birthday,
             'address'=>$request->address,
@@ -71,12 +71,11 @@ class ProfileController extends Controller
             'non_addictions'=>$non_addictions,
             'profile'=>$profile_url,
         ]);
-        $brands=[];
-        $zones=[];
+        $brands = [];
+        $zones = [];
 
-        //TODO
-//        $serviceman->brands()->sync($brands);
-//        $serviceman->zones()->sync($zones);
+        $serviceman->brands()->sync($brands);
+        $serviceman->zones()->sync($zones);
         //get serviceman data after update
         $serviceman = api_serviceman_get_user();
         return response()->json(['message'=>'اطلاعات پروفایل باموفقیت ویرایش شد','serviceman'=>$serviceman,'status'=>200]);
