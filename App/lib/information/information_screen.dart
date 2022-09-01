@@ -25,7 +25,9 @@ class InformationScreen extends StatefulWidget {
 
 class _InformationScreenState extends State<InformationScreen> {
   late Future _dashboardBrandsFuture;
-  late Future _dashboardZonesFuture;
+  late Future _dashboardProvincesFuture;
+
+  final _cityController = TextEditingController();
 
   String dateLabel = '';
   var testPickDate;
@@ -41,15 +43,15 @@ class _InformationScreenState extends State<InformationScreen> {
         .fetchAndSetDashboardBrands();
   }
 
-  Future _obtainDashboardZonesFuture() {
+  Future _obtainDashboardProvincesFuture() {
     return Provider.of<Auth>(context, listen: false)
-        .fetchAndSetDashboardZones();
+        .fetchAndSetDashboardProvinces();
   }
 
   @override
   void initState() {
     _dashboardBrandsFuture = _obtainDashboardBrandsFuture();
-    _dashboardZonesFuture = _obtainDashboardZonesFuture();
+    _dashboardProvincesFuture = _obtainDashboardProvincesFuture();
     super.initState();
   }
 
@@ -76,8 +78,8 @@ class _InformationScreenState extends State<InformationScreen> {
     birthday: "",
     province: "",
     city: "",
-    zone: "",
-    brand: "",
+    zone: [],
+    brand: [],
     telephone: "",
     email: "",
     startTime: "",
@@ -476,170 +478,51 @@ class _InformationScreenState extends State<InformationScreen> {
                                           required: true,
                                         ),
                                         // Province Input
-                                        InformationInput(
-                                          title: "استان",
-                                          input: SelectFormField(
-                                            initialValue:
-                                                auth.findUser().province,
-                                            type: SelectFormFieldType.dialog,
-                                            decoration: const InputDecoration(
-                                              border: InputBorder.none,
-                                              contentPadding:
-                                                  EdgeInsets.all(8.0),
-                                              label: Text(
-                                                "انتخاب استان",
-                                                style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                              suffixIcon:
-                                                  Icon(Icons.arrow_drop_down),
-                                              suffixIconColor: Colors.grey,
-                                            ),
-                                            // onFieldSubmitted: (_) =>
-                                            //     FocusScope.of(context)
-                                            //         .requestFocus(_cityFocusNode),
-                                            // focusNode: _provinceFocusNode,
-                                            dialogTitle: 'لیست استان ها',
-                                            dialogCancelBtn: 'لغو',
-                                            enableSearch: true,
-                                            dialogSearchHint: 'جستجو',
-                                            items: const [
-                                              {
-                                                'value': 8,
-                                                'label': 'تهران',
-                                              }
-                                            ],
-                                            onSaved: (value) {
-                                              _information = UserInformation(
-                                                id: _information.id,
-                                                name: _information.name,
-                                                family: _information.family,
-                                                nationalCode:
-                                                    _information.nationalCode,
-                                                birthday: _information.birthday,
-                                                province: value.toString(),
-                                                city: _information.city,
-                                                zone: _information.zone,
-                                                brand: _information.brand,
-                                                telephone:
-                                                    _information.telephone,
-                                                email: _information.email,
-                                                startTime:
-                                                    _information.startTime,
-                                                endTime: _information.endTime,
-                                                address: _information.address,
-                                                workAddress:
-                                                    _information.workAddress,
-                                              );
-                                            },
-                                          ),
-                                          required: true,
-                                          height: 50,
-                                        ),
-                                        // City Input
-                                        InformationInput(
-                                          title: "شهر",
-                                          input: SelectFormField(
-                                            initialValue: auth.findUser().city,
-                                            type: SelectFormFieldType.dialog,
-                                            decoration: const InputDecoration(
-                                              border: InputBorder.none,
-                                              contentPadding:
-                                                  EdgeInsets.all(8.0),
-                                              label: Text(
-                                                "انتخاب شهر",
-                                                style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                              suffixIcon:
-                                                  Icon(Icons.arrow_drop_down),
-                                              suffixIconColor: Colors.grey,
-                                            ),
-                                            // onFieldSubmitted: (_) =>
-                                            //     FocusScope.of(context)
-                                            //         .requestFocus(
-                                            //             _zoneFocusNode),
-                                            // focusNode: _cityFocusNode,
-                                            dialogTitle: 'لیست شهر ها',
-                                            dialogCancelBtn: 'لغو',
-                                            enableSearch: true,
-                                            dialogSearchHint: 'جستجو',
-                                            items: const [
-                                              {
-                                                'value': 100,
-                                                'label': 'تهران',
-                                              }
-                                            ],
-                                            onSaved: (value) {
-                                              _information = UserInformation(
-                                                id: _information.id,
-                                                name: _information.name,
-                                                family: _information.family,
-                                                nationalCode:
-                                                    _information.nationalCode,
-                                                birthday: _information.birthday,
-                                                province: _information.province,
-                                                city: value.toString(),
-                                                zone: _information.zone,
-                                                brand: _information.brand,
-                                                telephone:
-                                                    _information.telephone,
-                                                email: _information.email,
-                                                startTime:
-                                                    _information.startTime,
-                                                endTime: _information.endTime,
-                                                address: _information.address,
-                                                workAddress:
-                                                    _information.workAddress,
-                                              );
-                                            },
-                                          ),
-                                          required: true,
-                                          height: 50,
-                                        ),
-                                        // Zone Input
                                         FutureBuilder(
-                                          future: _dashboardZonesFuture,
+                                          future: _dashboardProvincesFuture,
                                           builder: ((ctx, dataSnapShot) {
                                             return InformationInput(
-                                              title: "منطقه فعالیت",
-                                              input: MultiSelectFormField(
-                                                dialogShapeBorder:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(
-                                                      12.0,
+                                              title: "استان",
+                                              input: SelectFormField(
+                                                initialValue:
+                                                    auth.findUser().province,
+                                                type:
+                                                    SelectFormFieldType.dialog,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  border: InputBorder.none,
+                                                  contentPadding:
+                                                      EdgeInsets.all(8.0),
+                                                  label: Text(
+                                                    "انتخاب استان",
+                                                    style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 16,
                                                     ),
                                                   ),
+                                                  suffixIcon: Icon(
+                                                      Icons.arrow_drop_down),
+                                                  suffixIconColor: Colors.grey,
                                                 ),
-                                                title: const Text(
-                                                  "یک یا چند منطقه انتخاب کنید",
-                                                ),
-                                                dataSource: auth.zones
+                                                // onFieldSubmitted: (_) =>
+                                                //     FocusScope.of(context)
+                                                //         .requestFocus(_cityFocusNode),
+                                                // focusNode: _provinceFocusNode,
+                                                dialogTitle: 'لیست استان ها',
+                                                dialogCancelBtn: 'لغو',
+                                                enableSearch: true,
+                                                dialogSearchHint: 'جستجو',
+                                                items: auth.provinces
                                                     .map(
                                                       (item) => ({
                                                         "value": item['id'],
                                                         "label": item['name'],
                                                       }),
                                                     )
-                                                    .toList()
-                                                    .cast<dynamic>(),
-                                                textField: 'label',
-                                                valueField: 'value',
-                                                okButtonLabel: 'تایید',
-                                                cancelButtonLabel: 'لغو',
-                                                hintWidget: const Text(''),
-                                                initialValue: const [],
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return 'لطفا مناطق موردنظر را وارد کنید!';
-                                                  }
-                                                  return null;
+                                                    .toList(),
+                                                onChanged: (value) {
+                                                  _cityController.clear();
+                                                  auth.setCities(value);
                                                 },
                                                 onSaved: (value) {
                                                   _information =
@@ -651,10 +534,9 @@ class _InformationScreenState extends State<InformationScreen> {
                                                         .nationalCode,
                                                     birthday:
                                                         _information.birthday,
-                                                    province:
-                                                        _information.province,
+                                                    province: value.toString(),
                                                     city: _information.city,
-                                                    zone: value.toString(),
+                                                    zone: _information.zone,
                                                     brand: _information.brand,
                                                     telephone:
                                                         _information.telephone,
@@ -670,9 +552,150 @@ class _InformationScreenState extends State<InformationScreen> {
                                                   );
                                                 },
                                               ),
-                                              height: 150,
+                                              required: true,
+                                              height: 50,
                                             );
                                           }),
+                                        ),
+                                        // City Input
+                                        FutureBuilder(
+                                          future: _dashboardProvincesFuture,
+                                          builder: ((ctx, dataSnapShot) {
+                                            return InformationInput(
+                                              title: "شهر",
+                                              input: SelectFormField(
+                                                controller: _cityController,
+                                                type:
+                                                    SelectFormFieldType.dialog,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  border: InputBorder.none,
+                                                  contentPadding:
+                                                      EdgeInsets.all(8.0),
+                                                  label: Text(
+                                                    "انتخاب شهر",
+                                                    style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  suffixIcon: Icon(
+                                                      Icons.arrow_drop_down),
+                                                  suffixIconColor: Colors.grey,
+                                                ),
+                                                // onFieldSubmitted: (_) =>
+                                                //     FocusScope.of(context)
+                                                //         .requestFocus(
+                                                //             _zoneFocusNode),
+                                                // focusNode: _cityFocusNode,
+                                                dialogTitle: 'لیست شهر ها',
+                                                dialogCancelBtn: 'لغو',
+                                                enableSearch: true,
+                                                dialogSearchHint: 'جستجو',
+                                                items: auth.cities.map((city) {
+                                                  return ({
+                                                    "value": city['id'],
+                                                    "label": city['name'],
+                                                  });
+                                                }).toList(),
+                                                onChanged: (value) {
+                                                  auth.setZones(value);
+                                                },
+                                                onSaved: (value) {
+                                                  _information =
+                                                      UserInformation(
+                                                    id: _information.id,
+                                                    name: _information.name,
+                                                    family: _information.family,
+                                                    nationalCode: _information
+                                                        .nationalCode,
+                                                    birthday:
+                                                        _information.birthday,
+                                                    province:
+                                                        _information.province,
+                                                    city: value.toString(),
+                                                    zone: _information.zone,
+                                                    brand: _information.brand,
+                                                    telephone:
+                                                        _information.telephone,
+                                                    email: _information.email,
+                                                    startTime:
+                                                        _information.startTime,
+                                                    endTime:
+                                                        _information.endTime,
+                                                    address:
+                                                        _information.address,
+                                                    workAddress: _information
+                                                        .workAddress,
+                                                  );
+                                                },
+                                              ),
+                                              required: true,
+                                              height: 50,
+                                            );
+                                          }),
+                                        ),
+                                        // Zone Input
+                                        InformationInput(
+                                          title: "منطقه فعالیت",
+                                          input: MultiSelectFormField(
+                                            dialogShapeBorder:
+                                                const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(
+                                                  12.0,
+                                                ),
+                                              ),
+                                            ),
+                                            title: const Text(
+                                              "یک یا چند منطقه انتخاب کنید",
+                                            ),
+                                            dataSource: auth.zones
+                                                .map((zone) {
+                                                  return ({
+                                                    "value": zone['id'],
+                                                    "label": zone['name'],
+                                                  });
+                                                })
+                                                .toList()
+                                                .cast<dynamic>(),
+                                            textField: 'label',
+                                            valueField: 'value',
+                                            okButtonLabel: 'تایید',
+                                            cancelButtonLabel: 'لغو',
+                                            hintWidget: const Text(''),
+                                            initialValue: const [],
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'لطفا مناطق موردنظر را وارد کنید!';
+                                              }
+                                              return null;
+                                            },
+                                            onSaved: (value) {
+                                              _information = UserInformation(
+                                                id: _information.id,
+                                                name: _information.name,
+                                                family: _information.family,
+                                                nationalCode:
+                                                    _information.nationalCode,
+                                                birthday: _information.birthday,
+                                                province: _information.province,
+                                                city: _information.city,
+                                                zone: value,
+                                                brand: _information.brand,
+                                                telephone:
+                                                    _information.telephone,
+                                                email: _information.email,
+                                                startTime:
+                                                    _information.startTime,
+                                                endTime: _information.endTime,
+                                                address: _information.address,
+                                                workAddress:
+                                                    _information.workAddress,
+                                              );
+                                            },
+                                          ),
+                                          height: 150,
                                         ),
                                         // Brand Input
                                         FutureBuilder(
@@ -728,7 +751,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                         _information.province,
                                                     city: _information.city,
                                                     zone: _information.zone,
-                                                    brand: value.toString(),
+                                                    brand: value,
                                                     telephone:
                                                         _information.telephone,
                                                     email: _information.email,

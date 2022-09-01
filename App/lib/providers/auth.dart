@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,14 +16,13 @@ class UserInformation with ChangeNotifier {
       birthday,
       province,
       city,
-      zone,
-      brand,
       telephone,
       email,
       startTime,
       endTime,
       address,
       workAddress;
+  final List zone, brand;
   final bool isAccepted, isOnline;
 
   UserInformation({
@@ -36,8 +34,8 @@ class UserInformation with ChangeNotifier {
     this.birthday = "",
     this.province = "",
     this.city = "",
-    this.zone = "",
-    this.brand = "",
+    this.zone = const [],
+    this.brand = const [],
     this.telephone = "",
     this.email = "",
     this.startTime = "",
@@ -75,14 +73,26 @@ class Auth with ChangeNotifier {
     }
   }
 
+  List<dynamic> _provinces = [];
+
+  List<Map<String, dynamic>> get provinces {
+    return [..._provinces];
+  }
+
+  List<dynamic> _cities = [];
+
+  List<Map<String, dynamic>> get cities {
+    return [..._cities];
+  }
+
   List<dynamic> _zones = [];
 
   List<Map<String, dynamic>> get zones {
     return [..._zones];
   }
 
-  Future<void> fetchAndSetDashboardZones() async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/helpers/get/zones");
+  Future<void> fetchAndSetDashboardProvinces() async {
+    final url = Uri.parse("http://10.0.2.2:8000/api/helpers/get/provinces");
 
     try {
       final response = await http.get(url);
@@ -90,11 +100,24 @@ class Auth with ChangeNotifier {
       if (responseData.toString().contains('error')) {
         throw HttpException(responseData['error'].toString());
       }
-      _zones = responseData;
+      _provinces = responseData;
+      setCities("8");
       notifyListeners();
     } catch (error) {
       rethrow;
     }
+  }
+
+  Future<void> setCities(String provinceId) async {
+    _cities = await provinces.firstWhere(
+        (province) => province['id'] == int.parse(provinceId))['cities'];
+    notifyListeners();
+  }
+
+  Future<void> setZones(String cityId) async {
+    _zones = await cities
+        .firstWhere((city) => city['id'] == int.parse(cityId))['zones'];
+    notifyListeners();
   }
 
   bool get isAuth {
@@ -150,7 +173,6 @@ class Auth with ChangeNotifier {
       if (responseData.toString().contains('error')) {
         throw HttpException(responseData['error']);
       }
-      print(responseData);
       _token = responseData['response']['api_token'];
       _userId = responseData['response']['id'].toString();
       _name = responseData['response']['name'].toString();
@@ -245,9 +267,6 @@ class Auth with ChangeNotifier {
           lastName = fullname[1];
         }
       }
-      print("================================");
-      print(user['response']);
-      print("================================");
       UserInformation data = UserInformation(
         id: user['response']['id'].toString(),
         code: user['response']['code'] != null
@@ -259,8 +278,8 @@ class Auth with ChangeNotifier {
         birthday: "",
         province: "8",
         city: "100",
-        zone: "",
-        brand: "",
+        zone: [],
+        brand: [],
         telephone: user['response']['tel'] != null
             ? user['response']['tel'].toString()
             : "",
@@ -272,7 +291,6 @@ class Auth with ChangeNotifier {
         isAccepted: user['response']['is_accepted'] == 1 ? true : false,
         isOnline: user['response']['is_online'] == 1 ? true : false,
       );
-      print(user['response'].toString());
       _user = data;
       notifyListeners();
     } catch (error) {
@@ -282,55 +300,51 @@ class Auth with ChangeNotifier {
 
   Future<void> updateUser(String id, UserInformation newInfo) async {
     final url = Uri.parse("http://10.0.2.2:8000/api/app/serviceman/profile");
-    int randomNumber = Random().nextInt(100);
     print("====================================================");
     print("id: ${newInfo.id}");
+    print("province: ${newInfo.province}");
+    print("city: ${newInfo.city}");
     print("name: ${newInfo.name}");
     print("family: ${newInfo.family}");
     print("nationalCode: ${newInfo.nationalCode}");
-    print("birthday: ${newInfo.birthday}");
-    print("province: ${newInfo.province}");
-    print("city: ${newInfo.city}");
-    print("zone: ${newInfo.zone}");
-    print("brand: ${newInfo.brand}");
-    print("telephone: ${newInfo.telephone}");
     print("email: ${newInfo.email}");
-    print("startTime: ${newInfo.startTime}");
-    print("endTime: ${newInfo.endTime}");
+    print("birthday: ${newInfo.birthday}");
     print("address: ${newInfo.address}");
     print("workAddress: ${newInfo.workAddress}");
+    print("telephone: ${newInfo.telephone}");
+    print("startTime: ${newInfo.startTime}");
+    print("endTime: ${newInfo.endTime}");
+    print("zone: ${newInfo.zone}");
+    print("brand: ${newInfo.brand}");
     print("isAccepted: ${newInfo.isAccepted}");
     print("isOnline: ${newInfo.isOnline}");
-    print("code: $randomNumber");
     print("====================================================");
     final response = await http.post(
       url,
-      body: {
+      body: json.encode({
         "province_id": newInfo.province,
         "city_id": newInfo.city,
         "name": "${newInfo.name} ${newInfo.family}",
         "national_code": newInfo.nationalCode,
         "email": newInfo.email,
-        "code": randomNumber.toString(),
-        "tel": newInfo.telephone,
+        'birthday': newInfo.birthday,
         "address": newInfo.address,
         "work_address": newInfo.workAddress,
+        "tel": newInfo.telephone,
+        'start_time': newInfo.startTime,
+        'end_time': newInfo.endTime,
         "brands": newInfo.brand,
         "zones": newInfo.zone,
-      },
+      }),
       headers: {
         "authorization": token.toString(),
+        'Content-type': 'application/json',
       },
     );
     final responseData = json.decode(response.body);
-    print(responseData);
     if (responseData['errors'] != null) {
       throw responseData['errors'];
     }
-    print(
-        "response workAddress: ${responseData['serviceman']['work_address']}");
-    print("---------------");
-    print("workAddress: ${newInfo.workAddress}");
     final prefs = await SharedPreferences.getInstance();
     _phone = _phone;
     prefs.remove('userData');
