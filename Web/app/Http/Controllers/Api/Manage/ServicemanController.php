@@ -80,7 +80,7 @@ class ServicemanController extends Controller
         }
         //#TODO
         $result = Serviceman::create([
-            'user_id'=>null,
+            'user_id'=> manage_auth_get()->id,
             'province_id'=>$request->province_id,
             'city_id'=>$request->city_id,
             'name'=>$request->name,

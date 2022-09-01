@@ -20,7 +20,9 @@ Route::prefix('helpers')->group(function (){
     Route::get('get/brands',[\App\Http\Controllers\Api\HelperController::class,'get_brands']);
     Route::get('get/zones',[\App\Http\Controllers\Api\HelperController::class,'get_zones']);
     Route::get('get/problems',[\App\Http\Controllers\Api\HelperController::class,'get_problems']);
+    Route::get('get/product-categories',[\App\Http\Controllers\Api\HelperController::class,'get_product_categories']);
     Route::get('install-zones',[\App\Http\Controllers\Api\HelperController::class,'install_zone']);
+
 });
 
 
@@ -72,6 +74,13 @@ Route::group(['prefix'=>'management'],static function (){
 
         //problems
         Route::resource('problems',\App\Http\Controllers\Api\Manage\ProblemController::class);
+
+        //products categories
+        Route::resource('product-categories',\App\Http\Controllers\Api\Manage\ProductCategoryController::class);
+
+        //products
+        Route::resource('products',\App\Http\Controllers\Api\Manage\ProductController::class);
+
 
 
     });

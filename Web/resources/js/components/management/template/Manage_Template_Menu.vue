@@ -65,7 +65,19 @@
                             <span data-key="t-devices-brands">دستگاه ها</span>
                         </router-link>
                     </li>
-
+                    <li class="menu-title text-danger" data-key="t-shops">فروشگاه قطعات و محصولات</li>
+                    <li>
+                        <router-link :to="{name : 'manage_products_categories'}">
+                            <i class="mdi mdi-format-list-bulleted-square"></i>
+                            <span data-key="t-devices-brands">دسته‌بندی محصولات</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{name : 'manage_products'}">
+                            <i class="mdi mdi-basket"></i>
+                            <span data-key="t-devices-brands">مدیریت محصولات</span>
+                        </router-link>
+                    </li>
                     <li class="menu-title text-danger" data-key="t-zones">مناطق کاری</li>
                     <li>
                         <router-link :to="{name : 'manage_zones'}">

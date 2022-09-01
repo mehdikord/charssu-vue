@@ -68,7 +68,7 @@ export default {
     name: "Front_Auth",
     created() {
         if (this.UserAuthCheck()){
-            // this.$router.push({name : 'manage_dashboard'})
+            return this.$router.push({name : 'front_index'})
         }
 
         if (AppStorage.AppStorageCheckItem('charssu_pre_customer_login')){

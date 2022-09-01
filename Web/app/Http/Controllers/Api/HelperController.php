@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Device_Brand;
 use App\Models\Problem;
+use App\Models\Product_Category;
 use App\Models\Province;
 use App\Models\Zone;
 use Illuminate\Http\Request;
@@ -41,5 +42,10 @@ class HelperController extends Controller
         }
         return response()->json('done');
 
+    }
+
+    public function get_product_categories()
+    {
+        return response()->json(Product_Category::all());
     }
 }

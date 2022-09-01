@@ -11,6 +11,8 @@ import Manage_Devices from "../components/management/devices/Manage_Devices";
 import Manage_Problems from "../components/management/problems/Manage_Problems";
 import Manage_Servicemans_Waiting from "../components/management/servicemans/Manage_Servicemans_Waiting";
 import Manage_Auth from "../components/management/auth/Manage_Auth";
+import Manage_Products_Categories from "../components/management/products/Manage_Products_Categories";
+import Manage_Products from "../components/management/products/Manage_Products";
 
 const routes = [
 
@@ -77,6 +79,16 @@ const routes = [
         path : '/management/problems',
         component : Manage_Problems,
         name : 'manage_problems',
+    },
+    {
+        path : '/management/products/categories',
+        component : Manage_Products_Categories,
+        name : 'manage_products_categories',
+    },
+    {
+        path : '/management/products',
+        component : Manage_Products,
+        name : 'manage_products',
     },
 
 
