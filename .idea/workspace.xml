@@ -4,32 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5f1e862-83d0-4055-a068-af76f2a3c0db" name="Changes" comment="updated">
-      <change afterPath="$PROJECT_DIR$/Web/app/Helpers/manage.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Manage/ProductCategoryController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Manage/ProductController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/app/Models/Product.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/app/Models/Product_Category.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_08_31_200736_product_categories.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_08_31_200747_products.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products_Categories.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/charssu.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="b5f1e862-83d0-4055-a068-af76f2a3c0db" name="Changes" comment="service man add email field">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/HelperController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/HelperController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Manage/ServicemanController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Manage/ServicemanController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/Web/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Web/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Web/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/public/js/management.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/auth/Front_Auth.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/auth/Front_Auth.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/management/template/Manage_Template_Menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/management/template/Manage_Template_Menu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/routes/manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/routes/manage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/App/Serviceman/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/App/Serviceman/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/routes/composer.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +185,7 @@
       <workItem from="1661957062284" duration="4042000" />
       <workItem from="1661983899398" duration="4595000" />
       <workItem from="1661990076398" duration="1706000" />
-      <workItem from="1662020055573" duration="331000" />
+      <workItem from="1662020055573" duration="4199000" />
     </task>
     <task id="LOCAL-00001" summary="updated">
       <created>1662020348792</created>
@@ -216,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662020348792</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="service man add email field">
+      <created>1662020497859</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1662020497859</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,6 +223,7 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated" />
+    <MESSAGE value="service man add email field" />
+    <option name="LAST_COMMIT_MESSAGE" value="service man add email field" />
   </component>
 </project>

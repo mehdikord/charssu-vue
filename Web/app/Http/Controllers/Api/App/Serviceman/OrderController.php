@@ -108,14 +108,33 @@ class OrderController extends Controller
         }
          $order->load(['customer' => function($customer){
              $customer->select(['id','name','phone','tel','address'])->get();
-         }],
-             'province',
-             'city',
-             'zone'
-         );
-
-        return $order;
-
+         }]);
+        $order->load([
+            'province',
+            'city',
+            'zone',
+            'device_brand',
+            'device'
+        ]);
+        return response()->json($order);
 
     }
+
+    public function done()
+    {
+        $result = Order::where('is_done',true)->whereHas('servicemans',function ($serviceman){
+            $serviceman->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->where('canceled',false);
+        })->get();
+
+        return response()->json($result);
+    }
+
+    public function active()
+    {
+        $result = api_serviceman_get_user()->orders()->where('accepted',true)->where("canceled",false)->whereHas('order',function ($order){
+            $order->where('is_done',false);
+        })->with('order')->get();
+        return response()->json($result);
+    }
+
 }

@@ -131,6 +131,8 @@ Route::group(['prefix' => 'app'],static function(){
             Route::get('activation',[\App\Http\Controllers\Api\App\Serviceman\ProfileController::class,'activation']);
             Route::prefix('orders')->group(function (){
                 Route::get('new',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'new']);
+                Route::get('done',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'done']);
+                Route::get('active',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'active']);
                 Route::post('accept',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'accept']);
                 Route::post('cancel',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'cancel']);
                 Route::post('cancel-reason',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'cancel_reason']);
