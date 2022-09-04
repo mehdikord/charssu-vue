@@ -105,6 +105,7 @@
                                 <th>تخفیف</th>
                                 <th>قیمت سرویس کار</th>
                                 <th>موجودی</th>
+                                <th>تصاویر</th>
                                 <th>ابزار</th>
                             </tr>
                             </thead>
@@ -120,37 +121,91 @@
                                     {{ item.name }}
                                 </td>
                                 <td>
-                                    {{ item.name }}
+                                    <template v-if="item.category !== null">
+                                        {{item.category.name}}
+                                    </template>
                                 </td>
                                 <td>
-                                    {{ item.name }}
+                                    <template v-if="item.category !== null">
+                                        {{item.category.name}}
+                                    </template>
                                 </td>
                                 <td>
-                                    {{ item.name }}
+                                    <span class="badge rounded-pill badge-soft-primary font-size-12 fw-medium p-2">
+                                        {{ item.product_code }}
+                                    </span>
                                 </td>
                                 <td>
-                                    {{ item.name }}
+                                    <span class="badge rounded-pill badge-soft-danger font-size-12 fw-medium p-2">
+                                        {{ item.code }}
+                                    </span>
                                 </td>
                                 <td>
-                                    {{ item.name }}
-                                </td>
-                                <td>
-                                    {{ item.name }}
-                                </td>
-                                <td>
-                                    {{ item.name }}
-                                </td>
-                                <td>
-                                    {{ item.name }}
-                                </td>
+                                    <strong class="font-size-14 text-success">{{this.NumberFormatter(item.price)}}</strong> <span>تومان</span>
 
+                                </td>
                                 <td>
+                                    <template v-if="item.sale !== null">
+                                        <strong class="font-size-14 text-danger">{{this.NumberFormatter(item.sale)}}</strong> <span>تومان</span>
+                                    </template>
+                                </td>
+                                <td>
+                                    <strong class="font-size-14 text-primary">{{this.NumberFormatter(item.serviceman_price)}}</strong> <span>تومان</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill badge-soft-pink font-size-12 fw-medium p-2">{{item.quantity}}</span>
+                                </td >
+                                <td>
+                                    <button type="button" data-bs-toggle="modal" :data-bs-target="'#image_item_'+item.id" class="btn btn-dark btn-sm waves-effect waves-light">مشاهده و ویرایش</button>
+
+                                    <div class="modal fade" :id="'image_item_'+item.id" tabindex="-1" role="dialog"  aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" >تصاویر محصول : <span class="text-danger">{{item.name}}</span></h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 class="font-size-14 mb-3 mt-2"> افزودن تصویر جدید</h5>
+                                                    <div v-if="!add_image_loading" class="row gx-3 gy-2 align-items-center">
+                                                        <div class="hstack gap-3">
+                                                            <input @change="AddNewImage(item.id)" class="form-control me-auto" :ref="'image'+item.id" type="file">
+                                                            <button :disabled="this.image === null" @click="SubmitNewImage(item.id)" type="button" class="btn btn-success">افزودن تصویر <i class="mdi mdi-plus me-1"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <template  v-else >
+                                                        <div class="progress progress-xl mt-3">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar"  style="width: 100%"></div>
+                                                        </div>
+                                                        <h6 class="mt-3 mb-4 text-danger text-center">در حال دخیره سازی تصویر ... </h6>
+                                                    </template>
+                                                    <hr>
+                                                    <div class="mt-3 row">
+                                                        <div v-for="(item_image,index) in item.images" :key="index+'_'+item.id" class="col-md-4">
+                                                            <div class="card">
+                                                                <img class="card-img-top img-fluid" :src="item_image.image" :alt="item.name">
+                                                                <div class="card-body p-1">
+                                                                    <button @click="DeleteImage(item_image.id)"  class="btn btn-danger waves-effect btn-label waves-light btn-sm"><i class="bx bx-trash label-icon"></i> حذف</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">
+                                                        <i class="bx bx-x font-size-18 align-middle"></i> بستن
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </td>
                                 <td>
                                     <button @click="EditSelectCity(item.id)" data-bs-toggle="modal" :data-bs-target="'#edit_item'+item.id" title="ویرایش آیتم" type="button" class="btn btn-sm btn-primary waves-effect waves-light me-2"><i class="bx bx-edit font-size-16 align-middle"></i></button>
                                     <button @click="DelItem(item.id)" title="حذف آیتم" type="button" class="btn btn-sm btn-danger waves-effect waves-light me-2"><i class="bx bx-trash font-size-16 align-middle"></i></button>
-
                                     <div class="modal fade" :id="'edit_item'+item.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                                          aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
@@ -236,6 +291,8 @@
 </template>
 
 <script>
+import Sweet from "../../../helpers/Sweet";
+
 export default {
     name: "Manage_Products",
     created() {
@@ -278,6 +335,8 @@ export default {
             brands:[],
             devices:[],
             search:'',
+            image:null,
+            add_image_loading : false,
 
         }
     },
@@ -407,6 +466,7 @@ export default {
 
             })
         },
+
         GetBrands(){
             axios.get('/api/helpers/get/brands').then(res => {
                 this.brands = res.data;
@@ -414,8 +474,56 @@ export default {
                 Sweet.SweetServerErrorMessage()
             })
 
-        }
+        },
 
+        AddNewImage(id){
+            let name = "image"+id;
+            if (this.$refs[name][0].files.length){
+                let file = this.$refs[name][0].files[0];
+                if (file.type === 'image/jpg' || file.type === 'image/png' || file.type === 'image/jpeg'){
+                    this.image = file;
+                }else{
+                    return Sweet.SweetToastMessage('فایل انتخابی باید فایلی از نوع ( jpg - png - jpeg ) باشد !','error');
+                }
+
+            }
+        },
+
+        SubmitNewImage(id){
+            this.add_image_loading=true;
+            let data = new FormData();
+            if (this.image !== null){data.append('image',this.image,this.image.name)}
+            axios.post('/api/management/products/images/'+id,data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(res => {
+                this.add_image_loading=false;
+                this.GetItems();
+                $('#image_item_'+id).modal('toggle');
+                Sweet.SweetToastMessage('تصویر جدید محصول باموفقیت اضافه شد');
+            }).catch(error => {
+                this.add_loading=false;
+                if (error.response.status === 421){
+                    this.errors = error.response.data
+                }else {
+                    Sweet.SweetServerErrorMessage()
+                }
+            })
+
+        },
+
+        DeleteImage(id){
+            axios.delete('/api/management/products/images/'+id).then(res => {
+                this.GetItems();
+                $('#image_item_'+id).modal('toggle');
+                Sweet.SweetDeleteItem();
+            }).catch(e => {
+                return Sweet.SweetServerErrorMessage()
+            })
+        }
     },
 
     computed:{
@@ -430,5 +538,8 @@ export default {
 </script>
 
 <style scoped>
+.product-image{
+    width: 75%!important;
+}
 
 </style>

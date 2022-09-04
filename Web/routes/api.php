@@ -80,6 +80,16 @@ Route::group(['prefix'=>'management'],static function (){
 
         //products
         Route::resource('products',\App\Http\Controllers\Api\Manage\ProductController::class);
+        Route::prefix('products')->group(function (){
+
+            Route::get('images/{product}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images']);
+            Route::post('images/{product}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images_store']);
+            Route::delete('images/{image}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images_delete']);
+
+        });
+
+
+
 
 
 

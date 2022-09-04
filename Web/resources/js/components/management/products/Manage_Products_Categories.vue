@@ -79,7 +79,6 @@
                                 </td>
                                 <td>
                                     {{item.description}}
-
                                 </td>
                                 <td>
                                     <button @click="EditSelectCity(item.id)" data-bs-toggle="modal" :data-bs-target="'#edit_item'+item.id" title="ویرایش آیتم" type="button" class="btn btn-sm btn-primary waves-effect waves-light me-2"><i class="bx bx-edit font-size-16 align-middle"></i></button>
