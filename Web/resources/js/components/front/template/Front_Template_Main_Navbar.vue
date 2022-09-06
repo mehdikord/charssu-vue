@@ -42,9 +42,9 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a  class="nav-link" >
+                                <router-link :to="{ name : 'front_shop'}"  class="nav-link" >
                                     فروشگاه چارسو
-                                </a>
+                                </router-link>
                             </li>
                             <li class="nav-item">
                                 <a  class="nav-link " >

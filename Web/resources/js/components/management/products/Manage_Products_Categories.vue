@@ -99,7 +99,7 @@
                                                         <validation_errors :errors="errors" :field="'name'"></validation_errors>
                                                     </div>
                                                     <div class="mb-4 ">
-                                                        <label  class="form-label">هزینه تعمیر (تومان)</label>
+                                                        <label  class="form-label">توضیحات</label>
                                                         <textarea v-model="edit.description[item.id]" class="form-control" rows="5"></textarea>
                                                     </div>
                                                 </div>

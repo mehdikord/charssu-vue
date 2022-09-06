@@ -137,4 +137,42 @@ class OrderController extends Controller
         return response()->json($result);
     }
 
+    public function set_notes(Order $order,Request $request)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        $validator = Validator::make($request->all(), [
+            'note' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors(),'status'=>422],422);
+        }
+        $order->notes()->create([
+            'serviceman_id' => api_serviceman_get_id(),
+            'note' => $request->note,
+        ]);
+
+        return response()->json(['message' => 'گزارش باموفقیت ثبت گردید']);
+    }
+
+    public function get_notes(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        return response()->json($order->notes);
+    }
+
+    public function get_products(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        $result = $order->products()->with('products')->with('serviceman')->get();
+
+        return response()->json($result);
+
+    }
+
 }

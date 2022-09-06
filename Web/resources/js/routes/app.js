@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Front_Index_Main from "../components/front/index/Front_Index_Main";
 import Front_Orders_New from "../components/front/orders/Front_Orders_New";
 import Front_Auth from "../components/front/auth/Front_Auth";
+import Front_Shop_Index from "../components/front/shop/Front_Shop_Index";
 
 
 const routes = [
@@ -21,6 +22,12 @@ const routes = [
         component : Front_Orders_New,
         name : 'front_orders_new',
     },
+    {
+        path : '/shop',
+        component : Front_Shop_Index,
+        name : 'front_shop',
+    },
+
 
 
 
