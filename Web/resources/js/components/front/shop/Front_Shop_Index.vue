@@ -31,39 +31,48 @@
                 </div>
             </div>
             <hr class="mb-5">
+        </div>
+        <div class="container-fluid">
             <div class="row">
-
                 <div v-if="products.len" class="col-12 text-center">
                     <img src="" width="350" alt="">
                     <h6 class="mt-5 mb-4 font-18">متاسفانه درحال حاضر هیچ محصولی در فروشگاه موجود نیست !</h6>
                 </div>
                 <template v-else>
-                    <div v-for="product in products" class="col-lg-4 col-md-6 col-sm-6">
+                    <div v-for="product in products" class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-product-box">
                             <div class="product-image text-center" >
-                                <a href="">
-                                    <img class="img-shop" alt="image">
-                                </a>
+                                <template v-if="product.images.length">
+                                    <img :src="product.images[0].image" width="210" :alt="product.name">
+                                </template>
+                                <img v-else src="/images/default/product.png" width="210" :alt="product.name">
+
                                 <a href="" class="add-to-cart-btn">
                                     افزودن به سبد خرید
                                     <i class="flaticon-shopping-cart"></i>
                                 </a>
                             </div>
                             <div class="product-content">
-                                <h6>
+                                <h6 class="font-18">
                                     <a href="">
                                         {{product.name}}
                                     </a>
                                 </h6>
-                                <h6 class="text-center text-primary">
-
+                                <h6 class="text-center mt-3 font-12 text-secondary">
+                                    <template v-if="product.product_category_id !== null">
+                                        {{product.category.name}}
+                                    </template>
                                 </h6>
+                                <hr>
                                 <div class="price">
+                                    <template v-if="product.sale !== null">
+                                        <span class="new font-20 text-success">{{ this.NumberFormatter(product.sale)}}</span>
+                                        <span class="old text-danger">{{ this.NumberFormatter(product.price)}}</span> تومان
+                                    </template>
+                                    <template v-else>
+                                        <span class="new font-22 text-success">{{ this.NumberFormatter(product.price)}}</span> تومان
+                                    </template>
 
-                                    <span class="new font-22 text-success">151515</span>
-                                    <span class="old text-danger">101010</span> تومان
-
-                                    <span class="new font-22 text-success">151515</span> تومان
 
                                 </div>
 

@@ -156,6 +156,7 @@ Route::group(['prefix' => 'app'],static function(){
                 Route::post('notes/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_notes']);
                 Route::get('notes/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_notes']);
                 Route::get('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_products']);
+                Route::post('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_products']);
 
             });
 

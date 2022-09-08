@@ -18,6 +18,8 @@ class ShopController extends Controller
     {
         $data = Product::query();
         $data->where('is_active',true);
+        $data->with('images');
+        $data->with('category');
 
         if ($request->filled('category')){
             $data->where('product_category_id',$request->category);

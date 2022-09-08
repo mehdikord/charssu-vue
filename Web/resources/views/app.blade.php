@@ -33,7 +33,7 @@
     <!-- Responsive CSS -->
 
     <link rel="stylesheet" href="{{asset('template/css/responsive.css')}}">
-    <link rel="stylesheet" href="{{asset('fonts/css/font.css')}}">
+    <link rel="stylesheet" href="{{asset('fonts/fonts.css')}}">
     <link rel="stylesheet" href="{{asset('template/css/custom.css')}}">
     <title>چارسو</title>
     <link rel="icon"  href="{{asset('logo.png')}}">

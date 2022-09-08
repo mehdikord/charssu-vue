@@ -4,21 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="update products management">
-      <change afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Front/ShopController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/app/Models/Order_Product.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_09_07_031421_create_order_products.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/public/images/default/category.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" afterDir="false" />
+    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="update application api">
+      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_09_08_163429_add_field_to_order_products.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/public/fonts/fonts.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/public/images/default/product.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/App/Serviceman/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/App/Serviceman/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Models/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Models/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Front/ShopController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Front/ShopController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/public/js/management.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products_Categories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products_Categories.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/routes/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/routes/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/public/template/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/template/css/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/views/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +30,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Vue Single File Component" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -165,26 +162,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Project.color&quot;: &quot;420347&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cloner/Projects/charssu-vue&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;&quot;,
-    &quot;nodejs.protractor.protractor_package&quot;: &quot;&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;liveEdit&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Project.color": "420347",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/cloner/Projects/charssu-vue/Web/public/images/default",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs.jest.jest_package": "",
+    "nodejs.protractor.protractor_package": "",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "liveEdit",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Web/public/images/default" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Web/public/images/default" />
     </key>
@@ -217,7 +218,9 @@
       <workItem from="1662377820299" duration="224000" />
       <workItem from="1662406013365" duration="4326000" />
       <workItem from="1662452466538" duration="453000" />
-      <workItem from="1662503053824" duration="2371000" />
+      <workItem from="1662503053824" duration="2613000" />
+      <workItem from="1662541435392" duration="103000" />
+      <workItem from="1662623118326" duration="10581000" />
     </task>
     <task id="LOCAL-00001" summary="update products management">
       <created>1662279993678</created>
@@ -233,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662280681741</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update application api">
+      <created>1662505655323</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1662505655323</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,7 +265,8 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="update products management" />
-    <option name="LAST_COMMIT_MESSAGE" value="update products management" />
+    <MESSAGE value="update application api" />
+    <option name="LAST_COMMIT_MESSAGE" value="update application api" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
