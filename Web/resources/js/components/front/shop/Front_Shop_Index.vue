@@ -42,21 +42,24 @@
                     <div v-for="product in products" class="col-lg-3 col-md-4 col-sm-6">
                         <div class="single-product-box">
                             <div class="product-image text-center" >
-                                <template v-if="product.images.length">
-                                    <img :src="product.images[0].image" width="210" :alt="product.name">
-                                </template>
-                                <img v-else src="/images/default/product.png" width="210" :alt="product.name">
+                                <router-link :to="{name:'front_shop_products_single',params : {code : product.code}}">
+                                    <template v-if="product.images.length">
+                                        <img :src="product.images[0].image" width="210" height="210" :alt="product.name">
+                                    </template>
+                                    <img v-else src="/images/default/product.png" width="210" height="210" :alt="product.name">
 
-                                <a href="" class="add-to-cart-btn">
+                                </router-link>
+
+                                <span href="" class="add-to-cart-btn">
                                     افزودن به سبد خرید
                                     <i class="flaticon-shopping-cart"></i>
-                                </a>
+                                </span>
                             </div>
                             <div class="product-content">
                                 <h6 class="font-18">
-                                    <a href="">
+                                    <router-link :to="{name:'front_shop_products_single',params : {code : product.code}}">
                                         {{product.name}}
-                                    </a>
+                                    </router-link>
                                 </h6>
                                 <h6 class="text-center mt-3 font-12 text-secondary">
                                     <template v-if="product.product_category_id !== null">

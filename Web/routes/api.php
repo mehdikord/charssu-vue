@@ -24,6 +24,7 @@ Route::prefix('helpers')->group(function (){
     Route::prefix('shop')->group(function (){
         Route::prefix('products')->group(function (){
             Route::get('',[\App\Http\Controllers\Api\Front\ShopController::class,'products']);
+            Route::get('single/{code}',[\App\Http\Controllers\Api\Front\ShopController::class,'single_product']);
             Route::get('categories',[\App\Http\Controllers\Api\Front\ShopController::class,'categories']);
         });
 

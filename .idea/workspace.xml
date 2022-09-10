@@ -4,17 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="update application api">
-      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_09_08_163429_add_field_to_order_products.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/public/fonts/fonts.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/public/images/default/product.png" afterDir="false" />
+    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="update application api and front store">
+      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Products_Single.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/resources/js/store/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/App/Serviceman/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/App/Serviceman/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Front/ShopController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Front/ShopController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/public/template/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/template/css/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/views/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/routes/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/routes/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Vue Single File Component" />
         <option value="CSS File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -169,7 +170,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/cloner/Projects/charssu-vue/Web/public/images/default",
+    "last_opened_file_path": "/home/cloner/Projects/abrama",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -220,7 +221,11 @@
       <workItem from="1662452466538" duration="453000" />
       <workItem from="1662503053824" duration="2613000" />
       <workItem from="1662541435392" duration="103000" />
-      <workItem from="1662623118326" duration="10581000" />
+      <workItem from="1662623118326" duration="11148000" />
+      <workItem from="1662709331856" duration="1591000" />
+      <workItem from="1662723175758" duration="3068000" />
+      <workItem from="1662794808874" duration="45000" />
+      <workItem from="1662839627085" duration="9493000" />
     </task>
     <task id="LOCAL-00001" summary="update products management">
       <created>1662279993678</created>
@@ -243,7 +248,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662505655323</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update application api and front store">
+      <created>1662647655112</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1662647655112</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,7 +278,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="update products management" />
     <MESSAGE value="update application api" />
-    <option name="LAST_COMMIT_MESSAGE" value="update application api" />
+    <MESSAGE value="update application api and front store" />
+    <option name="LAST_COMMIT_MESSAGE" value="update application api and front store" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

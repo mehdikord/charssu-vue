@@ -1,90 +1,114 @@
 <template>
-    <div class="navbar-area">
-        <div class="plamb-responsive-nav">
-            <div class="container">
-                <div class="plamb-responsive-menu">
-                    <div class="logo">
-                        <a>
-                            <img src="/logo-name.png" width="55" class="white-logo" alt="logo">
-                            <img src="/logo.png" width="55" class="black-logo" alt="logo">
-                        </a>
-                    </div>
+
+
+
+
+
+
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark pr-4 pl-4">
+
+        <a class="navbar-brand img-fluid font-weight-bolder" href="#">
+            <img src="/logo-name.png" width="40" class="img-fluid pl-2" alt="logo">
+            <span>
+                چارسو
+            </span>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav font-weight-bold ">
+                <li class="nav-item pr-1 pl-1">
+                    <router-link class="nav-link  text-warning " :to="{name: 'front_index'}" :class="{'text-light' : this.$route.name !== 'front_index' }">
+                        <i class="mdi mdi-home"></i>
+                        صفحه اصلی
+                    </router-link>
+                </li>
+                <li class="nav-item pr-1 pl-1">
+                    <router-link class="nav-link text-warning" :to="{name: 'front_orders_new'}" :class="{'text-light' : this.$route.name !== 'front_orders_new'}">
+                        <i class="mdi mdi-wrench"></i>
+                        تعمیر پکیج
+                    </router-link>
+                </li>
+                <li class="nav-item pr-1 pl-1">
+                    <router-link class="nav-link text-warning" :to="{name: 'front_shop'}"  :class="{'text-light' : this.$route.name !== 'front_shop'}">
+                        <i class="mdi mdi-cart-plus"></i>
+                        فروشگاه چارسو
+                    </router-link>
+                </li>
+
+                <li class="nav-item pr-1 pl-1">
+                    <a  class="nav-link text-light" >
+                        <i class="mdi mdi-account-group"></i>
+                        درباره چارسو
+                    </a>
+                </li>
+                <li class="nav-item pr-1 pl-1">
+                    <a  class="nav-link text-light">
+                        <i class="mdi mdi-script-text"></i>
+                        قوانین و مقررات
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="row">
+            <div>
+                <router-link v-if="!UserAuthCheck()" :to="{name : 'front_auth'}" class="btn btn-warning btn-sm">
+                    <i class="mdi mdi-account"></i>
+                    حساب کاربری
+                </router-link>
+                <router-link v-else :to="{name : 'front_auth'}" class="btn btn-warning btn-sm">
+                    <i class="mdi mdi-monitor-dashboard"></i>
+                    پنل کاربری
+                </router-link>
+
+            </div>
+            <div class="dropdown pr-3">
+                <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-expanded="false">
+                    <i class="mdi mdi-shopping"></i>
+                    سبد خرید
+                </button>
+                <div class="dropdown-menu">
+
+
                 </div>
             </div>
-        </div>
-
-        <div class="plamb-nav">
-            <div class="container">
-                <nav class="navbar navbar-expand-md navbar-light">
-                    <a class="navbar-brand" >
-                        <img src="/logo-name.png" width="55" class="white-logo" alt="logo">
-                        <img src="/logo.png" width="55" class="black-logo" alt="logo">
-                    </a>
-                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <router-link :to="{name: 'front_index'}" >
-                                    صفحه اصلی
-                                </router-link>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    لیست خدمات
-                                    <i class="mdi mdi-arrow-down"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <router-link :to="{name : 'front_orders_new'}"  class="nav-link">
-                                            تعمیر پکیج
-                                        </router-link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <router-link :to="{ name : 'front_shop'}"  class="nav-link" >
-                                    فروشگاه چارسو
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
-                                <a  class="nav-link " >
-                                    درباره چارسو
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a  class="nav-link">
-                                    قوانین
-                                </a>
-                            </li>
-
-                        </ul>
-                        <div class="other-option">
-
-                            <a class="default-btn bg-success" href="#support_call">
-                                <i class="fas fa-headset"></i> تماس با پشتیبان
-                                <span></span>
-                            </a>
-
-                            <router-link :to="{name : 'front_auth'}" class="default-btn mr-3">
-                                حساب کاربری
-                                <span></span>
-                            </router-link>
-
-                        </div>
-                    </div>
-                </nav>
+            <div class="pr-3">
+                <router-link :to="{name : 'front_auth'}" class="btn btn-success btn-sm ">
+                    <i class="mdi mdi-headset"></i>
+                    پشتیبانی
+                </router-link>
             </div>
+
+
+
+
         </div>
 
-    </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </nav>
+
+
+
+
+
+
 </template>
 
 <script>
 export default {
-    name: "Front_Template_Main_Navbar"
+    name: "Front_Template_Main_Navbar",
+
 }
 </script>
 
 <style scoped>
+.font-weight-bold{
+    font-weight: 500 !important;
+}
 
 </style>

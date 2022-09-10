@@ -35,4 +35,15 @@ class ShopController extends Controller
 
         return response()->json($data->orderByDesc('id')->get());
     }
+
+    public function single_product($code)
+    {
+        $product = Product::where('code',$code)->where('is_active',true)
+            ->with("images")
+            ->with('category')
+            ->with('brand')
+            ->firstorfail();
+        return response()->json($product);
+
+    }
 }
