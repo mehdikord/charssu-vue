@@ -305,10 +305,11 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              "روشن نشدن شمعک",
-                                              style: TextStyle(
+                                              dashboard.order['problem']
+                                                  ['problem'],
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                               ),
                                             ),
@@ -438,10 +439,10 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              "۱۴۰۱/۰۳/۱۵",
-                                              style: TextStyle(
+                                              dashboard.order['warranty_date'],
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                               ),
                                             ),
@@ -488,10 +489,10 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
-                                          child: const SingleChildScrollView(
+                                          child: SingleChildScrollView(
                                             child: Text(
-                                              "مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود. مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود. مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود.",
-                                              style: TextStyle(
+                                              dashboard.order['description'],
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                               ),
                                             ),
@@ -556,10 +557,11 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              "رضا حسینی",
-                                              style: TextStyle(
+                                              dashboard.order['customer']
+                                                  ['name'],
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                               ),
                                             ),
@@ -607,10 +609,11 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              "۰۹۳۵۶۲۱۲۵۵۵",
-                                              style: TextStyle(
+                                              dashboard.order['customer']
+                                                  ['phone'],
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                               ),
                                             ),
@@ -657,10 +660,11 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
-                                          child: const SingleChildScrollView(
+                                          child: SingleChildScrollView(
                                             child: Text(
-                                              "تست آدرس کامل و دقیق مشتری",
-                                              style: TextStyle(
+                                              dashboard.order['customer']
+                                                  ['address'],
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                               ),
                                             ),
