@@ -433,13 +433,14 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                                 .findSingleOrder(dashbord
                                                                         .orders
                                                                         .first[
-                                                                    'order']['id']);
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pushNamed(
-                                                              OrderSingleScreen
-                                                                  .routeName,
-                                                            );
+                                                                    'order']['id'])
+                                                                .then(
+                                                                  (value) => Navigator.of(
+                                                                          context)
+                                                                      .pushNamed(
+                                                                          OrderSingleScreen
+                                                                              .routeName),
+                                                                );
                                                           },
                                                           child: const Text(
                                                             "نمایش جزئیات",

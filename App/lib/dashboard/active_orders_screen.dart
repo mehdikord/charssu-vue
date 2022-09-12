@@ -286,12 +286,14 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                                 .findSingleOrder(dashbord
                                                                         .orders
                                                                         .first[
-                                                                    'order']['id']);
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pushNamed(
-                                                                    OrderSingleScreen
-                                                                        .routeName);
+                                                                    'order']['id'])
+                                                                .then(
+                                                                  (value) => Navigator.of(
+                                                                          context)
+                                                                      .pushNamed(
+                                                                          OrderSingleScreen
+                                                                              .routeName),
+                                                                );
                                                           },
                                                           child: Container(
                                                             height: 35,

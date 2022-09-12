@@ -283,15 +283,16 @@ class DoneOrdersScreenState extends State<DoneOrdersScreen> {
                                                                       context,
                                                                       listen:
                                                                           false)
-                                                                  .findSingleOrder(dashbord
+                                                                  .findSingleOrder(
+                                                                      dashbord
                                                                           .orders
-                                                                          .first[
-                                                                      'order']['id']);
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pushNamed(
-                                                                      OrderSingleScreen
-                                                                          .routeName);
+                                                                          .first['id'])
+                                                                  .then(
+                                                                    (value) => Navigator.of(
+                                                                            context)
+                                                                        .pushNamed(
+                                                                            OrderSingleScreen.routeName),
+                                                                  );
                                                             },
                                                             child: Container(
                                                               height: 35,
