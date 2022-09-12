@@ -26206,7 +26206,7 @@ var _hoisted_45 = {
 
 var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-label"
-}, "هزینه تعمیر (تومان)", -1
+}, "توضیحات", -1
 /* HOISTED */
 );
 

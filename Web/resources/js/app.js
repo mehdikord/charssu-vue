@@ -2,6 +2,7 @@ import './bootstrap';
 
 import { createApp } from "vue";
 import {router} from './routes/app';
+import store from './store'
 const App=createApp({});
 
 
@@ -44,7 +45,9 @@ App.component('validation_errors',Manage_Inc_Validation_Error);
 //----------------------------------------------------------------------------------------------------------------------
 
 App.mixin({
-
+    beforeCreate() {
+        this.$store.commit('CartGetFromStorage');
+    },
     methods:{
 
         ValidationErrors(errors={},field){
@@ -117,4 +120,5 @@ axios.interceptors.response.use(function (response) {
 
 
 App.use(router);
+App.use(store)
 App.mount("#app");

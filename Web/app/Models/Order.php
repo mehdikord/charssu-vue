@@ -55,4 +55,9 @@ class Order extends Model
         return $this->hasMany(Order_Note::class,'order_id');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Order_Product::class,'order_id');
+    }
+
 }

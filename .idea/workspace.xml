@@ -4,16 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/charssu-vue.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/app/Models/Product_Image.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_09_01_205600_product_images.php" afterDir="false" />
+    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="update application api and front store">
+      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Products_Single.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/resources/js/store/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Manage/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Manage/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/public/js/management.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/management.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products_Categories.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/management/products/Manage_Products_Categories.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Front/ShopController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Front/ShopController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/routes/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/routes/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +27,19 @@
     <pharConfigPath>$PROJECT_DIR$/Web/composer.json</pharConfigPath>
     <execution />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -143,18 +156,22 @@
     </include_path>
   </component>
   <component name="ProjectId" id="2ECrTDFC2lEh9Rgi11dKYWdIgdi" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Project.color": "420347",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/cloner/Projects/mini-games-api",
+    "last_opened_file_path": "/home/cloner/Projects/abrama",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -166,6 +183,14 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Web/public/images/default" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Web/public/images/default" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="CodeceptionConfigurationType" factoryName="Codeception">
       <PhpTestRunnerSettings method="" />
@@ -189,7 +214,48 @@
       <workItem from="1662111885256" duration="679000" />
       <workItem from="1662112648133" duration="8922000" />
       <workItem from="1662192486470" duration="57000" />
+      <workItem from="1662278807369" duration="2708000" />
+      <workItem from="1662321962188" duration="6680000" />
+      <workItem from="1662377820299" duration="224000" />
+      <workItem from="1662406013365" duration="4326000" />
+      <workItem from="1662452466538" duration="453000" />
+      <workItem from="1662503053824" duration="2613000" />
+      <workItem from="1662541435392" duration="103000" />
+      <workItem from="1662623118326" duration="11148000" />
+      <workItem from="1662709331856" duration="1591000" />
+      <workItem from="1662723175758" duration="3068000" />
+      <workItem from="1662794808874" duration="45000" />
+      <workItem from="1662839627085" duration="9493000" />
     </task>
+    <task id="LOCAL-00001" summary="update products management">
+      <created>1662279993678</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1662279993678</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update products management">
+      <created>1662280681741</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1662280681741</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update application api">
+      <created>1662505655323</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1662505655323</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update application api and front store">
+      <created>1662647655112</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1662647655112</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +271,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="update products management" />
+    <MESSAGE value="update application api" />
+    <MESSAGE value="update application api and front store" />
+    <option name="LAST_COMMIT_MESSAGE" value="update application api and front store" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

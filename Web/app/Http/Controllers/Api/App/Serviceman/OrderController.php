@@ -74,7 +74,7 @@ class OrderController extends Controller
             'canceled_at' => Carbon::now(),
         ]);
 
-        return response()->json(['message' => 'سفارش باموفقیت رد شد']);
+        return response()->json(['message' => 'سفارش باموفقیت کنسل شد']);
 
     }
 
@@ -139,5 +139,89 @@ class OrderController extends Controller
         })->get();
         return response()->json($result);
     }
+
+    public function set_notes(Order $order,Request $request)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        $validator = Validator::make($request->all(), [
+            'note' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors(),'status'=>422],422);
+        }
+        $order->notes()->create([
+            'serviceman_id' => api_serviceman_get_id(),
+            'note' => $request->note,
+        ]);
+
+        return response()->json(['message' => 'گزارش باموفقیت ثبت گردید']);
+    }
+
+    public function get_notes(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        return response()->json($order->notes);
+    }
+
+    public function get_products(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        $result = $order->products()
+            ->with('products.category')
+            ->with('products.brand')
+            ->with(['products' => function ($product){
+                $product->select(['id','product_category_id','device_brand_id','name','code','product_code','price','sale','serviceman_price'])->get();
+            }])
+            ->with(['serviceman' => function($serviceman){
+                $serviceman->select('id','name','phone','email','profile','code')->get();
+            }])
+            ->get();
+
+        return response()->json($result);
+
+    }
+
+    public function set_products(Order $order,Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required|exists:products,id',
+            'paid' => 'required|string',
+            'quantity' => 'required|numeric',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors(),'status'=>422],422);
+        }
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        //check order active
+        if ($order->is_done && !$order->is_active){
+            return response()->json(['error' => 'این سفارش به پایان رسیده  است'],409);
+        }
+        $is_paid = 0;
+        if ($request->paid == 'nobody'){
+            $is_paid = 1;
+        }
+        $order->products()->create([
+            'serviceman_id' => api_serviceman_get_id(),
+            'product_id' => $request->product_id,
+            'paid' => $request->paid,
+            'quantity' => $request->quantity,
+            'is_paid' => $is_paid,
+        ]);
+        return response()->json(['message' => 'محصول مورد نظر باموفقیت به سفارش اضافه شد']);
+    }
+
+
+
+
+
+
 
 }

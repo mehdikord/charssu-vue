@@ -21,6 +21,15 @@ Route::prefix('helpers')->group(function (){
     Route::get('get/problems',[\App\Http\Controllers\Api\HelperController::class,'get_problems']);
     Route::get('get/product-categories',[\App\Http\Controllers\Api\HelperController::class,'get_product_categories']);
     Route::get('install-zones',[\App\Http\Controllers\Api\HelperController::class,'install_zone']);
+    Route::prefix('shop')->group(function (){
+        Route::prefix('products')->group(function (){
+            Route::get('',[\App\Http\Controllers\Api\Front\ShopController::class,'products']);
+            Route::get('single/{code}',[\App\Http\Controllers\Api\Front\ShopController::class,'single_product']);
+            Route::get('categories',[\App\Http\Controllers\Api\Front\ShopController::class,'categories']);
+        });
+
+
+    });
 
 });
 
@@ -80,7 +89,6 @@ Route::group(['prefix'=>'management'],static function (){
         //products
         Route::resource('products',\App\Http\Controllers\Api\Manage\ProductController::class);
         Route::prefix('products')->group(function (){
-
             Route::get('images/{product}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images']);
             Route::post('images/{product}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images_store']);
             Route::delete('images/{image}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images_delete']);
@@ -99,6 +107,7 @@ Route::group(['prefix'=>'management'],static function (){
 
 });
 
+//management
 Route::prefix('customer')->group(function (){
 
     Route::prefix('auth')->group(function (){
@@ -123,7 +132,6 @@ Route::prefix('customer')->group(function (){
 
 });
 
-
 //Application api
 Route::group(['prefix' => 'app'],static function(){
 
@@ -146,6 +154,11 @@ Route::group(['prefix' => 'app'],static function(){
                 Route::post('cancel',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'cancel']);
                 Route::post('cancel-reason',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'cancel_reason']);
                 Route::get('single/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'single']);
+                Route::post('notes/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_notes']);
+                Route::get('notes/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_notes']);
+                Route::get('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_products']);
+                Route::post('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_products']);
+
             });
 
         });
