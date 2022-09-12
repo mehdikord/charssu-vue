@@ -30,6 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     _dashboardOrdersFuture = _obtainDashboardOrdersFuture();
+    final order = Provider.of<Dashboard>(context, listen: false).setNewOrder();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -53,7 +54,53 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
-  Future<dynamic> dialog() {
+  Future<dynamic> setNewOrderDialog() {
+    return showDialog(
+      context: context,
+      builder: (c) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            title: const Text(
+              "سفارش جدید",
+              style: TextStyle(
+                color: Colors.orange,
+              ),
+            ),
+            content:
+                const Text("آیا وضعیت دریافت سفارش را می خواهید تغییر دهید؟"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(c).pop();
+                },
+                child: const Text(
+                  "خیر",
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await changeOnline();
+                  Navigator.of(c).pop();
+                },
+                child: const Text(
+                  "تایید",
+                  style: TextStyle(
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<dynamic> activateDialog() {
     return showDialog(
       context: context,
       builder: (c) {
@@ -250,7 +297,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     FadeTransition(
                                       opacity: _animationController,
                                       child: RaisedButton(
-                                        onPressed: () => dialog(),
+                                        onPressed: () => activateDialog(),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(30),
@@ -268,7 +315,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     )
                                   else
                                     RaisedButton(
-                                      onPressed: () => dialog(),
+                                      onPressed: () => activateDialog(),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),
@@ -343,7 +390,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       infoRow(
                                                         "شماره: ",
                                                         dashbord.orders
-                                                            .first['code'],
+                                                                .first['order']
+                                                            ['code'],
                                                       ),
                                                       const Divider(
                                                         color: Colors.black,
@@ -351,7 +399,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       infoRow(
                                                         "نام مشتری: ",
                                                         dashbord.orders.first[
-                                                            'customer']['name'],
+                                                                    'order']
+                                                                ['customer']
+                                                            ['name'],
                                                       ),
                                                       const Divider(
                                                         color: Colors.black,
@@ -359,7 +409,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       infoRow(
                                                         "شماره مشتری: ",
                                                         dashbord.orders.first[
-                                                                'customer']
+                                                                    'order']
+                                                                ['customer']
                                                             ['phone'],
                                                       ),
                                                       const Divider(
@@ -367,24 +418,29 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       ),
                                                       infoRow(
                                                         "توضیحات: ",
-                                                        dashbord.orders.first[
-                                                            'description'],
+                                                        dashbord.orders
+                                                                .first['order']
+                                                            ['description'],
                                                       ),
                                                       SizedBox(
                                                         width: double.infinity,
                                                         child: ElevatedButton(
-                                                          onPressed: () =>
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pushNamed(
-                                                            OrderSingleScreen
-                                                                .routeName,
-                                                            arguments: {
-                                                              "id": dashbord
-                                                                  .orders
-                                                                  .first['id'],
-                                                            },
-                                                          ),
+                                                          onPressed: () {
+                                                            Provider.of<Dashboard>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .findSingleOrder(dashbord
+                                                                        .orders
+                                                                        .first[
+                                                                    'order']['id']);
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushNamed(
+                                                              OrderSingleScreen
+                                                                  .routeName,
+                                                            );
+                                                          },
                                                           child: const Text(
                                                             "نمایش جزئیات",
                                                             style: TextStyle(

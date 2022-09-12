@@ -93,10 +93,6 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
   @override
   Widget build(BuildContext context) {
     Image backMobileImage;
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final order = Provider.of<Dashboard>(context, listen: false)
-        .findSingleOrder(arguments['id']);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -128,7 +124,7 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                   "assets/images/Back-Number.png",
                                 ),
                                 const Text(
-                                  "جزئیات سفارش: ۱۲۳۴۵۶",
+                                  "جزئیات سفارش: 123",
                                   style: TextStyle(
                                     color: Color(0xff4ae3ed),
                                     fontSize: 16,
@@ -206,548 +202,559 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                         backMobileImage.height! -
                         MediaQuery.of(context).viewPadding.top,
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff5f5f5),
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(30),
-                      ),
-                    ),
+                    color: const Color(0xfff5f5f5),
                     child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          // Service (Order) Name
-                          Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            padding: const EdgeInsets.only(right: 10),
-                            decoration: const BoxDecoration(
-                              color: Color(0xff62bbd8),
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(30),
+                      child: Consumer<Dashboard>(
+                        builder: (context, dashboard, _) => Column(
+                          children: [
+                            // Service (Order) Name
+                            Container(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.05,
+                              padding: const EdgeInsets.only(right: 10),
+                              decoration: const BoxDecoration(
+                                color: Color(0xff62bbd8),
+                                borderRadius: BorderRadius.horizontal(
+                                  left: Radius.circular(30),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "نام سرویس",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.68,
+                                    height: double.infinity,
+                                    margin: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        dashboard.order['title'],
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "نام سرویس",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            // Order Details
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: const BoxDecoration(
+                                color: Color(0xffbcdeea),
+                                borderRadius: BorderRadius.horizontal(
+                                  left: Radius.circular(30),
                                 ),
-                                Container(
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Problem Title
+                                  Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    padding: const EdgeInsets.only(right: 5),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffd8c662),
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "عنوان مشکل",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          height: double.infinity,
+                                          padding:
+                                              const EdgeInsets.only(right: 5),
+                                          margin: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              "روشن نشدن شمعک",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Warranty
+                                  Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    padding: const EdgeInsets.only(right: 5),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffd8c662),
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          "دستگاه گارانتی",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 30),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
+                                              height: double.infinity,
+                                              padding: const EdgeInsets.only(
+                                                  right: 5),
+                                              margin: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xff6ac04f),
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              child: const Center(
+                                                child: Text(
+                                                  "دارد",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
+                                              height: double.infinity,
+                                              padding: const EdgeInsets.only(
+                                                  right: 5),
+                                              margin: const EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              child: const Center(
+                                                child: Text(
+                                                  "ندارد",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Warranty Date
+                                  Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    padding: const EdgeInsets.only(right: 5),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffd8c662),
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "تاریخ گارانتی",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          height: double.infinity,
+                                          padding:
+                                              const EdgeInsets.only(right: 5),
+                                          margin: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              "۱۴۰۱/۰۳/۱۵",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Description
+                                  Container(
+                                    width: double.infinity,
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    padding: const EdgeInsets.only(right: 5),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffd8c662),
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "توضیح کامل",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          height: double.infinity,
+                                          padding: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: const SingleChildScrollView(
+                                            child: Text(
+                                              "مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود. مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود. مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود.",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Customer Details
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: const BoxDecoration(
+                                color: Color(0xffbcdeea),
+                                borderRadius: BorderRadius.horizontal(
+                                  left: Radius.circular(30),
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Name
+                                  Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    padding: const EdgeInsets.only(right: 5),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffd8c662),
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "نام مشتری",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          height: double.infinity,
+                                          padding:
+                                              const EdgeInsets.only(right: 5),
+                                          margin: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              "رضا حسینی",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Mobile
+                                  Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    padding: const EdgeInsets.only(right: 5),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffd8c662),
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "شماره موبایل",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          height: double.infinity,
+                                          padding:
+                                              const EdgeInsets.only(right: 5),
+                                          margin: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              "۰۹۳۵۶۲۱۲۵۵۵",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  // Address
+                                  Container(
+                                    width: double.infinity,
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    padding: const EdgeInsets.only(right: 5),
+                                    margin: const EdgeInsets.only(bottom: 10),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffd8c662),
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(30),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "آدرس مشتری",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          height: double.infinity,
+                                          padding: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: const SingleChildScrollView(
+                                            child: Text(
+                                              "تست آدرس کامل و دقیق مشتری",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Buttons
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                // Report Button
+                                SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.68,
-                                  height: double.infinity,
-                                  margin: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      "تعمیر پکیج دیواری مدل MR45",
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: ElevatedButton(
+                                    onPressed: () => dialog("گزارش"),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        const Color(0xffd86262),
+                                      ),
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "گزارش",
                                       style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // Part Button
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: ElevatedButton(
+                                    onPressed: () => dialog("قطعه"),
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "قطعه",
+                                      style: TextStyle(
+                                        fontSize: 18,
                                       ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          // Order Details
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            decoration: const BoxDecoration(
-                              color: Color(0xffbcdeea),
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(30),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Problem Title
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  padding: const EdgeInsets.only(right: 5),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffd8c662),
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(30),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "عنوان مشکل",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        height: double.infinity,
-                                        padding:
-                                            const EdgeInsets.only(right: 5),
-                                        margin: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            "روشن نشدن شمعک",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                            // Submit Button
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              margin: const EdgeInsets.only(bottom: 10),
+                              child: ElevatedButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pushNamed(
+                                  FactorScreen.routeName,
                                 ),
-                                // Warranty
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  padding: const EdgeInsets.only(right: 5),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffd8c662),
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(30),
-                                    ),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color(0xff6ac04f),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        "دستگاه گارانتی",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 30),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.2,
-                                            height: double.infinity,
-                                            padding:
-                                                const EdgeInsets.only(right: 5),
-                                            margin: const EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xff6ac04f),
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            child: const Center(
-                                              child: Text(
-                                                "دارد",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.2,
-                                            height: double.infinity,
-                                            padding:
-                                                const EdgeInsets.only(right: 5),
-                                            margin: const EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            child: const Center(
-                                              child: Text(
-                                                "ندارد",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Warranty Date
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  padding: const EdgeInsets.only(right: 5),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffd8c662),
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(30),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "تاریخ گارانتی",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        height: double.infinity,
-                                        padding:
-                                            const EdgeInsets.only(right: 5),
-                                        margin: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            "۱۴۰۱/۰۳/۱۵",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Description
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  padding: const EdgeInsets.only(right: 5),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffd8c662),
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(30),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "توضیح کامل",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        height: double.infinity,
-                                        padding: const EdgeInsets.all(10),
-                                        margin: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: const SingleChildScrollView(
-                                          child: Text(
-                                            "مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود. مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود. مدتی است که شمعک پکیج روشن نمی شود و یا اگر روشن شود در مدت زمان کوتاهی خاموش می شود.",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Customer Details
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            decoration: const BoxDecoration(
-                              color: Color(0xffbcdeea),
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(30),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Name
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  padding: const EdgeInsets.only(right: 5),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffd8c662),
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(30),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "نام مشتری",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        height: double.infinity,
-                                        padding:
-                                            const EdgeInsets.only(right: 5),
-                                        margin: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            "رضا حسینی",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Mobile
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  padding: const EdgeInsets.only(right: 5),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffd8c662),
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(30),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "شماره موبایل",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        height: double.infinity,
-                                        padding:
-                                            const EdgeInsets.only(right: 5),
-                                        margin: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            "۰۹۳۵۶۲۱۲۵۵۵",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Address
-                                Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  padding: const EdgeInsets.only(right: 5),
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffd8c662),
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(30),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "آدرس مشتری",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        height: double.infinity,
-                                        padding: const EdgeInsets.all(10),
-                                        margin: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                        child: const SingleChildScrollView(
-                                          child: Text(
-                                            "تست آدرس کامل و دقیق مشتری",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Buttons
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              // Report Button
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: ElevatedButton(
-                                  onPressed: () => dialog("گزارش"),
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xffd86262),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    "گزارش",
-                                    style: TextStyle(
-                                      fontSize: 18,
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
                                     ),
                                   ),
                                 ),
-                              ),
-                              // Part Button
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: ElevatedButton(
-                                  onPressed: () => dialog("قطعه"),
-                                  style: ButtonStyle(
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                    ),
+                                child: const Text(
+                                  "صدور فاکتور و اتمام سرویس",
+                                  style: TextStyle(
+                                    fontSize: 18,
                                   ),
-                                  child: const Text(
-                                    "قطعه",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          // Submit Button
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.6,
-                            margin: const EdgeInsets.only(bottom: 10),
-                            child: ElevatedButton(
-                              onPressed: () => Navigator.of(context).pushNamed(
-                                FactorScreen.routeName,
-                              ),
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  const Color(0xff6ac04f),
-                                ),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                              ),
-                              child: const Text(
-                                "صدور فاکتور و اتمام سرویس",
-                                style: TextStyle(
-                                  fontSize: 18,
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

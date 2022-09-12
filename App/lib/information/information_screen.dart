@@ -27,8 +27,6 @@ class _InformationScreenState extends State<InformationScreen> {
   late Future _dashboardBrandsFuture;
   late Future _dashboardProvincesFuture;
 
-  final _cityController = TextEditingController();
-
   String dateLabel = '';
   var testPickDate;
 
@@ -48,11 +46,14 @@ class _InformationScreenState extends State<InformationScreen> {
         .fetchAndSetDashboardProvinces();
   }
 
+  List? _myActivities;
+
   @override
   void initState() {
     _dashboardBrandsFuture = _obtainDashboardBrandsFuture();
     _dashboardProvincesFuture = _obtainDashboardProvincesFuture();
     super.initState();
+    _myActivities = [];
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -183,6 +184,12 @@ class _InformationScreenState extends State<InformationScreen> {
   @override
   Widget build(BuildContext context) {
     Image backMobileImage;
+
+    final _cityController = TextEditingController(
+        text: Provider.of<Auth>(
+      context,
+      listen: false,
+    ).findUser().city);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -664,7 +671,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                             okButtonLabel: 'تایید',
                                             cancelButtonLabel: 'لغو',
                                             hintWidget: const Text(''),
-                                            initialValue: const [],
+                                            initialValue: auth.findUser().zone,
                                             validator: (value) {
                                               if (value!.isEmpty) {
                                                 return 'لطفا مناطق موردنظر را وارد کنید!';
@@ -672,6 +679,12 @@ class _InformationScreenState extends State<InformationScreen> {
                                               return null;
                                             },
                                             onSaved: (value) {
+                                              // setState(() {
+                                              //   _myActivities = value;
+                                              //   print(_myActivities);
+                                              //   print(auth.findUser().zone);
+                                              //   print(_information.zone);
+                                              // });
                                               _information = UserInformation(
                                                 id: _information.id,
                                                 name: _information.name,
@@ -931,11 +944,16 @@ class _InformationScreenState extends State<InformationScreen> {
                                                 ),
                                               );
                                             },
-                                            initialValue:
-                                                startTimeLabel.isNotEmpty
-                                                    ? startTimeLabel
-                                                        .substring(10, 16)
-                                                        .toString()
+                                            initialValue: startTimeLabel
+                                                    .isNotEmpty
+                                                ? startTimeLabel
+                                                    .substring(10, 16)
+                                                    .toString()
+                                                : auth
+                                                        .findUser()
+                                                        .startTime
+                                                        .isNotEmpty
+                                                    ? auth.findUser().startTime
                                                     : '',
                                             showCursor: false,
                                             keyboardType: TextInputType.none,
@@ -1003,7 +1021,7 @@ class _InformationScreenState extends State<InformationScreen> {
                                                               PCupertinoDatePickerMode
                                                                   .time,
                                                           initialDateTime:
-                                                              testPickStartTime,
+                                                              testPickEndTime,
                                                           onDateTimeChanged:
                                                               (Jalali
                                                                   dateTime) {
@@ -1035,11 +1053,16 @@ class _InformationScreenState extends State<InformationScreen> {
                                                 ),
                                               );
                                             },
-                                            initialValue:
-                                                endTimeLabel.isNotEmpty
-                                                    ? endTimeLabel
-                                                        .substring(10, 16)
-                                                        .toString()
+                                            initialValue: endTimeLabel
+                                                    .isNotEmpty
+                                                ? endTimeLabel
+                                                    .substring(10, 16)
+                                                    .toString()
+                                                : auth
+                                                        .findUser()
+                                                        .endTime
+                                                        .isNotEmpty
+                                                    ? auth.findUser().endTime
                                                     : '',
                                             showCursor: false,
                                             keyboardType: TextInputType.none,

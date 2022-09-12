@@ -217,37 +217,36 @@ class DoneOrdersScreenState extends State<DoneOrdersScreen> {
                                                       "شماره",
                                                       "نام مشتری",
                                                       Container(
-                                                          height: 35,
-                                                          margin:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      2),
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            color: Color(
-                                                                0xff62bbd8),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .horizontal(
-                                                              left: Radius
-                                                                  .circular(30),
-                                                            ),
+                                                        height: 35,
+                                                        margin: const EdgeInsets
+                                                                .symmetric(
+                                                            horizontal: 2),
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          color:
+                                                              Color(0xff62bbd8),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .horizontal(
+                                                            left:
+                                                                Radius.circular(
+                                                                    30),
                                                           ),
-                                                          child: const Center(
-                                                            child: Text(
-                                                              "توضیحات",
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xfff5f5f5),
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
+                                                        ),
+                                                        child: const Center(
+                                                          child: Text(
+                                                            "توضیحات",
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xfff5f5f5),
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
                                                             ),
                                                           ),
                                                         ),
+                                                      ),
                                                       const Color(0xff62bbd8),
                                                     ),
                                                     SingleChildScrollView(
@@ -279,18 +278,21 @@ class DoneOrdersScreenState extends State<DoneOrdersScreen> {
                                                                   ['name']
                                                               .toString(),
                                                           InkWell(
-                                                            onTap: () =>
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pushNamed(
-                                                              OrderSingleScreen
-                                                                  .routeName,
-                                                              arguments: {
-                                                                "id": dashbord
-                                                                        .orders[
-                                                                    i]['id'],
-                                                              },
-                                                            ),
+                                                            onTap: () {
+                                                              Provider.of<Dashboard>(
+                                                                      context,
+                                                                      listen:
+                                                                          false)
+                                                                  .findSingleOrder(dashbord
+                                                                          .orders
+                                                                          .first[
+                                                                      'order']['id']);
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pushNamed(
+                                                                      OrderSingleScreen
+                                                                          .routeName);
+                                                            },
                                                             child: Container(
                                                               height: 35,
                                                               margin: const EdgeInsets

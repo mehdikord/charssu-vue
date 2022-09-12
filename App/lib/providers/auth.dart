@@ -101,7 +101,7 @@ class Auth with ChangeNotifier {
         throw HttpException(responseData['error'].toString());
       }
       _provinces = responseData;
-      setCities("8");
+      setCities(findUser().province.isNotEmpty ? findUser().province : "8");
       notifyListeners();
     } catch (error) {
       rethrow;
@@ -111,6 +111,7 @@ class Auth with ChangeNotifier {
   Future<void> setCities(String provinceId) async {
     _cities = await provinces.firstWhere(
         (province) => province['id'] == int.parse(provinceId))['cities'];
+    setZones(findUser().city.isNotEmpty ? findUser().city : "100");
     notifyListeners();
   }
 
@@ -272,22 +273,22 @@ class Auth with ChangeNotifier {
         code: user['response']['code'] != null
             ? user['response']['code'].toString()
             : "---",
-        name: firstName ?? "",
-        family: lastName ?? "",
+        name: firstName,
+        family: lastName,
         nationalCode: user['response']['national_code'].toString(),
-        birthday: "",
-        province: "8",
-        city: "100",
+        birthday: user['response']['birthday'].toString(),
+        province: user['response']['province_id'].toString(),
+        city: user['response']['city_id'].toString(),
         zone: [],
         brand: [],
         telephone: user['response']['tel'] != null
             ? user['response']['tel'].toString()
             : "",
-        email: user['response']['email'] ?? "",
-        startTime: "",
-        endTime: "",
-        address: user['response']['address'] ?? "",
-        workAddress: user['response']['work_address'] ?? "",
+        email: user['response']['email'],
+        startTime: user['response']['start_time'],
+        endTime: user['response']['end_time'],
+        address: user['response']['address'],
+        workAddress: user['response']['work_address'],
         isAccepted: user['response']['is_accepted'] == 1 ? true : false,
         isOnline: user['response']['is_online'] == 1 ? true : false,
       );

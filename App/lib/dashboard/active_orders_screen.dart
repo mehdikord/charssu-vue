@@ -265,28 +265,34 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                       itemBuilder:
                                                           (context, i) =>
                                                               ServiceItem(
-                                                        dashbord.orders[i]['id']
+                                                        dashbord.orders[i]
+                                                                ['order']['id']
                                                             .toString(),
                                                         dashbord.orders[i]
+                                                                ['order']
                                                                 ['code']
                                                             .toString(),
                                                         dashbord.orders[i]
+                                                                ['order']
                                                                 ['customer']
                                                                 ['name']
                                                             .toString(),
                                                         InkWell(
-                                                          onTap: () =>
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pushNamed(
-                                                            OrderSingleScreen
-                                                                .routeName,
-                                                            arguments: {
-                                                              "id": dashbord
-                                                                      .orders[i]
-                                                                  ['id'],
-                                                            },
-                                                          ),
+                                                          onTap: () {
+                                                            Provider.of<Dashboard>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .findSingleOrder(dashbord
+                                                                        .orders
+                                                                        .first[
+                                                                    'order']['id']);
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushNamed(
+                                                                    OrderSingleScreen
+                                                                        .routeName);
+                                                          },
                                                           child: Container(
                                                             height: 35,
                                                             margin:
