@@ -110,11 +110,12 @@ class OrderController extends Controller
              $customer->select(['id','name','phone','tel','address'])->get();
          }]);
         $order->load([
+            'problem',
             'province',
             'city',
             'zone',
             'device_brand',
-            'device'
+            'device',
         ]);
         return response()->json($order);
 
@@ -124,7 +125,7 @@ class OrderController extends Controller
     {
         $result = Order::where('is_done',true)->whereHas('servicemans',function ($serviceman){
             $serviceman->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->where('canceled',false);
-        })->get();
+        })->with('customer')->get();
 
         return response()->json($result);
     }
@@ -133,7 +134,9 @@ class OrderController extends Controller
     {
         $result = api_serviceman_get_user()->orders()->where('accepted',true)->where("canceled",false)->whereHas('order',function ($order){
             $order->where('is_done',false);
-        })->with('order')->get();
+        })->with('order', function ($order) {
+            $order->with('customer');
+        })->get();
         return response()->json($result);
     }
 
