@@ -3,7 +3,9 @@ import 'package:charssu/dashboard/active_orders_screen.dart';
 import 'package:charssu/dashboard/dashboard_screen.dart';
 import 'package:charssu/dashboard/done_orders_screen.dart';
 import 'package:charssu/dashboard/factor_screen.dart';
+import 'package:charssu/dashboard/notes/order_notes_screen.dart';
 import 'package:charssu/dashboard/order_single_screen.dart';
+import 'package:charssu/dashboard/products/order_products_screen.dart';
 import 'package:charssu/information/information_screen.dart';
 import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
             DoneOrdersScreen.routeName: (ctx) => const DoneOrdersScreen(),
             ActiveOrdersScreen.routeName: (ctx) => const ActiveOrdersScreen(),
             OrderSingleScreen.routeName: (ctx) => const OrderSingleScreen(),
+            OrderNotesScreen.routeName: (ctx) => const OrderNotesScreen(),
+            OrderProductsScreen.routeName: (ctx) => const OrderProductsScreen(),
             FactorScreen.routeName: (ctx) => const FactorScreen(),
           },
           home: auth.isAuth

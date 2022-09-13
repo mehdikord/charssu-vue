@@ -1,12 +1,11 @@
 import 'package:charssu/dashboard/factor_screen.dart';
-import 'package:charssu/main.dart';
-import 'package:charssu/providers/auth.dart';
+import 'package:charssu/dashboard/notes/order_notes_screen.dart';
+import 'package:charssu/dashboard/products/order_products_screen.dart';
 import 'package:charssu/providers/dashboard.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
 import 'package:charssu/widget/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import '../widget/bg_widget.dart';
 
@@ -35,7 +34,7 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
               ),
             ),
             content: Container(
-              width: double.infinity,
+              height: 100,
               child: Column(
                 children: [
                   // Add Button
@@ -65,7 +64,16 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        if (title == "گزارش") {
+                          Navigator.of(context)
+                              .pushNamed(OrderNotesScreen.routeName);
+                        } else {
+                          Navigator.of(context)
+                              .pushNamed(OrderProductsScreen.routeName);
+                        }
+                      },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
@@ -356,16 +364,24 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                                   right: 5),
                                               margin: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
-                                                color: const Color(0xff6ac04f),
+                                                color: dashboard.order[
+                                                            'warranty'] ==
+                                                        "1"
+                                                    ? const Color(0xff6ac04f)
+                                                    : Colors.white,
                                                 borderRadius:
                                                     BorderRadius.circular(30),
                                               ),
-                                              child: const Center(
+                                              child: Center(
                                                 child: Text(
                                                   "دارد",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                    color: Colors.white,
+                                                    color: dashboard.order[
+                                                                'warranty'] ==
+                                                            "1"
+                                                        ? Colors.white
+                                                        : Colors.black,
                                                     fontSize: 16,
                                                   ),
                                                 ),
@@ -381,15 +397,24 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                                   right: 5),
                                               margin: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
-                                                color: Colors.white,
+                                                color: dashboard.order[
+                                                            'warranty'] !=
+                                                        "1"
+                                                    ? const Color(0xff6ac04f)
+                                                    : Colors.white,
                                                 borderRadius:
                                                     BorderRadius.circular(30),
                                               ),
-                                              child: const Center(
+                                              child: Center(
                                                 child: Text(
                                                   "ندارد",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
+                                                    color: dashboard.order[
+                                                                'warranty'] !=
+                                                            "1"
+                                                        ? Colors.white
+                                                        : Colors.black,
                                                     fontSize: 16,
                                                   ),
                                                 ),
