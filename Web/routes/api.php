@@ -156,8 +156,10 @@ Route::group(['prefix' => 'app'],static function(){
                 Route::get('single/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'single']);
                 Route::post('notes/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_notes']);
                 Route::get('notes/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_notes']);
+                Route::delete('notes/{note}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'delete_note']);
                 Route::get('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_products']);
                 Route::post('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_products']);
+                Route::delete('products/{product}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'delete_product']);
 
             });
 

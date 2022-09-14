@@ -87,12 +87,12 @@ class ProfileController extends Controller
         $serviceman = api_serviceman_get_user();
         if ($serviceman->is_online == 1){
             $serviceman->update(['is_online'=>0]);
-            $serviceman->activities()->create(['active'=>0]);
+            // $serviceman->activities()->create(['active'=>0]);
             $response = ['activation'=>0,'message'=>'وضعیت درحالت غیرفعال قرار گرفت'];
 
         }else{
             $serviceman->update(['is_online'=>1]);
-            $serviceman->activities()->create(['active'=>1]);
+            // $serviceman->activities()->create(['active'=>1]);
             $response = ['activation'=>1,'message'=>'وضعیت درحالت فعال قرار گرفت'];
 
         }
