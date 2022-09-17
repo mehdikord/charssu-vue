@@ -4,14 +4,20 @@ import 'package:charssu/widget/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class OrderNotesScreen extends StatelessWidget {
+class OrderNotesScreen extends StatefulWidget {
   const OrderNotesScreen({Key? key}) : super(key: key);
 
   static const routeName = "/orders/show/notes";
 
   @override
+  State<OrderNotesScreen> createState() => _OrderNotesScreenState();
+}
+
+class _OrderNotesScreenState extends State<OrderNotesScreen> {
+  @override
   Widget build(BuildContext context) {
     Image backMobileImage;
+    var _isLoading = false;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -119,54 +125,139 @@ class OrderNotesScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.85 -
                         backMobileImage.height! -
                         MediaQuery.of(context).viewPadding.top,
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      left: 15.0,
+                      right: 15.0,
+                    ),
                     color: const Color(0xfff5f5f5),
                     child: Consumer<Dashboard>(
-                      builder: (context, dashboard, _) => SingleChildScrollView(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 3,
-                          itemBuilder: (context, index) => Card(
-                            elevation: 8,
-                            color: Colors.lightGreen,
-                            margin: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "مشتری: ${dashboard.order['customer']['name']}",
-                                    style: const TextStyle(fontSize: 18),
-                                  ),
-                                  const Divider(
-                                    color: Colors.black,
-                                  ),
-                                  Text(
-                                    "گزارش:‌ ${dashboard.order['description']}",
-                                    style: const TextStyle(fontSize: 18),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                          Colors.red,
+                      builder: (context, dashboard, _) {
+                        if (dashboard.notes.isNotEmpty) {
+                          return SingleChildScrollView(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: dashboard.notes.length,
+                              itemBuilder: (context, i) => Card(
+                                elevation: 8,
+                                color: Colors.lightGreen,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "مشتری: ${dashboard.order['customer']['name']}",
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
+                                      const Divider(
+                                        color: Colors.black,
+                                      ),
+                                      Text(
+                                        "گزارش:\n${dashboard.notes[i]['note']}",
+                                        style: const TextStyle(fontSize: 18),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _isLoading = true;
+                                            });
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  Directionality(
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                child: AlertDialog(
+                                                  title: const Text(
+                                                    "بله",
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                  content: const Text(
+                                                    "آیا مطمئن هستید؟",
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: const Text(
+                                                        "خیر",
+                                                        style: TextStyle(
+                                                            color: Colors.red),
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        dashboard
+                                                            .deleteOrderNote(
+                                                                dashboard.notes[
+                                                                    i]['id']);
+                                                        dashboard
+                                                            .findSingleOrderNotes(
+                                                                dashboard.order[
+                                                                    'id']);
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: _isLoading
+                                                          ? const CircularProgressIndicator()
+                                                          : const Text(
+                                                              "تایید",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .green),
+                                                            ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          },
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                              Colors.red,
+                                            ),
+                                          ),
+                                          child: _isLoading
+                                              ? const CircularProgressIndicator()
+                                              : const Text("حذف"),
                                         ),
                                       ),
-                                      child: const Text("حذف"),
-                                    ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "گزارشی ثبت نشده است!",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
                   SizedBox(

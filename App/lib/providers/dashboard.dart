@@ -40,6 +40,98 @@ class Dashboard with ChangeNotifier {
         return;
       }
       _order = extractedData;
+      await findSingleOrderNotes(orderId);
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  List _notes = [];
+
+  List get notes {
+    return [..._notes];
+  }
+
+  Future<void> findSingleOrderNotes(orderId) async {
+    final url = Uri.parse(
+        "http://10.0.2.2:8000/api/app/serviceman/orders/notes/$orderId");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.get(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      _notes = extractedData;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> submitNewOrderNote(orderId, noteText) async {
+    final url = Uri.parse(
+        "http://10.0.2.2:8000/api/app/serviceman/orders/notes/$orderId");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.post(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+        body: json.encode({
+          "note": noteText,
+        }),
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteOrderNote(noteId) async {
+    final url = Uri.parse(
+        "http://10.0.2.2:8000/api/app/serviceman/orders/notes/$noteId");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.delete(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
       notifyListeners();
     } catch (error) {
       rethrow;

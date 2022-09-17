@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\App\Serviceman;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Order_Note;
+use App\Models\Order_Product;
 use App\Models\Order_Serviceman;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ class OrderController extends Controller
         $data = $serviceman->orders()
             ->where('accepted',false)
             ->where('canceled',false)
-            ->get();
+            ->first();
         return response()->json($data);
     }
 
@@ -167,6 +169,15 @@ class OrderController extends Controller
         return response()->json($order->notes);
     }
 
+    public function delete_note(Order_Note $note)
+    {
+        if (!$note->order()->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        $note->delete();
+        return response()->json(['message' => 'گزارش باموفقیت حذف گردید']);
+    }
+
     public function get_products(Order $order)
     {
         if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
@@ -216,6 +227,16 @@ class OrderController extends Controller
             'is_paid' => $is_paid,
         ]);
         return response()->json(['message' => 'محصول مورد نظر باموفقیت به سفارش اضافه شد']);
+    }
+
+    public function delete_product(Order_Product $product)
+    {
+        if (!$product->order()->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        $product->delete();
+        return response()->json(['message' => 'قطعه باموفقیت حذف گردید']);
+
     }
 
 
