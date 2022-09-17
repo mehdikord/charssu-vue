@@ -50,7 +50,7 @@
 
                                 </router-link>
 
-                                <span href="" class="add-to-cart-btn">
+                                <span href="" class="add-to-cart-btn pointer"  @click="this.CartAddToCart({product : product, quantity : 1})">
                                     افزودن به سبد خرید
                                     <i class="flaticon-shopping-cart"></i>
                                 </span>
@@ -136,6 +136,10 @@ export default {
 .cat-box:hover{
    background-color: rgba(33, 148, 242, 0.12);
     cursor: pointer;
+}
+.pointer{
+    cursor: pointer;
+
 }
 
 </style>

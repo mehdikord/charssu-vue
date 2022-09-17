@@ -65,13 +65,64 @@
 
             </div>
             <div class="dropdown pr-3">
-                <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle btn-sm" :class="{'btn-danger' : CartItemCount}" type="button" data-toggle="dropdown" aria-expanded="false">
                     <i class="mdi mdi-shopping"></i>
-                    سبد خرید
+                    سبد خرید ({{CartItemCount}})
                 </button>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu mt-3 p-3 cart-box">
+                    <template v-if="CartItemCount">
+                        <table class="table">
+
+                            <tr v-for="(item,index) in CartItemGet.items" :key="index" class="cart-right">
+                                <td>
+                                    <template v-if="item.product.images.length">
+                                        <img class="img-fluid" :src="item.product.images[0].image" :alt="item.product.name" width="70" >
+                                    </template>
+                                    <img v-else class="img-fluid" src="/images/default/product.png" width="50" alt="image">
+                                </td>
+                                <td>
+                                    <router-link class="font-17" :to="{name:'front_shop_products_single',params : {code : item.product.code}}">
+                                        {{item.product.name}}
+                                    </router-link>
+                                    <br>
+                                    <span v-if="item.product.sale !== null" class="font-14 text-success">
+                                        {{this.NumberFormatter(item.product.sale)}}
+                                    </span>
+                                    <span v-else class="font-14 text-success">
+                                        {{this.NumberFormatter(item.product.price)}}
+                                    </span>
+                                    <span class="font-12 mr-2">تومان</span>
+
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary mt-2">{{item.quantity}}</span>
+                                </td>
+                                <td>
+                                    <i @click="CartRemoveFromCart(index)" class="mdi mdi-trash-can font-22 pointer"></i>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </template>
+
+                    <template v-else>
+
+                        <div class="text-center">
+                            <img src="/images/default/empty-cart.png" width="180" alt="empty cart">
+                            <h6 class="mt-3">
+                                سبد خرید شما خالی است
+                            </h6>
 
 
+                        </div>
+
+                    </template>
+                    <hr>
+                   <div class="text-center">
+                       <router-link :to="{name : 'front_shop_checkout'}" class="btn btn-success w-100">
+                           مشاهده سبد و پرداخت نهایی
+                       </router-link>
+                   </div>
                 </div>
             </div>
             <div class="pr-3">
@@ -80,9 +131,6 @@
                     پشتیبانی
                 </router-link>
             </div>
-
-
-
 
         </div>
 
@@ -100,8 +148,19 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "Front_Template_Main_Navbar",
+
+    computed:{
+        ...mapGetters({
+            CartItemCount : 'CartItemCount',
+            CartItemGet : 'CartItemGet',
+            CartTotalPrice : 'CartTotalPrice',
+        })
+
+    }
 
 }
 </script>
@@ -109,6 +168,23 @@ export default {
 <style scoped>
 .font-weight-bold{
     font-weight: 500 !important;
+}
+.dropdown-menu{
+    min-width: 18rem;
+    left: -70px !important;
+
+}
+.cart-right{
+    text-align: right!important;
+}
+.cart-box {
+    overflow: scroll !important;
+    height: auto !important;
+    max-height: 100vh !important;
+}
+
+.pointer{
+    cursor: pointer!important;
 }
 
 </style>

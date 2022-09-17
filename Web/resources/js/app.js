@@ -91,6 +91,18 @@ App.mixin({
         UserAuthGet() {
             return Auth.AuthGetUser();
         },
+        CartAddToCart(item){
+            this.$store.commit('CartAddToCart',item)
+            return Sweet.SweetToastMessage('محصول باموفقیت به سبد خرید اضافه شد')
+        },
+        CartRemoveFromCart(index){
+
+            this.$store.commit('CartRemoveFromCart',index)
+            return Sweet.SweetToastMessage('محصول از سبد خرید حذف شد')
+
+        }
+
+
     }
 
 })

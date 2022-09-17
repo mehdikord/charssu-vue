@@ -130,7 +130,10 @@ export default {
                     setTimeout(() => {
                         window.open('/orders/new','_self');
                     }, 1000);
-                }else {
+                }else if(appStorage.AppStorageCheckItem('charssu_back_to_cart')){
+                    appStorage.AppStorageDelItem('charssu_back_to_cart');
+                    window.open('/shop/checkout','_self');
+                } else {
                     setTimeout(() => {
                         window.open('/','_self');
                     }, 1000);

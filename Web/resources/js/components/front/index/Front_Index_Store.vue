@@ -14,10 +14,10 @@
                         </p>
 
                         <div class="productive-btn">
-                            <a class="productive-btn main-shop-btn font-18" href="">
+                            <router-link :to="{name : 'front_shop'}" class="productive-btn main-shop-btn font-18" href="">
                                 ورود به فروشگاه چارسو
                                 <span></span>
-                            </a>
+                            </router-link>
 
                         </div>
                     </div>
@@ -36,7 +36,9 @@
 
 <script>
 export default {
-    name: "Front_Index_Store"
+    name: "Front_Index_Store",
+
+
 }
 </script>
 

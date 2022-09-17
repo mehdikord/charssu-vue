@@ -4,6 +4,7 @@ import Front_Orders_New from "../components/front/orders/Front_Orders_New";
 import Front_Auth from "../components/front/auth/Front_Auth";
 import Front_Shop_Index from "../components/front/shop/Front_Shop_Index";
 import Front_Shop_Products_Single from "../components/front/shop/Front_Shop_Products_Single";
+import Front_Shop_Checkout from "../components/front/shop/Front_Shop_Checkout";
 
 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
         path : '/products/:code',
         component : Front_Shop_Products_Single,
         name : 'front_shop_products_single',
+    },
+    {
+        path : '/shop/checkout',
+        component : Front_Shop_Checkout,
+        name : 'front_shop_checkout',
     },
 
 

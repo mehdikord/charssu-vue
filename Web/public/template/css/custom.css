@@ -59,3 +59,27 @@ Fades Css
 .main-shop-btn{
     background-color:#01445E !important;
 }
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #353434;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #008bd3;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.pointer{
+    cursor: pointer!important;
+
+}
+

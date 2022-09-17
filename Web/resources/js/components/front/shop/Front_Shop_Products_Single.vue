@@ -57,15 +57,15 @@
                             </div>
                             <div class="product-add-to-cart">
                                 <div class="input-counter">
-                                        <span class="minus-btn">
-                                            <i class="mdi mdi-minus"></i>
-                                        </span>
-                                    <input type="text" min="1" value="1">
-                                    <span class="plus-btn">
-                                            <i class="mdi mdi-plus"></i>
-                                        </span>
+                                    <span v-if="quantity > 1" @click="quantity--"  class="minus-btn">
+                                        <i class="mdi mdi-minus"></i>
+                                    </span>
+                                    <input type="number"  v-model="quantity">
+                                    <span @click="quantity++" class="plus-btn">
+                                        <i class="mdi mdi-plus"></i>
+                                    </span>
                                 </div>
-                                <button type="submit" class="default-btn">
+                                <button @click="this.CartAddToCart({product : product, quantity : quantity})" type="button" class="default-btn">
                                     <i class="fas fa-cart-plus"></i>
                                     افزودن به سبد خرید
                                 </button>
@@ -80,7 +80,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-12 col-md-12">
                         <div class="tab products-details-tab">
                             <div class="row">
@@ -111,96 +110,6 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="tabs_item">
-                                            <div class="products-details-tab-content">
-                                                <div class="product-review-form">
-                                                    <h3>Customer Reviews</h3>
-                                                    <div class="review-title">
-                                                        <div class="rating">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </div>
-                                                        <p>Based on 3 reviews</p>
-                                                        <a href="#" class="default-btn">Write a Review</a>
-                                                    </div>
-                                                    <div class="review-comments">
-                                                        <div class="review-item">
-                                                            <div class="rating">
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="far fa-star"></i>
-                                                            </div>
-                                                            <h3>Good</h3>
-                                                            <span><strong>Admin</strong> on <strong>Sep 21, 2019</strong></span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                                            <a href="#" class="review-report-link">Report as Inappropriate</a>
-                                                        </div>
-                                                        <div class="review-item">
-                                                            <div class="rating">
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="far fa-star"></i>
-                                                            </div>
-                                                            <h3>Good</h3>
-                                                            <span><strong>Admin</strong> on <strong>Sep 21, 2019</strong></span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                                            <a href="#" class="review-report-link">Report as Inappropriate</a>
-                                                        </div>
-                                                        <div class="review-item">
-                                                            <div class="rating">
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="far fa-star"></i>
-                                                            </div>
-                                                            <h3>Good</h3>
-                                                            <span><strong>Admin</strong> on <strong>Sep 21, 2019</strong></span>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                                            <a href="#" class="review-report-link">Report as Inappropriate</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="review-form">
-                                                        <h3>Write a Review</h3>
-                                                        <form>
-                                                            <div class="row">
-                                                                <div class="col-lg-6 col-md-6">
-                                                                    <div class="form-group">
-                                                                        <input type="text" id="name" name="name" placeholder="Enter your name" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6 col-md-6">
-                                                                    <div class="form-group">
-                                                                        <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="form-group">
-                                                                        <input type="text" id="review-title" name="review-title" placeholder="Enter your review a title" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="form-group">
-                                                                        <textarea name="review-body" id="review-body" cols="30" rows="7" placeholder="Write your comments here" class="form-control"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <button type="submit" class="default-btn">Submit Review</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -235,7 +144,8 @@ export default {
     },
     data(){
         return {
-            product:null
+            product:null,
+            quantity : 1,
         }
     },
     methods:{
