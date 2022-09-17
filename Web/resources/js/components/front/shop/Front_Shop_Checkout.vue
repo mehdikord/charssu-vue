@@ -139,7 +139,7 @@
                                             </div>
                                             <div class="mt-4">
                                                 <label class="form-label mb-3">شماره موبایل :</label>
-                                                <input class="form-control " v-model="phone" type="text" dir="ltr" placeholder="09XX XXX XXXX">
+                                                <input class="form-control " v-model="phone" type="text" dir="ltr" @keyup.enter="LoginFormSubmit" placeholder="09XX XXX XXXX">
                                                 <div class="mt-4 text-center">
                                                     <button v-if="!loading" @click="LoginFormSubmit" class="default-btn">ثبت نام یا ورود به حساب کاربری</button>
                                                     <button v-else disabled class="default-btn">ثبت نام یا ورود به حساب کاربری</button>
@@ -153,7 +153,44 @@
                                 </div>
                             </template>
                             <template v-else>
+                                <div class="mt-4 row">
+                                   <div class="col-md-6 mt-4">
+                                       <label for="" class="form-label text-danger">نام و نام خانوادگی</label>
+                                       <input type="text" class="form-control" v-model="user.name" >
+                                   </div>
+                                    <div class="col-md-6 mt-4">
+                                        <label for="" class="form-label text-danger">شماره موبایل</label>
+                                        <input disabled type="text" class="form-control" v-model="user.phone">
+                                    </div>
+                                    <div class="col-md-6 mt-4">
+                                        <label for="" class="form-label text-danger">استان محل سکونت</label>
+                                        <select @change="SelectCity" class="form-control mt-1" v-model="user.province_id" :class="{'is-invalid' : this.ValidationErrors(errors,'province_id').length}">
+                                            <option  v-for="(province,index) in provinces" :key="index+'_province'" :value="province.id">{{province.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mt-4">
+                                        <label for="" class="form-label text-danger">شهر</label>
+                                        <select @change="SelectZone"  class="form-control mt-1" v-model="user.city_id" :class="{'is-invalid' : this.ValidationErrors(errors,'city_id').length}">
+                                            <option   v-for="(city,index) in cities" :key="index+'_city'" :value="city.id">{{city.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mt-4">
+                                        <label for="" class="form-label text-danger">انتخاب منطقه</label>
+                                        <select class="form-control mt-1" v-model="user.zone_id" :class="{'is-invalid' : this.ValidationErrors(errors,'zone_id').length}">
+                                            <option  v-for="(zone,index) in zones" :key="index+'_zone'" :value="zone.id">{{zone.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mt-4">
+                                        <label for="" class="form-label text-danger">تلفن ثابت (اختیاری)</label>
+                                        <input type="text" class="form-control" v-model="user.tel">
+                                    </div>
+                                    <div class="col-md-12 mt-4">
+                                        <label for="" class="form-label text-danger">آدرس کامل</label>
+                                        <textarea class="form-control" rows="6" v-model="user.address"></textarea>
 
+
+                                    </div>
+                                </div>
                             </template>
                         </div>
 
@@ -188,12 +225,23 @@
 
 <script>
 import {mapGetters} from "vuex";
+import Sweet from "../../../helpers/Sweet";
 export default {
     name: "Front_Shop_Checkout",
     created(){
         if(!this.UserAuthCheck()){
             AppStorage.AppStorageSetItem('charssu_back_to_cart','true')
+        }else {
+            axios.get('/api/customer/profile').then(res => {
+                this.user = res.data
+                console.log(this.user)
+            }).catch(e => {
+                Sweet.SweetServerErrorMessage();
+            })
+
         }
+        this.GetProvinces();
+
 
     },
     data(){
@@ -201,6 +249,18 @@ export default {
             phone : null,
             loading : false,
             errors:[],
+            provinces:[],
+            cities:[],
+            zones:[],
+            user : {
+                name:null,
+                province_id:null,
+                city_id:null,
+                zone_id:null,
+                phone:null,
+                tel:null,
+                address:null,
+            },
         }
     },
     methods : {
@@ -225,6 +285,43 @@ export default {
 
             })
         },
+
+        GetProvinces(){
+            axios.get('/api/helpers/get/provinces').then(res =>{
+                this.provinces = res.data;
+                this.provincesloading = false;
+            })
+        },
+        SelectCity(){
+
+            if (this.user.province_id !== null){
+                let cities = this.provinces.filter(item => {
+                    return this.user.province_id === item.id;
+                })
+                this.cities = cities[0].cities;
+                this.user.city_id = this.cities[0].id;
+                this.SelectZone();
+            }
+
+        },
+        SelectZone(){
+            if (this.user.province_id !== null && this.user.city_id !== null){
+                let cities = this.provinces.filter(item => {
+                    return this.user.province_id === item.id;
+                })
+                let zones = cities[0].cities.filter(city => {
+                    return this.user.city_id === city.id;
+                })
+                this.zones = zones[0].zones
+                if (this.zones.length){
+                    this.user.zone_id = this.zones[0].id;
+                }
+
+
+            }
+        },
+
+
     },
 
         computed:{

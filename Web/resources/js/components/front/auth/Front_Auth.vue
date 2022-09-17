@@ -39,8 +39,10 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
-                                    <button @click="SubmitCode" type="submit" class="submit-btn">ارسال کد تائید</button>
+                                    <button @click="SubmitCode" type="submit" class="submit-btn mb-4">ارسال کد تائید</button>
+                                    <span @click="ChangePhone" class="text-danger pointer ">ویرایش شماره موبایل</span>
                                 </div>
+
                             </div>
                         <div v-else class="row">
                                 <div class="col-lg-12 col-md-12">

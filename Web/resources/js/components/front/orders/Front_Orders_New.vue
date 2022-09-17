@@ -189,11 +189,14 @@
 import Front_Inc_Loading1 from "../includes/Front_Inc_Loading1";
 import Sweet from "../../../helpers/Sweet";
 
+
 export default {
     name: "Front_Orders_New",
 
+
     components:{
         'loading1' : Front_Inc_Loading1,
+
     },
 
     created() {
@@ -214,6 +217,7 @@ export default {
         this.GetProblems();
         this.GetProvinces();
     },
+
     data(){
         return {
             errors:[],
@@ -248,8 +252,11 @@ export default {
             confirmloading:false,
             phone : null,
 
+
         }
     },
+
+
     methods :{
         GetBrands(){
             axios.get('/api/helpers/get/brands').then(res =>{
@@ -373,7 +380,6 @@ export default {
             })
 
         }
-
     }
 }
 </script>
