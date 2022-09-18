@@ -171,7 +171,7 @@ class OrderController extends Controller
 
     public function delete_note(Order_Note $note)
     {
-        if (!$note->order()->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+        if (!$note->order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
             return response()->json(['error' => 'forbidden'],403);
         }
         $note->delete();
@@ -231,7 +231,7 @@ class OrderController extends Controller
 
     public function delete_product(Order_Product $product)
     {
-        if (!$product->order()->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
+        if (!$product->order->servicemans()->where('serviceman_id',api_serviceman_get_id())->exists()){
             return response()->json(['error' => 'forbidden'],403);
         }
         $product->delete();
