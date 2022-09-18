@@ -147,16 +147,17 @@ class _SmsCodeScreenState extends State<SmsCodeScreen> {
                         "assets/images/Back-Mobile.png",
                         fit: BoxFit.fill,
                         width: MediaQuery.of(context).size.width * 0.8,
-                        height: MediaQuery.of(context).size.height * 0.35,
                       ),
                       SizedBox(
-                        height: backMobileImage.height!,
+                        height: MediaQuery.of(context).size.height * 0.35,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                top: backMobileImage.height! * 0.1,
+                                top: MediaQuery.of(context).size.height *
+                                    0.35 *
+                                    0.1,
                               ),
                               child: Image.asset(
                                 "assets/images/Icon-Code.png",
@@ -274,11 +275,21 @@ class _SmsCodeScreenState extends State<SmsCodeScreen> {
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(
-                                            top: backMobileImage.height! * 0.02,
-                                            bottom:
-                                                backMobileImage.height! * 0.08,
-                                            right:
-                                                backMobileImage.height! * 0.02,
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.35 *
+                                                0.02,
+                                            bottom: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.35 *
+                                                0.08,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.35 *
+                                                0.02,
                                           ),
                                           child: RaisedButton(
                                             onPressed: () =>
@@ -311,11 +322,20 @@ class _SmsCodeScreenState extends State<SmsCodeScreen> {
                                         if (timerEnabled)
                                           Padding(
                                             padding: EdgeInsets.only(
-                                              top: backMobileImage.height! *
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.35 *
                                                   0.02,
-                                              bottom: backMobileImage.height! *
+                                              bottom: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.35 *
                                                   0.08,
-                                              left: backMobileImage.height! *
+                                              left: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.35 *
                                                   0.02,
                                             ),
                                             child: RaisedButton(
