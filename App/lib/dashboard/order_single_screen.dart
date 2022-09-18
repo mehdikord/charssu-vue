@@ -256,12 +256,14 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                   Image.asset(
                                     "assets/images/Back-Number.png",
                                   ),
-                                  const Text(
-                                    "جزئیات سفارش: 123",
-                                    style: TextStyle(
-                                      color: Color(0xff4ae3ed),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                  Consumer<Dashboard>(
+                                    builder: (context, dashboard, _) => Text(
+                                      "جزئیات سفارش: ${dashboard.order['code']}",
+                                      style: const TextStyle(
+                                        color: Color(0xff4ae3ed),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],

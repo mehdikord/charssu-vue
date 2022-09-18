@@ -47,12 +47,14 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
                                 Image.asset(
                                   "assets/images/Back-Number.png",
                                 ),
-                                const Text(
-                                  "گزارشات سفارش: 123",
-                                  style: TextStyle(
-                                    color: Color(0xff4ae3ed),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                Consumer<Dashboard>(
+                                  builder: (context, dashboard, _) => Text(
+                                    "جزئیات سفارش: ${dashboard.order['code']}",
+                                    style: const TextStyle(
+                                      color: Color(0xff4ae3ed),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ],
