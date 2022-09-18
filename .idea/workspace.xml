@@ -4,23 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="update front template">
-      <change afterPath="$PROJECT_DIR$/Web/public/images/default/empty-cart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Checkout.vue" afterDir="false" />
+    <list default="true" id="cbebf8a1-9a02-410b-b598-2186267e8dae" name="Changes" comment="update front shop">
+      <change afterPath="$PROJECT_DIR$/Web/public/images/vendor/leaflet/dist/layers-2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/public/images/vendor/leaflet/dist/layers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/public/images/vendor/leaflet/dist/marker-icon-2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/public/images/vendor/leaflet/dist/marker-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/public/images/vendor/leaflet/dist/marker-shadow.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Web/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Web/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/public/template/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/template/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/auth/Front_Auth.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/auth/Front_Auth.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/index/Front_Index_Store.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/index/Front_Index_Store.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Products_Single.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Products_Single.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/routes/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/routes/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/orders/Front_Orders_New.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/orders/Front_Orders_New.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Checkout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/shop/Front_Shop_Checkout.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +233,7 @@
       <workItem from="1663225594354" duration="8261000" />
       <workItem from="1663333025575" duration="10468000" />
       <workItem from="1663357929349" duration="3294000" />
-      <workItem from="1663411665752" duration="298000" />
+      <workItem from="1663411665752" duration="8507000" />
     </task>
     <task id="LOCAL-00001" summary="update products management">
       <created>1662279993678</created>
@@ -274,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662854141292</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="update front shop">
+      <created>1663412287063</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1663412287063</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,7 +302,8 @@
     <MESSAGE value="update application api" />
     <MESSAGE value="update application api and front store" />
     <MESSAGE value="update front template" />
-    <option name="LAST_COMMIT_MESSAGE" value="update front template" />
+    <MESSAGE value="update front shop" />
+    <option name="LAST_COMMIT_MESSAGE" value="update front shop" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
