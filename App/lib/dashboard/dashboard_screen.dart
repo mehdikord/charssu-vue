@@ -1,4 +1,5 @@
 import 'package:charssu/dashboard/order_single_screen.dart';
+import 'package:charssu/main.dart';
 import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
@@ -21,8 +22,9 @@ class _DashboardScreenState extends State<DashboardScreen>
     with SingleTickerProviderStateMixin {
   late Future _dashboardOrdersFuture;
   late AnimationController _animationController;
+  late var newOrder;
 
-  Future _obtainDashboardOrdersFuture() {
+  Future _obtainDashboardOrdersFuture() async {
     return Provider.of<Dashboard>(context, listen: false)
         .fetchAndSetDashboardActiveOrders();
   }
@@ -30,13 +32,25 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     _dashboardOrdersFuture = _obtainDashboardOrdersFuture();
-    final order = Provider.of<Dashboard>(context, listen: false).setNewOrder();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     );
     _animationController.repeat(reverse: true);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => Provider.of<Dashboard>(
+        context,
+        listen: false,
+      ).fetchAndSetOrderServiceman().then(
+        (value) {
+          newOrder = Provider.of<Dashboard>(context, listen: false).newOrder;
+          if (newOrder != null) {
+            MyHomePage.setNewOrderDialog(context, newOrder);
+          }
+        },
+      ),
+    );
   }
 
   Future<void> changeOnline() async {
@@ -54,53 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
-  Future<dynamic> setNewOrderDialog() {
-    return showDialog(
-      context: context,
-      builder: (c) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: AlertDialog(
-            title: const Text(
-              "سفارش جدید",
-              style: TextStyle(
-                color: Colors.orange,
-              ),
-            ),
-            content:
-                const Text("آیا وضعیت دریافت سفارش را می خواهید تغییر دهید؟"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(c).pop();
-                },
-                child: const Text(
-                  "خیر",
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await changeOnline();
-                  Navigator.of(c).pop();
-                },
-                child: const Text(
-                  "تایید",
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Future<dynamic> activateDialog() {
+  Future<dynamic> changeOnlineDialog() {
     return showDialog(
       context: context,
       builder: (c) {
@@ -297,7 +265,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     FadeTransition(
                                       opacity: _animationController,
                                       child: RaisedButton(
-                                        onPressed: () => activateDialog(),
+                                        onPressed: () => changeOnlineDialog(),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(30),
@@ -315,7 +283,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     )
                                   else
                                     RaisedButton(
-                                      onPressed: () => activateDialog(),
+                                      onPressed: () => changeOnlineDialog(),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),
