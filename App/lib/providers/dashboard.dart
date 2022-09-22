@@ -6,12 +6,6 @@ import 'dart:convert';
 import 'dart:async';
 
 class Dashboard with ChangeNotifier {
-  List _orders = [];
-
-  List get orders {
-    return [..._orders];
-  }
-
   Map _order = {};
 
   Map get order {
@@ -41,16 +35,17 @@ class Dashboard with ChangeNotifier {
       }
       _order = extractedData;
       await findSingleOrderNotes(orderId);
+      await findSingleOrderProducts(orderId);
       notifyListeners();
     } catch (error) {
       rethrow;
     }
   }
 
-  List _notes = [];
+  List _orderNotes = [];
 
-  List get notes {
-    return [..._notes];
+  List get orderNotes {
+    return [..._orderNotes];
   }
 
   Future<void> findSingleOrderNotes(orderId) async {
@@ -74,7 +69,7 @@ class Dashboard with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      _notes = extractedData;
+      _orderNotes = extractedData;
       notifyListeners();
     } catch (error) {
       rethrow;
@@ -138,6 +133,138 @@ class Dashboard with ChangeNotifier {
     }
   }
 
+  List _products = [];
+
+  List get products {
+    return [..._products];
+  }
+
+  Future<void> fetchAndSetProducts() async {
+    final url = Uri.parse("http://10.0.2.2:8000/api/helpers/shop/products");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.get(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      _products = extractedData;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  List _orderProducts = [];
+
+  List get orderProducts {
+    return [..._orderProducts];
+  }
+
+  Future<void> findSingleOrderProducts(orderId) async {
+    final url = Uri.parse(
+        "http://10.0.2.2:8000/api/app/serviceman/orders/products/$orderId");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.get(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      _orderProducts = extractedData;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> submitNewOrderProduct(orderId, productId, paid, quantity) async {
+    final url = Uri.parse(
+        "http://10.0.2.2:8000/api/app/serviceman/orders/products/$orderId");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.post(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+        body: json.encode({
+          'product_id': productId,
+          'paid': paid,
+          'quantity': quantity,
+        }),
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteOrderProduct(productId) async {
+    final url = Uri.parse(
+        "http://10.0.2.2:8000/api/app/serviceman/orders/products/$productId");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.delete(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  List _orders = [];
+
+  List get orders {
+    return [..._orders];
+  }
+
   Future<void> fetchAndSetDashboardActiveOrders() async {
     final url =
         Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/active");
@@ -159,6 +286,7 @@ class Dashboard with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      await fetchAndSetOrderServiceman();
       _orders = extractedData;
       notifyListeners();
     } catch (error) {
@@ -194,34 +322,21 @@ class Dashboard with ChangeNotifier {
     }
   }
 
-  Future<void> changeOnline() async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/app/serviceman/activation");
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      if (!prefs.containsKey('userData')) {
-        return;
-      }
-      final extractedUserData =
-          json.decode(prefs.getString('userData').toString());
-      final response = await http.get(
-        url,
-        headers: {
-          "authorization": extractedUserData['token'],
-          'Content-type': 'application/json',
-        },
-      );
-      final extractedData = json.decode(response.body);
-      if (extractedData['response'] == null) {
-        return;
-      }
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
+  var _newOrder;
+
+  get newOrder {
+    return _newOrder;
   }
 
-  Future<void> setNewOrder() async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/new");
+  var _orderServiceman;
+
+  get orderServiceman {
+    return _orderServiceman;
+  }
+
+  Future<void> fetchAndSetOrderServiceman() async {
+    final urlOrderServiceman =
+        Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/new");
     try {
       final prefs = await SharedPreferences.getInstance();
       if (!prefs.containsKey('userData')) {
@@ -229,17 +344,35 @@ class Dashboard with ChangeNotifier {
       }
       final extractedUserData =
           json.decode(prefs.getString('userData').toString());
-      final response = await http.get(
-        url,
+      final responseOrderServiceman = await http.get(
+        urlOrderServiceman,
         headers: {
           "authorization": extractedUserData['token'],
           'Content-type': 'application/json',
         },
       );
-      final extractedData = json.decode(response.body);
-      if (extractedData == null) {
+      final extractedDataOrderServiceman =
+          json.decode(responseOrderServiceman.body);
+      if (extractedDataOrderServiceman == null) {
         return;
       }
+      _orderServiceman = extractedDataOrderServiceman;
+      // ===================================================
+      final urlSingleOrder = Uri.parse(
+          "http://10.0.2.2:8000/api/app/serviceman/orders/single/${_orderServiceman['order_id']}");
+      final responseSingleOrder = await http.get(
+        urlSingleOrder,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedDataSingleOrder = json.decode(responseSingleOrder.body);
+      if (extractedDataSingleOrder == null) {
+        return;
+      }
+      _newOrder = extractedDataSingleOrder;
+      // ===================================================
       notifyListeners();
     } catch (error) {
       rethrow;
@@ -268,6 +401,32 @@ class Dashboard with ChangeNotifier {
       );
       final extractedData = json.decode(response.body);
       if (extractedData == null) {
+        return;
+      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> changeOnline() async {
+    final url = Uri.parse("http://10.0.2.2:8000/api/app/serviceman/activation");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.get(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData['response'] == null) {
         return;
       }
       notifyListeners();

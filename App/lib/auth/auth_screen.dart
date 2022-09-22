@@ -130,16 +130,17 @@ class _AuthScreenState extends State<AuthScreen> {
                       "assets/images/Back-Mobile.png",
                       fit: BoxFit.fill,
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.35,
                     ),
                     SizedBox(
-                      height: backMobileImage.height!,
+                      height: MediaQuery.of(context).size.height * 0.35,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              top: backMobileImage.height! * 0.1,
+                              top: MediaQuery.of(context).size.height *
+                                  0.35 *
+                                  0.1,
                             ),
                             child: Image.asset(
                               "assets/images/Icon-Mobail.png",
@@ -182,7 +183,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           //       ),
                           //       Padding(
                           //         padding: EdgeInsets.only(
-                          //           bottom: backMobileImage.height! * 0.08,
+                          //           bottom: MediaQuery.of(context).size.height * 0.35 * 0.08,
                           //         ),
                           //         child: _isLoading
                           //             ? const Padding(
@@ -332,7 +333,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              bottom: backMobileImage.height! * 0.08,
+                              bottom: MediaQuery.of(context).size.height *
+                                  0.35 *
+                                  0.08,
                             ),
                             child: RaisedButton(
                               onPressed: () {
