@@ -165,6 +165,11 @@ Route::group(['prefix' => 'app'],static function(){
                 Route::get('make-invoice/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'make_invoice']);
                 Route::get('get-invoice/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_invoice']);
                 Route::get('delete-invoice/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'delete_invoice']);
+                Route::get('set/done/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_done']);
+                //payments
+                Route::post('payment/start/{invoice}',[\App\Http\Controllers\Api\App\Serviceman\PaymentController::class,'start']);
+                Route::post('payment/callback/',[\App\Http\Controllers\Api\App\Serviceman\PaymentController::class,'callback']);
+
 
             });
 
