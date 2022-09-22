@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\App\Serviceman;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cost;
 use App\Models\Order;
 use App\Models\Order_Note;
 use App\Models\Order_Product;
@@ -236,6 +237,98 @@ class OrderController extends Controller
         }
         $product->delete();
         return response()->json(['message' => 'قطعه باموفقیت حذف گردید']);
+
+    }
+
+    public function make_invoice(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+
+        //start making invoice for order
+        $invoice = $order->invoices()->create([
+            'type' => 'customer',
+        ]);
+
+        $total_price = 0;
+
+        //make invoice details
+
+        //set problem price
+        if (!empty($order->problem_id)){
+            $invoice->details()->create([
+                'title' => $order->problem->problem,
+                'price' => $order->problem->price,
+            ]);
+            $total_price = $order->problem->price;
+        }
+
+        //set costs
+        foreach (Cost::where('is_active',true)->get() as $cost){
+            $invoice->details()->create([
+                'title' => $cost->title,
+                'price' => $cost->price,
+            ]);
+            $total_price += $cost->price;
+        }
+
+        //set products (customers)
+        foreach ($order->products()->where('paid','customer')->get() as $product){
+            $product_price = 0;
+            if (!empty($product->products->sale)){
+                $product_price = $product->products->sale;
+            }else{
+                $product_price = $product->products->price;
+            }
+            $product_price *= $product->quantity;
+            $product_title = $product->products->name."/کد: ".$product->products->code."/تعداد: ".$product->quantity;
+            $invoice->details()->create([
+                'title' => $product_title,
+                'price' => $product_price,
+                'is_product' => 1,
+            ]);
+            $total_price += $product_price;
+        }
+
+        $invoice->update([
+            'price' => $total_price,
+        ]);
+
+
+        //check invoice for serviceman (products)
+        if ($order->products()->where('paid','serviceman')->exists()){
+            //start making invoice for serviceman
+            $serviceman_invoice = $order->invoices()->create([
+                'type' => 'serviceman',
+            ]);
+
+            $serviceman_total_price = 0;
+
+            foreach ($order->products()->where('paid','serviceman')->get() as $serviceman_product){
+                $serviceman_product_price = 0;
+                if (!empty($serviceman_product->products->serviceman_price)){
+                    $serviceman_product_price = $serviceman_product->products->serviceman_price;
+                }else{
+                    $serviceman_product_price = $serviceman_product->products->price;
+                }
+                $serviceman_product_price *= $serviceman_product->quantity;
+                $product_title = $serviceman_product->products->name."/کد: ".$serviceman_product->products->code."/تعداد: ".$serviceman_product->quantity;
+                $serviceman_invoice->details()->create([
+                    'title' => $product_title,
+                    'price' => $serviceman_product_price,
+                    'is_product' => 1,
+                ]);
+                $serviceman_total_price += $serviceman_product_price;
+            }
+
+            $serviceman_invoice->update([
+                'price' => $serviceman_total_price,
+            ]);
+
+
+        }
+
 
     }
 

@@ -6,20 +6,20 @@
                 <div class="navbar-brand-box">
                     <a href="" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="manage/images/logo-sm.svg" alt="" height="30">
+                                <img src="/logo.png" alt="" height="30">
                             </span>
                         <span class="logo-lg">
-                                <img src="manage/images/logo-sm.svg" alt="" height="24"> <span
+                                <img src="/logo.png" alt="" height="24"> <span
                             class="logo-txt">چارسو</span>
                             </span>
                     </a>
 
                     <a href="" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="/manage/images/logo-sm.svg" alt="" height="30">
+                                <img src="/logo.png" alt="" height="30">
                             </span>
                         <span class="logo-lg">
-                                <img src="/manage/images/logo-sm.svg" alt="" height="24"> <span
+                                <img src="/logo.png" alt="" height="24"> <span
                             class="logo-txt">چارسو</span>
                             </span>
                     </a>
@@ -92,7 +92,7 @@
                                 <a href="#!" class="text-reset notification-item">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
-                                            <img src="/manage/images/users/avatar-3.jpg" class="rounded-circle avatar-sm"
+                                            <img src="/images/default/user.png" class="rounded-circle avatar-sm"
                                                  alt="user-pic">
                                         </div>
                                         <div class="flex-grow-1">
@@ -120,9 +120,9 @@
                         <button type="button" class="btn header-item bg-soft-light border-start border-end"
                                 id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                            <img class="rounded-circle header-profile-user" src="/manage/images/users/avatar-1.jpg"
+                            <img class="rounded-circle header-profile-user" src="/images/default/user.png"
                                  alt="Header Avatar">
-                            <span class="d-none d-xl-inline-block ms-1 fw-medium"> نام مدیر</span>
+                            <span class="d-none d-xl-inline-block ms-1 fw-medium">{{UserAuthGet().name}}</span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">

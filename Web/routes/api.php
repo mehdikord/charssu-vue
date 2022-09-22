@@ -88,6 +88,7 @@ Route::group(['prefix'=>'management'],static function (){
 
         //products
         Route::resource('products',\App\Http\Controllers\Api\Manage\ProductController::class);
+
         Route::prefix('products')->group(function (){
             Route::get('images/{product}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images']);
             Route::post('images/{product}',[\App\Http\Controllers\Api\Manage\ProductController::class,'images_store']);
@@ -95,7 +96,8 @@ Route::group(['prefix'=>'management'],static function (){
 
         });
 
-
+        //costs
+        Route::resource('costs',\App\Http\Controllers\Api\Manage\CostController::class)->except('create','show','edit');
 
 
 
@@ -160,6 +162,9 @@ Route::group(['prefix' => 'app'],static function(){
                 Route::get('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_products']);
                 Route::post('products/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'set_products']);
                 Route::delete('products/{product}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'delete_product']);
+                Route::get('make-invoice/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'make_invoice']);
+                Route::get('get-invoice/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'get_invoice']);
+                Route::get('delete-invoice/{order}',[\App\Http\Controllers\Api\App\Serviceman\OrderController::class,'delete_invoice']);
 
             });
 

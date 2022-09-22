@@ -85,7 +85,13 @@
                             <span data-key="t-zones-manage">منطقه ها</span>
                         </router-link>
                     </li>
-                    <li class="menu-title text-danger" data-key="t-zones">مشکلات دستگاه</li>
+                    <li class="menu-title text-danger" data-key="t-problems-costs">مشکلات دستگاه و هزینه ها</li>
+                    <li>
+                        <router-link :to="{name : 'manage_costs'}">
+                            <i class="mdi mdi-currency-usd"></i>
+                            <span data-key="t-costs-manage">هزینه های سفارش</span>
+                        </router-link>
+                    </li>
                     <li>
                         <router-link :to="{name : 'manage_problems'}">
                             <i class="mdi mdi-alert"></i>

@@ -60,4 +60,9 @@ class Order extends Model
         return $this->hasMany(Order_Product::class,'order_id');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Order_Invoice::class,'order_id');
+    }
+
 }

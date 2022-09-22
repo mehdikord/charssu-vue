@@ -13,6 +13,7 @@ import Manage_Servicemans_Waiting from "../components/management/servicemans/Man
 import Manage_Auth from "../components/management/auth/Manage_Auth";
 import Manage_Products_Categories from "../components/management/products/Manage_Products_Categories";
 import Manage_Products from "../components/management/products/Manage_Products";
+import Manage_Costs from "../components/management/costs/Manage_Costs";
 
 const routes = [
 
@@ -89,6 +90,11 @@ const routes = [
         path : '/management/products',
         component : Manage_Products,
         name : 'manage_products',
+    },
+    {
+        path : '/management/costs',
+        component : Manage_Costs,
+        name : 'manage_costs',
     },
 
 

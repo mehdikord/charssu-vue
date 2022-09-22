@@ -13,7 +13,7 @@ function helper_send_auth_sms($phone,$code)
 function helper_send_sms($phone,$message){
 
     try{
-        $sender = "10004346";
+        $sender = "";
 
         $receptor = array($phone);
 

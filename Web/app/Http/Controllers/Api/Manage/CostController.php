@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\Manage;
 
 use App\Http\Controllers\Controller;
-use App\Models\Problem;
+use App\Models\Cost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProblemController extends Controller
+class CostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,18 +16,10 @@ class ProblemController extends Controller
      */
     public function index()
     {
-        return response()->json(Problem::all());
+        return response()->json(Cost::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,49 +30,58 @@ class ProblemController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(),[
-            'problem' => 'required|unique:problems',
+            'title' => 'required|unique:costs|max:225',
             'price' => 'required|numeric|min:1000',
         ]);
         if ($validation->fails()){
             return response()->json($validation->errors(),421);
         }
-        $result = Problem::create([
-            'problem' => $request->problem,
+        $result = Cost::create([
+            'title' => $request->title,
             'price' => $request->price,
+            'is_active' => 0,
         ]);
-        return  response()->json($result);
-
+        return response()->json($result);
     }
+
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Problem  $problem
+     * @param  \App\Models\Cost  $cost
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Problem $problem)
+    public function update(Request $request, Cost $cost)
     {
+
         $validation = Validator::make($request->all(),[
-            'problem' => "required|unique:problems,problem,$problem->id",
+            'title' => "required|unique:costs,title,$cost->id|max:225",
             'price' => 'required|numeric|min:1000',
         ]);
+
         if ($validation->fails()){
             return response()->json($validation->errors(),421);
         }
-        $problem->update(['problem'=>$request->problem,'price'=>$request->price]);
+        $cost->update([
+            'title' => $request->title,
+            'price' => $request->price,
+        ]);
+
         return response()->json('Updated Successful');
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Problem  $problem
-     * @return \Illuminate\Http\JsonResponse
+     * @param  \App\Models\Cost  $cost
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(Problem $problem)
+    public function destroy(Cost $cost)
     {
-        $problem->delete();
+        $cost->delete();
+
         return response()->json('Deleted Successful');
 
     }
