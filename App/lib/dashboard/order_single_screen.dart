@@ -20,8 +20,9 @@ class OrderSingleScreen extends StatefulWidget {
 
 class _OrderSingleScreenState extends State<OrderSingleScreen> {
   final _controller = TextEditingController();
-  String noteText = "";
-  var _isLoading = false;
+  var _isLoadingProduct = false;
+  var _isLoadingNote = false;
+  var _isLoadingFactor = false;
 
   @override
   void dispose() {
@@ -719,12 +720,19 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.4,
                                     child: ElevatedButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pushNamed(
-                                        OrderNotesScreen.routeName,
-                                        arguments:
-                                            dashboard.order['id'].toString(),
-                                      ),
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isLoadingNote = true;
+                                        });
+                                        await Navigator.of(context).pushNamed(
+                                          OrderNotesScreen.routeName,
+                                          arguments:
+                                              dashboard.order['id'].toString(),
+                                        );
+                                        setState(() {
+                                          _isLoadingNote = false;
+                                        });
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all(
@@ -737,12 +745,20 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                           ),
                                         ),
                                       ),
-                                      child: const Text(
-                                        "گزارش",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
+                                      child: _isLoadingNote
+                                          ? const SizedBox(
+                                              width: 22.0,
+                                              height: 22.0,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : const Text(
+                                              "گزارش",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
                                     ),
                                   ),
                                   // Part Button
@@ -750,17 +766,25 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.4,
                                     child: ElevatedButton(
-                                      onPressed: () => Provider.of<Dashboard>(
-                                        context,
-                                        listen: false,
-                                      ).fetchAndSetProducts().then(
-                                            (value) =>
-                                                Navigator.of(context).pushNamed(
-                                              OrderProductsScreen.routeName,
-                                              arguments: dashboard.order['id']
-                                                  .toString(),
-                                            ),
-                                          ),
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isLoadingProduct = true;
+                                        });
+                                        await Provider.of<Dashboard>(
+                                          context,
+                                          listen: false,
+                                        ).fetchAndSetProducts().then(
+                                              (value) => Navigator.of(context)
+                                                  .pushNamed(
+                                                OrderProductsScreen.routeName,
+                                                arguments: dashboard.order['id']
+                                                    .toString(),
+                                              ),
+                                            );
+                                        setState(() {
+                                          _isLoadingProduct = false;
+                                        });
+                                      },
                                       style: ButtonStyle(
                                         shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
@@ -769,12 +793,20 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                           ),
                                         ),
                                       ),
-                                      child: const Text(
-                                        "قطعه",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
+                                      child: _isLoadingProduct
+                                          ? const SizedBox(
+                                              width: 22.0,
+                                              height: 22.0,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : const Text(
+                                              "قطعه",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
                                     ),
                                   ),
                                 ],
@@ -784,10 +816,17 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                 width: MediaQuery.of(context).size.width * 0.6,
                                 margin: const EdgeInsets.only(bottom: 10),
                                 child: ElevatedButton(
-                                  onPressed: () =>
-                                      Navigator.of(context).pushNamed(
-                                    FactorScreen.routeName,
-                                  ),
+                                  onPressed: () async {
+                                    setState(() {
+                                      _isLoadingFactor = true;
+                                    });
+                                    await Navigator.of(context).pushNamed(
+                                      FactorScreen.routeName,
+                                    );
+                                    setState(() {
+                                      _isLoadingFactor = false;
+                                    });
+                                  },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                       const Color(0xff6ac04f),
@@ -798,12 +837,20 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                       ),
                                     ),
                                   ),
-                                  child: const Text(
-                                    "صدور فاکتور و اتمام سرویس",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                                  child: _isLoadingFactor
+                                      ? const SizedBox(
+                                          width: 22.0,
+                                          height: 22.0,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : const Text(
+                                          "صدور فاکتور و اتمام سرویس",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ],

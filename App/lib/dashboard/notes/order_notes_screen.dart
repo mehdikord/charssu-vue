@@ -1,6 +1,7 @@
 import 'package:charssu/providers/dashboard.dart';
 import 'package:charssu/widget/bg_widget.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
+import 'package:charssu/widget/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +15,15 @@ class OrderNotesScreen extends StatefulWidget {
 }
 
 class _OrderNotesScreenState extends State<OrderNotesScreen> {
-  var _isLoading = false;
   final _controller = TextEditingController();
+  var _isLoadingSubmit = false;
+  var _isLoadingDelete = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +33,7 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        drawer: const MainDrawer(),
         floatingActionButton: Padding(
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).size.height * 0.1,
@@ -37,96 +46,102 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
                 builder: (c) {
                   return Directionality(
                     textDirection: TextDirection.rtl,
-                    child: AlertDialog(
-                      title: const Text(
-                        "ثبت گزارش",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
+                    child: StatefulBuilder(
+                      builder: (context, setState) => AlertDialog(
+                        title: const Text(
+                          "ثبت گزارش",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      content: Container(
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.only(bottom: 15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "متن گزارش",
-                              style: TextStyle(
-                                color: Color(0xff253567),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                        content: Container(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(bottom: 15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "متن گزارش",
+                                style: TextStyle(
+                                  color: Color(0xff253567),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            TextFormField(
-                              controller: _controller,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(),
-                                focusedBorder: OutlineInputBorder(),
+                              TextFormField(
+                                controller: _controller,
+                                decoration: const InputDecoration(
+                                  enabledBorder: OutlineInputBorder(),
+                                  focusedBorder: OutlineInputBorder(),
+                                ),
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: 5,
                               ),
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: 5,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            if (_controller.value.text.isNotEmpty) {
-                              setState(() {
-                                _isLoading = true;
-                              });
-                              Provider.of<Dashboard>(
-                                context,
-                                listen: false,
-                              )
-                                  .submitNewOrderNote(
-                                orderId,
-                                _controller.value.text,
-                              )
-                                  .then((value) {
+                        actions: [
+                          TextButton(
+                            onPressed: () async {
+                              if (_controller.value.text.isNotEmpty) {
                                 setState(() {
-                                  _controller.value = TextEditingValue.empty;
+                                  _isLoadingSubmit = true;
                                 });
-                              });
-                              Provider.of<Dashboard>(
-                                context,
-                                listen: false,
-                              ).findSingleOrderNotes(orderId);
-                              setState(() {
-                                _isLoading = false;
-                              });
-                              Navigator.of(context).pop();
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) => const Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: AlertDialog(
-                                    title: Text(
-                                      "خطا",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 18,
+                                await Provider.of<Dashboard>(
+                                  context,
+                                  listen: false,
+                                )
+                                    .submitNewOrderNote(
+                                  orderId,
+                                  _controller.value.text,
+                                )
+                                    .then((value) {
+                                  setState(() {
+                                    _controller.value = TextEditingValue.empty;
+                                  });
+                                });
+                                Provider.of<Dashboard>(
+                                  context,
+                                  listen: false,
+                                ).findSingleOrderNotes(orderId);
+                                setState(() {
+                                  _isLoadingSubmit = false;
+                                });
+                                Navigator.of(context).pop();
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: AlertDialog(
+                                      title: Text(
+                                        "خطا",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      content: Text(
+                                        "لطفا متن گزارش خود را وارد کنید.",
                                       ),
                                     ),
-                                    content: Text(
-                                      "لطفا متن گزارش خود را وارد کنید.",
-                                    ),
                                   ),
-                                ),
-                              );
-                            }
-                          },
-                          child: _isLoading
-                              ? const CircularProgressIndicator()
-                              : const Text("ثبت"),
-                        ),
-                      ],
+                                );
+                              }
+                            },
+                            child: _isLoadingSubmit
+                                ? const SizedBox(
+                                    width: 22.0,
+                                    height: 22.0,
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : const Text("ثبت"),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -293,69 +308,83 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
                                           alignment: Alignment.centerLeft,
                                           child: ElevatedButton(
                                             onPressed: () {
-                                              setState(() {
-                                                _isLoading = true;
-                                              });
                                               showDialog(
                                                 context: context,
                                                 builder: (context) =>
                                                     Directionality(
                                                   textDirection:
                                                       TextDirection.rtl,
-                                                  child: AlertDialog(
-                                                    title: const Text(
-                                                      "هشدار",
-                                                      style: TextStyle(
-                                                        color: Colors.orange,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                    content: const Text(
-                                                      "آیا مطمئن هستید؟",
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: const Text(
-                                                          "خیر",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.red),
+                                                  child: StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) =>
+                                                            AlertDialog(
+                                                      title: const Text(
+                                                        "هشدار",
+                                                        style: TextStyle(
+                                                          color: Colors.orange,
+                                                          fontSize: 18,
                                                         ),
                                                       ),
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          dashboard.deleteOrderNote(
-                                                              dashboard
-                                                                      .orderNotes[
-                                                                  i]['id']);
-                                                          dashboard
-                                                              .findSingleOrderNotes(
-                                                                  dashboard
-                                                                          .order[
-                                                                      'id']);
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: _isLoading
-                                                            ? const CircularProgressIndicator()
-                                                            : const Text(
-                                                                "تایید",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .green),
-                                                              ),
+                                                      content: const Text(
+                                                        "آیا مطمئن هستید؟",
                                                       ),
-                                                    ],
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: const Text(
+                                                            "خیر",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            setState(() {
+                                                              _isLoadingDelete =
+                                                                  true;
+                                                            });
+                                                            await dashboard
+                                                                .deleteOrderNote(
+                                                                    dashboard.orderNotes[
+                                                                            i]
+                                                                        ['id'])
+                                                                .then((value) =>
+                                                                    dashboard.findSingleOrderNotes(
+                                                                        dashboard.order[
+                                                                            'id']))
+                                                                .then((value) =>
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop());
+                                                            setState(() {
+                                                              _isLoadingDelete =
+                                                                  false;
+                                                            });
+                                                          },
+                                                          child: _isLoadingDelete
+                                                              ? const SizedBox(
+                                                                  width: 22.0,
+                                                                  height: 22.0,
+                                                                  child:
+                                                                      CircularProgressIndicator(),
+                                                                )
+                                                              : const Text(
+                                                                  "بله",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .green),
+                                                                ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               );
-                                              setState(() {
-                                                _isLoading = false;
-                                              });
                                             },
                                             style: ButtonStyle(
                                               backgroundColor:
@@ -363,9 +392,7 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
                                                 Colors.red,
                                               ),
                                             ),
-                                            child: _isLoading
-                                                ? const CircularProgressIndicator()
-                                                : const Text("حذف"),
+                                            child: const Text("حذف"),
                                           ),
                                         ),
                                       ],

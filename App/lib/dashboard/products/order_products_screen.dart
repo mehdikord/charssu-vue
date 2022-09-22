@@ -1,34 +1,100 @@
 import 'package:charssu/providers/dashboard.dart';
 import 'package:charssu/widget/bg_widget.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
+import 'package:charssu/widget/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:select_form_field/select_form_field.dart';
 
 class OrderProductsScreen extends StatefulWidget {
   const OrderProductsScreen({Key? key}) : super(key: key);
 
-  static const routeName = "/orders/show/products";
+  static const routeName = "/products";
 
   @override
   State<OrderProductsScreen> createState() => _OrderProductsScreenState();
 }
 
 class _OrderProductsScreenState extends State<OrderProductsScreen> {
-  var _isLoading = false;
   final _paidController = TextEditingController();
   final _productController = TextEditingController();
   final _quantityController = TextEditingController();
   var _productId;
+
+  var _isLoadingSubmit = false;
+  var _isLoadingDelete = false;
+
+  late var _allProducts;
+
+  List _getProducts() {
+    return Provider.of<Dashboard>(context, listen: false).products;
+  }
+
+  @override
+  void dispose() {
+    _paidController.dispose();
+    _productController.dispose();
+    _quantityController.dispose();
+    super.dispose();
+  }
+
+  // This holds a list of fiction users
+  // You can use data fetched from a database or a server as well
+  // final List<Map<String, dynamic>> _allUsers = [
+  //   {"id": 1, "name": "Andy", "age": 29},
+  //   {"id": 2, "name": "Aragon", "age": 40},
+  //   {"id": 3, "name": "Bob", "age": 5},
+  //   {"id": 4, "name": "Barbara", "age": 35},
+  //   {"id": 5, "name": "Candy", "age": 21},
+  //   {"id": 6, "name": "Colin", "age": 55},
+  //   {"id": 7, "name": "Audra", "age": 30},
+  //   {"id": 8, "name": "Banana", "age": 14},
+  //   {"id": 9, "name": "Caversky", "age": 100},
+  //   {"id": 10, "name": "Becky", "age": 32},
+  // ];
+
+  // This list holds the data for the list view
+  List _foundProducts = [];
+  @override
+  initState() {
+    // at the beginning, all users are shown
+    _allProducts = _getProducts();
+    _foundProducts = _allProducts;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     Image backMobileImage;
     final orderId = ModalRoute.of(context)!.settings.arguments;
 
+    // This function is called whenever the text field changes
+    void _runSearch(String enteredKeyword) {
+      List results = [];
+      if (enteredKeyword.isEmpty) {
+        // if the search field is empty or only contains white-space, we'll display all users
+        results = _allProducts;
+      } else {
+        results = _allProducts
+            .where((product) => product["name"]
+                .toString()
+                .toLowerCase()
+                .contains(enteredKeyword.toLowerCase()))
+            .toList();
+        // we use the toLowerCase() method to make it case-insensitive
+      }
+
+      // Refresh the UI
+      setState(() {
+        _foundProducts = results;
+      });
+    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        drawer: const MainDrawer(),
         floatingActionButton: Container(
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).size.height * 0.1,
@@ -40,205 +106,265 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
                 isScrollControlled: true,
                 context: context,
                 builder: (c) {
-                  return Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.5 +
-                          MediaQuery.of(context).viewInsets.bottom,
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 40,
-                        horizontal: 20,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextFormField(
-                            controller: _productController,
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(),
-                              labelText: "انتخاب قطعه",
-                            ),
-                            readOnly: true,
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (c) {
-                                  return Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: AlertDialog(
-                                      title: const Text(
-                                        "لیست محصولات",
-                                        style: TextStyle(
-                                          color: Colors.green,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      content: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Consumer<Dashboard>(
-                                          builder: (context, dashboard, _) =>
-                                              Column(
-                                            children: [
-                                              ListView.builder(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                itemCount:
-                                                    dashboard.products.length,
-                                                itemBuilder: (context, i) =>
-                                                    Card(
-                                                  color: Colors.lightGreen,
-                                                  elevation: 18,
-                                                  margin: const EdgeInsets
-                                                          .symmetric(
-                                                      vertical: 10.0),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        _productController
-                                                            .text = dashboard
-                                                                .products[i]
-                                                            ['name'];
-                                                        _productId = dashboard
-                                                            .products[i]['id'];
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: Text(
-                                                        dashboard.products[i]
-                                                            ['name'],
-                                                        style: const TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SelectFormField(
-                                controller: _paidController,
-                                decoration: const InputDecoration(
-                                  enabledBorder: OutlineInputBorder(),
-                                  focusedBorder: OutlineInputBorder(),
-                                  labelText: "پرداخت توسط",
-                                ),
-                                items: const [
-                                  {
-                                    'value': 'serviceman',
-                                    'label': 'سرویس کار',
-                                  },
-                                  {
-                                    'value': 'customer',
-                                    'label': 'مشتری',
-                                  },
-                                  {
-                                    'value': 'nobody',
-                                    'label': 'هیچکدام',
-                                  },
-                                ],
+                  return StatefulBuilder(
+                    builder: (context, setState) => Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.5 +
+                            MediaQuery.of(context).viewInsets.bottom,
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 40,
+                          horizontal: 20,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextFormField(
+                              controller: _productController,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(),
+                                focusedBorder: OutlineInputBorder(),
+                                labelText: "انتخاب قطعه",
                               ),
-                            ],
-                          ),
-                          TextFormField(
-                            controller: _quantityController,
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(),
-                              focusedBorder: OutlineInputBorder(),
-                              labelText: "تعداد",
-                            ),
-                            textInputAction: TextInputAction.done,
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_paidController.value.text.isNotEmpty &&
-                                    _quantityController.value.text.isNotEmpty) {
-                                  setState(() {
-                                    _isLoading = true;
-                                  });
-                                  Provider.of<Dashboard>(
-                                    context,
-                                    listen: false,
-                                  )
-                                      .submitNewOrderProduct(
-                                    orderId,
-                                    _productId,
-                                    _paidController.value.text,
-                                    _quantityController.value.text,
-                                  )
-                                      .then((value) {
-                                    setState(() {
-                                      _productController.value =
-                                          TextEditingValue.empty;
-                                      _paidController.value =
-                                          TextEditingValue.empty;
-                                      _quantityController.value =
-                                          TextEditingValue.empty;
-                                    });
-                                  });
-                                  Provider.of<Dashboard>(
-                                    context,
-                                    listen: false,
-                                  ).findSingleOrderProducts(orderId);
-                                  setState(() {
-                                    _isLoading = false;
-                                  });
-                                  Navigator.of(context).pop();
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const Directionality(
+                              readOnly: true,
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (c) {
+                                    return Directionality(
                                       textDirection: TextDirection.rtl,
-                                      child: AlertDialog(
-                                        title: Text(
-                                          "خطا",
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 18,
+                                      child: StatefulBuilder(
+                                        builder: (context, setState) =>
+                                            AlertDialog(
+                                          title: const Text(
+                                            "لیست محصولات",
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          content: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                children: [
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  TextField(
+                                                    onChanged: (value) =>
+                                                        setState(() =>
+                                                            _runSearch(value)),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            labelText: 'جستجو',
+                                                            suffixIcon: Icon(
+                                                                Icons.search)),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  _foundProducts.isNotEmpty
+                                                      ? ListView.builder(
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemCount:
+                                                              _foundProducts
+                                                                  .length,
+                                                          itemBuilder:
+                                                              (context, i) =>
+                                                                  InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                _productController
+                                                                        .text =
+                                                                    _foundProducts[
+                                                                            i][
+                                                                        'name'];
+                                                                _productId =
+                                                                    _foundProducts[
+                                                                            i]
+                                                                        ['id'];
+                                                              });
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Card(
+                                                              key: ValueKey(
+                                                                  _foundProducts[
+                                                                      i]["id"]),
+                                                              color: Colors
+                                                                  .lightGreen,
+                                                              elevation: 18,
+                                                              margin: const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical:
+                                                                      10.0),
+                                                              child: ListTile(
+                                                                // leading: Text(
+                                                                //   _foundProducts[
+                                                                //           i]["id"]
+                                                                //       .toString(),
+                                                                //   style:
+                                                                //       const TextStyle(
+                                                                //           fontSize:
+                                                                //               24),
+                                                                // ),
+                                                                title: Text(
+                                                                    _foundProducts[
+                                                                            i][
+                                                                        'name']),
+                                                                subtitle: Text(
+                                                                  _foundProducts[i]
+                                                                              [
+                                                                              "category"]
+                                                                          [
+                                                                          "name"]
+                                                                      .toString(),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : const Text(
+                                                          'محصولی یافت نشد!',
+                                                          style: TextStyle(
+                                                              fontSize: 24),
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                        content: Text(
-                                          "لطفا اطلاعات را با دقت وارد کنید.",
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                SelectFormField(
+                                  controller: _paidController,
+                                  decoration: const InputDecoration(
+                                    enabledBorder: OutlineInputBorder(),
+                                    focusedBorder: OutlineInputBorder(),
+                                    labelText: "پرداخت توسط",
+                                  ),
+                                  items: const [
+                                    {
+                                      'value': 'serviceman',
+                                      'label': 'سرویس کار',
+                                    },
+                                    {
+                                      'value': 'customer',
+                                      'label': 'مشتری',
+                                    },
+                                    {
+                                      'value': 'nobody',
+                                      'label': 'هیچکدام',
+                                    },
+                                  ],
+                                ),
+                              ],
+                            ),
+                            TextFormField(
+                              controller: _quantityController,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(),
+                                focusedBorder: OutlineInputBorder(),
+                                labelText: "تعداد",
+                              ),
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.number,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (_paidController.value.text.isNotEmpty &&
+                                      _quantityController
+                                          .value.text.isNotEmpty) {
+                                    setState(() {
+                                      _isLoadingSubmit = true;
+                                    });
+                                    await Provider.of<Dashboard>(
+                                      context,
+                                      listen: false,
+                                    )
+                                        .submitNewOrderProduct(
+                                          orderId,
+                                          _productId,
+                                          _paidController.value.text,
+                                          _quantityController.value.text,
+                                        )
+                                        .then((value) => Provider.of<Dashboard>(
+                                              context,
+                                              listen: false,
+                                            )
+                                                .findSingleOrderProducts(
+                                                    orderId)
+                                                .then((value) {
+                                              setState(() {
+                                                _productController.value =
+                                                    TextEditingValue.empty;
+                                                _paidController.value =
+                                                    TextEditingValue.empty;
+                                                _quantityController.value =
+                                                    TextEditingValue.empty;
+                                              });
+                                            }));
+                                    setState(() {
+                                      _isLoadingSubmit = false;
+                                    });
+                                    Navigator.of(context).pop();
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          const Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: AlertDialog(
+                                          title: Text(
+                                            "خطا",
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          content: Text(
+                                            "لطفا اطلاعات را با دقت وارد کنید.",
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: _isLoading
-                                  ? const CircularProgressIndicator()
-                                  : const Text("ثبت"),
+                                    );
+                                  }
+                                },
+                                child: _isLoadingSubmit
+                                    ? const SizedBox(
+                                        width: 22.0,
+                                        height: 22.0,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : const Text("ثبت"),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -418,51 +544,72 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
                                                   Directionality(
                                                 textDirection:
                                                     TextDirection.rtl,
-                                                child: AlertDialog(
-                                                  title: const Text(
-                                                    "هشدار",
-                                                    style: TextStyle(
-                                                      color: Colors.orange,
-                                                      fontSize: 18,
-                                                    ),
-                                                  ),
-                                                  content: const Text(
-                                                    "آیا مطمئن هستید؟",
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: const Text(
-                                                        "خیر",
-                                                        style: TextStyle(
-                                                            color: Colors.red),
+                                                child: StatefulBuilder(
+                                                  builder:
+                                                      (context, setState) =>
+                                                          AlertDialog(
+                                                    title: const Text(
+                                                      "هشدار",
+                                                      style: TextStyle(
+                                                        color: Colors.orange,
+                                                        fontSize: 18,
                                                       ),
                                                     ),
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        dashboard
-                                                            .deleteOrderProduct(
-                                                                dashboard
-                                                                        .orderProducts[
-                                                                    i]['id']);
-                                                        dashboard
-                                                            .findSingleOrderProducts(
-                                                                dashboard.order[
-                                                                    'id']);
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: const Text(
-                                                        "تایید",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.green),
-                                                      ),
+                                                    content: const Text(
+                                                      "آیا مطمئن هستید؟",
                                                     ),
-                                                  ],
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: const Text(
+                                                          "خیر",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () async {
+                                                          setState(() {
+                                                            _isLoadingDelete =
+                                                                true;
+                                                          });
+                                                          await dashboard
+                                                              .deleteOrderProduct(
+                                                                  dashboard
+                                                                          .orderProducts[
+                                                                      i]['id'])
+                                                              .then((value) => dashboard
+                                                                  .findSingleOrderProducts(
+                                                                      dashboard
+                                                                              .order[
+                                                                          'id']));
+                                                          setState(() {
+                                                            _isLoadingDelete =
+                                                                false;
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: _isLoadingDelete
+                                                            ? const SizedBox(
+                                                                width: 22.0,
+                                                                height: 22.0,
+                                                                child:
+                                                                    CircularProgressIndicator(),
+                                                              )
+                                                            : const Text(
+                                                                "بله",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .green),
+                                                              ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             );
