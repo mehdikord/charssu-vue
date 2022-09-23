@@ -58,7 +58,7 @@
                     <i class="mdi mdi-account"></i>
                     حساب کاربری
                 </router-link>
-                <router-link v-else :to="{name : 'front_auth'}" class="btn btn-warning btn-sm">
+                <router-link v-else :to="{name : 'customer_profile'}" class="btn btn-warning btn-sm">
                     <i class="mdi mdi-monitor-dashboard"></i>
                     پنل کاربری
                 </router-link>

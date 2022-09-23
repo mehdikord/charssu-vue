@@ -8,13 +8,13 @@
                             <div class="main-banner-content">
                                 <h1 class="text-aviny font-70">چارسو</h1>
                                 <p class="font-22">
-                                    سفارش انواع خدمات و ارسال سرویس کار متخصص به منزل فقط با چند کلیک !
+                                    چارسو اولین پلتفرم تخصصی خدمات و ارسال سرویس کار پکیج های دیواری
                                 </p>
                                 <div class="banner-btn">
-                                    <a  class="default-btn-one">
+                                    <router-link :to="{name : 'front_orders_new'}"  class="default-btn-one text-dark">
                                         درخواست سرویس کار !
                                         <span></span>
-                                    </a>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>

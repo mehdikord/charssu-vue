@@ -5,6 +5,8 @@ import Front_Auth from "../components/front/auth/Front_Auth";
 import Front_Shop_Index from "../components/front/shop/Front_Shop_Index";
 import Front_Shop_Products_Single from "../components/front/shop/Front_Shop_Products_Single";
 import Front_Shop_Checkout from "../components/front/shop/Front_Shop_Checkout";
+import Customer_Main from "../components/front/panel/Customer_Main";
+import Customer_Profile from "../components/front/panel/Customer_Profile";
 
 
 const routes = [
@@ -39,6 +41,25 @@ const routes = [
         component : Front_Shop_Checkout,
         name : 'front_shop_checkout',
     },
+    {
+        path : '/shop/checkout',
+        component : Front_Shop_Checkout,
+        name : 'front_shop_checkout',
+    },
+
+    //Customer Panel Routes
+    {
+        path : '/panel',
+        component : Customer_Main,
+        children : [
+            {
+                path : 'profile',
+                component : Customer_Profile,
+                name : 'customer_profile',
+
+            }
+        ]
+    }
 
 
 
@@ -52,3 +73,4 @@ export  const router = createRouter({
     history: createWebHistory(),
     routes: routes,
 });
+
