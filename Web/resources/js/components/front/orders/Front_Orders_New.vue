@@ -51,7 +51,7 @@
                 </div>
             </template>
             <template v-else>
-                <div class="col-8 app-fade-in">
+                <div class="col-md-8 app-fade-in">
                     <div class="card-body shadow rounded-3">
                         <h6 class="text-danger">مشخصات محصول</h6>
                         <hr>
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-8 app-fade-in mt-5">
+                <div class="col-md-8 app-fade-in mt-5">
                     <div class="card-body shadow rounded-3">
                         <h6 class="text-danger">ثبت مشکلات دستگاه</h6>
                         <hr>
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-8 app-fade-in mt-5">
+                <div class="col-md-8 app-fade-in mt-5">
                     <div class="card-body shadow rounded-3">
                         <h6 class="text-danger">ثبت مشخصات فردی و اطلاعات آدرس</h6>
                         <hr>

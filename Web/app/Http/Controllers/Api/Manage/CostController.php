@@ -76,12 +76,11 @@ class CostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Cost  $cost
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Cost $cost)
     {
         $cost->delete();
-
         return response()->json('Deleted Successful');
 
     }

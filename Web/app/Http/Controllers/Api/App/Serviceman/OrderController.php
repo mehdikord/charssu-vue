@@ -20,6 +20,7 @@ class OrderController extends Controller
         $data = $serviceman->orders()
             ->where('accepted',false)
             ->where('canceled',false)
+            ->with('order')
             ->first();
         return response()->json($data);
     }
@@ -213,7 +214,7 @@ class OrderController extends Controller
             return response()->json(['error' => 'forbidden'],403);
         }
         //check order active
-        if ($order->is_done && !$order->is_active){
+        if ($order->is_done || !$order->is_active){
             return response()->json(['error' => 'این سفارش به پایان رسیده  است'],409);
         }
         $is_paid = 0;
@@ -244,6 +245,10 @@ class OrderController extends Controller
     {
         if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->exists()){
             return response()->json(['error' => 'forbidden'],403);
+        }
+        //check old invoice
+        if ($order->invoice){
+            return response()->json(['error' => 'فاکتور قبلا برا این سفارش ثبت شده است'],409);
         }
 
         //start making invoice for order
@@ -326,16 +331,70 @@ class OrderController extends Controller
                 'price' => $serviceman_total_price,
             ]);
 
-
         }
 
+        //update order invoice bool
+        $order->update(['invoice' => true]);
+        return response()->json('invoice created successful');
+    }
+
+    public function get_invoice(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        $result = $order->invoices()->with('details')->get();
+        return response()->json($result);
+    }
+
+    public function delete_invoice(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        if ($order->is_done || !$order->is_active){
+            return response()->json(['error' => 'این سفارش به پایان رسیده است'],409);
+        }
+        if (!$order->invoice){
+            return response()->json(['error' => 'فاکتوری برای این سفارش ثبت نشده است'],409);
+        }
+
+        //check paid invoice
+        $check_paid = false;
+        foreach ($order->invoices as $invoice){
+            if ($invoice->is_pay){
+                $check_paid = true;
+            }
+        }
+        if ($check_paid){
+            return response()->json(['error' => 'فاکتور پرداخت شده وجود دارد . بامدیریت تماس بگیرید'],409);
+        }
+
+        //remove orders invoice
+        $order->invoices()->delete();
+        //update order invoice bool
+        $order->update(['invoice' => false]);
+        return response()->json('invoice removed successful');
 
     }
 
-
-
-
-
-
-
+    public function set_done(Order $order)
+    {
+        if (!$order->servicemans()->where('serviceman_id',api_serviceman_get_id())->where('accepted',true)->exists()){
+            return response()->json(['error' => 'forbidden'],403);
+        }
+        if ($order->is_done || !$order->is_active){
+            return response()->json(['error' => 'این سفارش به پایان رسیده است'],409);
+        }
+        //check unpaid order invoices
+        if ($order->invoices()->where('is_pay',false)->exists()){
+            return response()->json(['error' => 'این سفارش شامل فاکتور پرداخت نشده است'],409);
+        }
+        //update order
+        $order->update([
+            'is_done' => true,
+            'end_at' => Carbon::now(),
+        ]);
+        return response()->json('order finished successful');
+    }
 }
