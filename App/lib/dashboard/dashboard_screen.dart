@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/order_single_screen.dart';
 import 'package:charssu/main.dart';
 import 'package:charssu/providers/auth.dart';
@@ -22,7 +25,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     with SingleTickerProviderStateMixin {
   late Future _dashboardOrdersFuture;
   late AnimationController _animationController;
-  late var newOrder;
 
   Future _obtainDashboardOrdersFuture() async {
     return Provider.of<Dashboard>(context, listen: false)
@@ -38,34 +40,35 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
     _animationController.repeat(reverse: true);
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => Provider.of<Dashboard>(
-        context,
-        listen: false,
-      ).fetchAndSetOrderServiceman().then(
-        (value) {
-          newOrder = Provider.of<Dashboard>(context, listen: false).newOrder;
-          if (newOrder != null) {
-            MyHomePage.setNewOrderDialog(context, newOrder);
-          }
-        },
-      ),
-    );
+    startTime();
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
+  }
+
+  route() {
+    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+      Navigator.of(context).pushReplacementNamed(NewOrderScreen.routeName);
+    }
   }
 
   Future<void> changeOnline() async {
-    await Provider.of<Dashboard>(context, listen: false).changeOnline();
-    await Provider.of<Auth>(context, listen: false).setUser();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('وضعیت دریافت سفارش تغییر یافت.'),
-        duration: const Duration(seconds: 5),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
+    await Provider.of<Dashboard>(context, listen: false).changeOnline().then(
+          (value) => Provider.of<Auth>(context, listen: false).setUser().then(
+                (val) => ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('وضعیت دریافت سفارش تغییر یافت.'),
+                    duration: const Duration(seconds: 5),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+              ),
+        );
   }
 
   Future<dynamic> changeOnlineDialog() {
@@ -97,8 +100,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               ),
               TextButton(
                 onPressed: () async {
-                  await changeOnline();
-                  Navigator.of(c).pop();
+                  await changeOnline().then((value) => Navigator.of(c).pop());
                 },
                 child: const Text(
                   "تایید",

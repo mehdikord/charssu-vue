@@ -3,6 +3,7 @@ import 'package:charssu/dashboard/active_orders_screen.dart';
 import 'package:charssu/dashboard/dashboard_screen.dart';
 import 'package:charssu/dashboard/done_orders_screen.dart';
 import 'package:charssu/dashboard/factor_screen.dart';
+import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/notes/order_notes_screen.dart';
 import 'package:charssu/dashboard/order_single_screen.dart';
 import 'package:charssu/dashboard/products/order_products_screen.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
             SmsCodeScreen.routeName: (ctx) => const SmsCodeScreen(),
             InformationScreen.routeName: (ctx) => const InformationScreen(),
             DashboardScreen.routeName: (ctx) => const DashboardScreen(),
+            NewOrderScreen.routeName: (ctx) => const NewOrderScreen(),
             DoneOrdersScreen.routeName: (ctx) => const DoneOrdersScreen(),
             ActiveOrdersScreen.routeName: (ctx) => const ActiveOrdersScreen(),
             OrderSingleScreen.routeName: (ctx) => const OrderSingleScreen(),
@@ -80,113 +82,6 @@ class MyHomePage extends StatefulWidget {
   static const routeName = "/home";
 
   static var numberFormat = NumberFormat('###,###', 'fa');
-
-  static Future<dynamic> setNewOrderDialog(context, newOrder) {
-    return showDialog(
-      context: context,
-      builder: (c) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: AlertDialog(
-            title: const Text(
-              "سفارش جدید",
-              style: TextStyle(
-                color: Colors.blue,
-              ),
-            ),
-            content: Text(
-                "آیا مایل به دریافت سفارش \"${newOrder['title']}\" هستید؟"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(c).pop();
-                  showDialog(
-                    context: context,
-                    builder: (c) {
-                      return Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: AlertDialog(
-                          // title: const Text(
-                          //   "سفارش جدید",
-                          //   style: TextStyle(
-                          //     color: Colors.blue,
-                          //   ),
-                          // ),
-                          content: Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.only(bottom: 15.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "لطفا دلیل لغو کردن سفارش را بنویسید.",
-                                  style: TextStyle(
-                                    color: Color(0xff253567),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextFormField(
-                                  // controller: _controller,
-                                  decoration: const InputDecoration(
-                                    enabledBorder: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(),
-                                  ),
-                                  textInputAction: TextInputAction.done,
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: 5,
-                                  // onChanged: (value) {
-                                  //   setState(() {
-                                  //     reasonText = value.toString();
-                                  //   });
-                                  // },
-                                ),
-                              ],
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(c).pop();
-                              },
-                              child: const Text(
-                                "ثبت",
-                                style: TextStyle(
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: const Text(
-                  "خیر",
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(c).pop();
-                },
-                child: const Text(
-                  "تایید",
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

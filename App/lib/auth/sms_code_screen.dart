@@ -378,10 +378,12 @@ class _SmsCodeScreenState extends State<SmsCodeScreen> {
                                                   const Color(0xfff5f5f5),
                                               child: _isLoading
                                                   ? const SizedBox(
-                                                      width: 25,
-                                                      height: 25,
+                                                      width: 22.0,
+                                                      height: 22.0,
                                                       child:
-                                                          CircularProgressIndicator(),
+                                                          CircularProgressIndicator(
+                                                        color: Colors.white,
+                                                      ),
                                                     )
                                                   : const Text(
                                                       "ثبت",

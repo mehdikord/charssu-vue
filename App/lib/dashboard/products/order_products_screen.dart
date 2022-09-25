@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:charssu/dashboard/new_order_screen.dart';
+import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
 import 'package:charssu/widget/bg_widget.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
@@ -62,6 +66,18 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
     _allProducts = _getProducts();
     _foundProducts = _allProducts;
     super.initState();
+    startTime();
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
+  }
+
+  route() {
+    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+      Navigator.pushReplacementNamed(context, NewOrderScreen.routeName);
+    }
   }
 
   @override

@@ -286,7 +286,6 @@ class Dashboard with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      await fetchAndSetOrderServiceman();
       _orders = extractedData;
       notifyListeners();
     } catch (error) {
@@ -316,93 +315,6 @@ class Dashboard with ChangeNotifier {
         return;
       }
       _orders = extractedData;
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  var _newOrder;
-
-  get newOrder {
-    return _newOrder;
-  }
-
-  var _orderServiceman;
-
-  get orderServiceman {
-    return _orderServiceman;
-  }
-
-  Future<void> fetchAndSetOrderServiceman() async {
-    final urlOrderServiceman =
-        Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/new");
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      if (!prefs.containsKey('userData')) {
-        return;
-      }
-      final extractedUserData =
-          json.decode(prefs.getString('userData').toString());
-      final responseOrderServiceman = await http.get(
-        urlOrderServiceman,
-        headers: {
-          "authorization": extractedUserData['token'],
-          'Content-type': 'application/json',
-        },
-      );
-      final extractedDataOrderServiceman =
-          json.decode(responseOrderServiceman.body);
-      if (extractedDataOrderServiceman == null) {
-        return;
-      }
-      _orderServiceman = extractedDataOrderServiceman;
-      // ===================================================
-      final urlSingleOrder = Uri.parse(
-          "http://10.0.2.2:8000/api/app/serviceman/orders/single/${_orderServiceman['order_id']}");
-      final responseSingleOrder = await http.get(
-        urlSingleOrder,
-        headers: {
-          "authorization": extractedUserData['token'],
-          'Content-type': 'application/json',
-        },
-      );
-      final extractedDataSingleOrder = json.decode(responseSingleOrder.body);
-      if (extractedDataSingleOrder == null) {
-        return;
-      }
-      _newOrder = extractedDataSingleOrder;
-      // ===================================================
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<void> setNewOrderAccept(orderServicemanId) async {
-    final url =
-        Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/accept");
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      if (!prefs.containsKey('userData')) {
-        return;
-      }
-      final extractedUserData =
-          json.decode(prefs.getString('userData').toString());
-      final response = await http.post(
-        url,
-        headers: {
-          "authorization": extractedUserData['token'],
-          'Content-type': 'application/json',
-        },
-        body: json.encode({
-          'order_serviceman_id': orderServicemanId,
-        }),
-      );
-      final extractedData = json.decode(response.body);
-      if (extractedData == null) {
-        return;
-      }
       notifyListeners();
     } catch (error) {
       rethrow;

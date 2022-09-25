@@ -1587,10 +1587,12 @@ class _InformationScreenState extends State<InformationScreen> {
                                                   const Color(0xfff5f5f5),
                                               child: _isLoading
                                                   ? const SizedBox(
-                                                      width: 27.5,
-                                                      height: 24.0,
+                                                      width: 22.0,
+                                                      height: 22.0,
                                                       child:
-                                                          CircularProgressIndicator(),
+                                                          CircularProgressIndicator(
+                                                        color: Colors.white,
+                                                      ),
                                                     )
                                                   : const Text(
                                                       "ثبت",

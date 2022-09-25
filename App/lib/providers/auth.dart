@@ -48,7 +48,7 @@ class UserInformation with ChangeNotifier {
 }
 
 class Auth with ChangeNotifier {
-  var _token, _userId, _expiryDate, _authTimer, _name, _phone;
+  var _token, _userId, _expiryDate, _authTimer, _name, _phone, _newOrder;
   UserInformation _user = UserInformation();
 
   List<dynamic> _brands = [];
@@ -181,6 +181,7 @@ class Auth with ChangeNotifier {
       _expiryDate = DateTime.now().add(
         const Duration(hours: 12),
       );
+      await fetchAndSetOrderServiceman();
       _autoLogout();
       notifyListeners();
       final prefs = await SharedPreferences.getInstance();
@@ -227,6 +228,8 @@ class Auth with ChangeNotifier {
     _userId = null;
     _name = null;
     _phone = null;
+    _orderServiceman = null;
+    _newOrder = null;
     _expiryDate = DateTime.now();
     if (_authTimer != null) {
       _authTimer.cancel();
@@ -293,6 +296,7 @@ class Auth with ChangeNotifier {
         isOnline: user['response']['is_online'] == 1 ? true : false,
       );
       _user = data;
+      await fetchAndSetOrderServiceman();
       notifyListeners();
     } catch (error) {
       rethrow;
@@ -364,5 +368,150 @@ class Auth with ChangeNotifier {
     });
     prefs.setString('userData', userData);
     notifyListeners();
+  }
+
+  get newOrder {
+    if (_newOrder != null) {
+      return _newOrder;
+    }
+    return null;
+  }
+
+  var _orderServiceman;
+
+  get orderServiceman {
+    return _orderServiceman;
+  }
+
+  bool get hasNewOrder {
+    return _newOrder != null;
+  }
+
+  Future<void> fetchAndSetOrderServiceman() async {
+    final urlOrderServiceman =
+        Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/new");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final responseOrderServiceman = await http.get(
+        urlOrderServiceman,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedDataOrderServiceman =
+          json.decode(responseOrderServiceman.body);
+      if (extractedDataOrderServiceman == null) {
+        return;
+      }
+      _orderServiceman = extractedDataOrderServiceman;
+      if (_orderServiceman.isNotEmpty) {
+        final urlSingleOrder = Uri.parse(
+            "http://10.0.2.2:8000/api/app/serviceman/orders/single/${_orderServiceman['order_id']}");
+        final responseSingleOrder = await http.get(
+          urlSingleOrder,
+          headers: {
+            "authorization": extractedUserData['token'],
+            'Content-type': 'application/json',
+          },
+        );
+        final extractedDataSingleOrder = json.decode(responseSingleOrder.body);
+        if (extractedDataSingleOrder == null) {
+          return;
+        }
+        _newOrder = extractedDataSingleOrder;
+      } else {
+        _newOrder = null;
+      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> setNewOrderAccept(orderServicemanId) async {
+    final url =
+        Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/accept");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.post(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+        body: json.encode({
+          'order_serviceman_id': orderServicemanId,
+        }),
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      await fetchAndSetOrderServiceman();
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> setNewOrderCancel(orderServicemanId) async {
+    final url =
+        Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/cancel");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.post(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+        body: json.encode({
+          'order_serviceman_id': orderServicemanId,
+        }),
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      // =======================
+      final urlReason = Uri.parse(
+          "http://10.0.2.2:8000/api/app/serviceman/orders/cancel-reason");
+      final responseReason = await http.post(
+        urlReason,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+        body: json.encode({
+          'order_serviceman_id': orderServicemanId,
+          'cancel_reason': "test cancel reason",
+        }),
+      );
+      final extractedDataReason = json.decode(responseReason.body);
+      if (extractedDataReason == null) {
+        return;
+      }
+      // =======================
+      await fetchAndSetOrderServiceman();
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 }

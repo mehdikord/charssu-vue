@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:charssu/dashboard/new_order_screen.dart';
+import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
 import 'package:charssu/widget/bg_widget.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
@@ -18,6 +22,23 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
   final _controller = TextEditingController();
   var _isLoadingSubmit = false;
   var _isLoadingDelete = false;
+
+  @override
+  void initState() {
+    super.initState();
+    startTime();
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
+  }
+
+  route() {
+    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+      Navigator.pushReplacementNamed(context, NewOrderScreen.routeName);
+    }
+  }
 
   @override
   void dispose() {

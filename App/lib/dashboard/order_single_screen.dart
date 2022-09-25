@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:charssu/dashboard/factor_screen.dart';
+import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/notes/order_notes_screen.dart';
 import 'package:charssu/dashboard/products/order_products_screen.dart';
+import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
 import 'package:charssu/widget/main_drawer.dart';
@@ -23,6 +27,23 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
   var _isLoadingProduct = false;
   var _isLoadingNote = false;
   var _isLoadingFactor = false;
+
+  @override
+  void initState() {
+    super.initState();
+    startTime();
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
+  }
+
+  route() {
+    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+      Navigator.pushReplacementNamed(context, NewOrderScreen.routeName);
+    }
+  }
 
   @override
   void dispose() {
