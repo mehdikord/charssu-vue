@@ -791,11 +791,12 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                         setState(() {
                                           _isLoadingProduct = true;
                                         });
-                                        await Provider.of<Dashboard>(
-                                          context,
-                                          listen: false,
-                                        ).fetchAndSetProducts().then(
-                                              (value) => Navigator.of(context)
+                                        await dashboard
+                                            .fetchAndSetProducts()
+                                            .then((value) => dashboard
+                                                .fetchAndSetProductCategories())
+                                            .then(
+                                              (val) => Navigator.of(context)
                                                   .pushNamed(
                                                 OrderProductsScreen.routeName,
                                                 arguments: dashboard.order['id']
@@ -866,9 +867,11 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                             color: Colors.white,
                                           ),
                                         )
-                                      : const Text(
-                                          "صدور فاکتور و اتمام سرویس",
-                                          style: TextStyle(
+                                      : Text(
+                                          dashboard.order['is_done'] == 1
+                                              ? "نمایش فاکتور"
+                                              : "صدور فاکتور و اتمام سرویس",
+                                          style: const TextStyle(
                                             fontSize: 18,
                                           ),
                                         ),

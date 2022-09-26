@@ -84,6 +84,7 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
   Widget build(BuildContext context) {
     Image backMobileImage;
     final orderId = ModalRoute.of(context)!.settings.arguments;
+    final order = Provider.of<Dashboard>(context, listen: false).order;
 
     // This function is called whenever the text field changes
     void _runSearch(String enteredKeyword) {
@@ -107,295 +108,384 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
       });
     }
 
+    void _runFilterCategory(String selectedCategory) {
+      List resultCategories = [];
+      if (selectedCategory.isEmpty) {
+        resultCategories = _allProducts;
+      } else {
+        resultCategories = _allProducts
+            .where((product) => product["category"]["id"]
+                .toString()
+                .contains(selectedCategory.toString()))
+            .toList();
+      }
+      setState(() {
+        _foundProducts = resultCategories;
+      });
+    }
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         drawer: const MainDrawer(),
-        floatingActionButton: Container(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height * 0.1,
-          ),
-          child: FloatingActionButton.extended(
-            backgroundColor: Colors.green,
-            onPressed: () {
-              showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (c) {
-                  return StatefulBuilder(
-                    builder: (context, setState) => Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.5 +
-                            MediaQuery.of(context).viewInsets.bottom,
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 40,
-                          horizontal: 20,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextFormField(
-                              controller: _productController,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(),
-                                focusedBorder: OutlineInputBorder(),
-                                labelText: "انتخاب قطعه",
+        floatingActionButton: order['is_done'] == 1
+            ? null
+            : Container(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.1,
+                ),
+                child: FloatingActionButton.extended(
+                  backgroundColor: Colors.green,
+                  onPressed: () {
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (c) {
+                        return StatefulBuilder(
+                          builder: (context, setState) => Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.5 +
+                                  MediaQuery.of(context).viewInsets.bottom,
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 40,
+                                horizontal: 20,
                               ),
-                              readOnly: true,
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (c) {
-                                    return Directionality(
-                                      textDirection: TextDirection.rtl,
-                                      child: StatefulBuilder(
-                                        builder: (context, setState) =>
-                                            AlertDialog(
-                                          title: const Text(
-                                            "لیست محصولات",
-                                            style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          content: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: SingleChildScrollView(
-                                              child: Column(
-                                                children: [
-                                                  const SizedBox(
-                                                    height: 20,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextFormField(
+                                    controller: _productController,
+                                    decoration: const InputDecoration(
+                                      enabledBorder: OutlineInputBorder(),
+                                      focusedBorder: OutlineInputBorder(),
+                                      labelText: "انتخاب قطعه",
+                                    ),
+                                    readOnly: true,
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (c) {
+                                          return Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: StatefulBuilder(
+                                              builder: (context, setState) =>
+                                                  AlertDialog(
+                                                title: const Text(
+                                                  "لیست محصولات",
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
-                                                  TextField(
-                                                    onChanged: (value) =>
-                                                        setState(() =>
-                                                            _runSearch(value)),
-                                                    decoration:
-                                                        const InputDecoration(
-                                                            labelText: 'جستجو',
-                                                            suffixIcon: Icon(
-                                                                Icons.search)),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  _foundProducts.isNotEmpty
-                                                      ? ListView.builder(
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          itemCount:
-                                                              _foundProducts
-                                                                  .length,
-                                                          itemBuilder:
-                                                              (context, i) =>
-                                                                  InkWell(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                _productController
-                                                                        .text =
-                                                                    _foundProducts[
-                                                                            i][
-                                                                        'name'];
-                                                                _productId =
-                                                                    _foundProducts[
-                                                                            i]
-                                                                        ['id'];
-                                                              });
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: Card(
-                                                              key: ValueKey(
-                                                                  _foundProducts[
-                                                                      i]["id"]),
-                                                              color: Colors
-                                                                  .lightGreen,
-                                                              elevation: 18,
-                                                              margin: const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical:
-                                                                      10.0),
-                                                              child: ListTile(
-                                                                // leading: Text(
-                                                                //   _foundProducts[
-                                                                //           i]["id"]
-                                                                //       .toString(),
-                                                                //   style:
-                                                                //       const TextStyle(
-                                                                //           fontSize:
-                                                                //               24),
-                                                                // ),
-                                                                title: Text(
-                                                                    _foundProducts[
-                                                                            i][
-                                                                        'name']),
-                                                                subtitle: Text(
-                                                                  _foundProducts[i]
-                                                                              [
-                                                                              "category"]
-                                                                          [
-                                                                          "name"]
-                                                                      .toString(),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const Text(
-                                                          'محصولی یافت نشد!',
-                                                          style: TextStyle(
-                                                              fontSize: 24),
+                                                ),
+                                                content: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: SingleChildScrollView(
+                                                    child: Column(
+                                                      children: [
+                                                        const SizedBox(
+                                                          height: 20,
                                                         ),
-                                                ],
+                                                        TextField(
+                                                          onChanged: (value) =>
+                                                              setState(() =>
+                                                                  _runSearch(
+                                                                      value)),
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                  labelText:
+                                                                      'جستجو',
+                                                                  suffixIcon:
+                                                                      Icon(Icons
+                                                                          .search)),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        // ==================================
+                                                        // ==================================
+                                                        // ==================================
+                                                        // ==================================
+                                                        SelectFormField(
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            enabledBorder:
+                                                                OutlineInputBorder(),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(),
+                                                            labelText:
+                                                                "دسته بندی",
+                                                          ),
+                                                          onChanged: (value) =>
+                                                              setState(
+                                                            () =>
+                                                                _runFilterCategory(
+                                                                    value),
+                                                          ),
+                                                          items: Provider.of<
+                                                                      Dashboard>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .productCategories
+                                                              .map(
+                                                                  (category) =>
+                                                                      {
+                                                                        "value":
+                                                                            category['id'],
+                                                                        "label":
+                                                                            category['name'],
+                                                                      })
+                                                              .toList(),
+                                                          // [
+                                                          //   {
+                                                          //     'value':
+                                                          //         'serviceman',
+                                                          //     'label':
+                                                          //         'سرویس کار',
+                                                          //   },
+                                                          //   {
+                                                          //     'value':
+                                                          //         'customer',
+                                                          //     'label': 'مشتری',
+                                                          //   },
+                                                          //   {
+                                                          //     'value': 'nobody',
+                                                          //     'label':
+                                                          //         'هیچکدام',
+                                                          //   },
+                                                          // ],
+                                                        ),
+                                                        // ==================================
+                                                        // ==================================
+                                                        // ==================================
+                                                        // ==================================
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        _foundProducts
+                                                                .isNotEmpty
+                                                            ? ListView.builder(
+                                                                shrinkWrap:
+                                                                    true,
+                                                                physics:
+                                                                    const NeverScrollableScrollPhysics(),
+                                                                itemCount:
+                                                                    _foundProducts
+                                                                        .length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                            i) =>
+                                                                        InkWell(
+                                                                  onTap: () {
+                                                                    setState(
+                                                                        () {
+                                                                      _productController
+                                                                          .text = _foundProducts[
+                                                                              i]
+                                                                          [
+                                                                          'name'];
+                                                                      _productId =
+                                                                          _foundProducts[i]
+                                                                              [
+                                                                              'id'];
+                                                                    });
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                  },
+                                                                  child: Card(
+                                                                    key: ValueKey(
+                                                                        _foundProducts[i]
+                                                                            [
+                                                                            "id"]),
+                                                                    color: Colors
+                                                                        .lightGreen,
+                                                                    elevation:
+                                                                        18,
+                                                                    margin: const EdgeInsets
+                                                                            .symmetric(
+                                                                        vertical:
+                                                                            10.0),
+                                                                    child:
+                                                                        ListTile(
+                                                                      // leading: Text(
+                                                                      //   _foundProducts[
+                                                                      //           i]["id"]
+                                                                      //       .toString(),
+                                                                      //   style:
+                                                                      //       const TextStyle(
+                                                                      //           fontSize:
+                                                                      //               24),
+                                                                      // ),
+                                                                      title: Text(
+                                                                          _foundProducts[i]
+                                                                              [
+                                                                              'name']),
+                                                                      subtitle:
+                                                                          Text(
+                                                                        _foundProducts[i]["category"]["name"]
+                                                                            .toString(),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : const Text(
+                                                                'محصولی یافت نشد!',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        24),
+                                                              ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                SelectFormField(
-                                  controller: _paidController,
-                                  decoration: const InputDecoration(
-                                    enabledBorder: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(),
-                                    labelText: "پرداخت توسط",
+                                          );
+                                        },
+                                      );
+                                    },
                                   ),
-                                  items: const [
-                                    {
-                                      'value': 'serviceman',
-                                      'label': 'سرویس کار',
-                                    },
-                                    {
-                                      'value': 'customer',
-                                      'label': 'مشتری',
-                                    },
-                                    {
-                                      'value': 'nobody',
-                                      'label': 'هیچکدام',
-                                    },
-                                  ],
-                                ),
-                              ],
-                            ),
-                            TextFormField(
-                              controller: _quantityController,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(),
-                                focusedBorder: OutlineInputBorder(),
-                                labelText: "تعداد",
-                              ),
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.number,
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  if (_paidController.value.text.isNotEmpty &&
-                                      _quantityController
-                                          .value.text.isNotEmpty) {
-                                    setState(() {
-                                      _isLoadingSubmit = true;
-                                    });
-                                    await Provider.of<Dashboard>(
-                                      context,
-                                      listen: false,
-                                    )
-                                        .submitNewOrderProduct(
-                                          orderId,
-                                          _productId,
-                                          _paidController.value.text,
-                                          _quantityController.value.text,
-                                        )
-                                        .then((value) => Provider.of<Dashboard>(
-                                              context,
-                                              listen: false,
-                                            )
-                                                .findSingleOrderProducts(
-                                                    orderId)
-                                                .then((value) {
-                                              setState(() {
-                                                _productController.value =
-                                                    TextEditingValue.empty;
-                                                _paidController.value =
-                                                    TextEditingValue.empty;
-                                                _quantityController.value =
-                                                    TextEditingValue.empty;
-                                              });
-                                            }));
-                                    setState(() {
-                                      _isLoadingSubmit = false;
-                                    });
-                                    Navigator.of(context).pop();
-                                  } else {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          const Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: AlertDialog(
-                                          title: Text(
-                                            "خطا",
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 18,
+                                  SelectFormField(
+                                    controller: _paidController,
+                                    decoration: const InputDecoration(
+                                      enabledBorder: OutlineInputBorder(),
+                                      focusedBorder: OutlineInputBorder(),
+                                      labelText: "پرداخت توسط",
+                                    ),
+                                    items: const [
+                                      {
+                                        'value': 'serviceman',
+                                        'label': 'سرویس کار',
+                                      },
+                                      {
+                                        'value': 'customer',
+                                        'label': 'مشتری',
+                                      },
+                                      {
+                                        'value': 'nobody',
+                                        'label': 'هیچکدام',
+                                      },
+                                    ],
+                                  ),
+                                  TextFormField(
+                                    controller: _quantityController,
+                                    decoration: const InputDecoration(
+                                      enabledBorder: OutlineInputBorder(),
+                                      focusedBorder: OutlineInputBorder(),
+                                      labelText: "تعداد",
+                                    ),
+                                    textInputAction: TextInputAction.done,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        if (_paidController
+                                                .value.text.isNotEmpty &&
+                                            _quantityController
+                                                .value.text.isNotEmpty) {
+                                          setState(() {
+                                            _isLoadingSubmit = true;
+                                          });
+                                          await Provider.of<Dashboard>(
+                                            context,
+                                            listen: false,
+                                          )
+                                              .submitNewOrderProduct(
+                                                orderId,
+                                                _productId,
+                                                _paidController.value.text,
+                                                _quantityController.value.text,
+                                              )
+                                              .then((value) =>
+                                                  Provider.of<Dashboard>(
+                                                    context,
+                                                    listen: false,
+                                                  )
+                                                      .findSingleOrderProducts(
+                                                          orderId)
+                                                      .then((value) {
+                                                    setState(() {
+                                                      _productController.value =
+                                                          TextEditingValue
+                                                              .empty;
+                                                      _paidController.value =
+                                                          TextEditingValue
+                                                              .empty;
+                                                      _quantityController
+                                                              .value =
+                                                          TextEditingValue
+                                                              .empty;
+                                                    });
+                                                  }));
+                                          setState(() {
+                                            _isLoadingSubmit = false;
+                                          });
+                                          Navigator.of(context).pop();
+                                        } else {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: AlertDialog(
+                                                title: Text(
+                                                  "خطا",
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                                content: Text(
+                                                  "لطفا اطلاعات را با دقت وارد کنید.",
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                          content: Text(
-                                            "لطفا اطلاعات را با دقت وارد کنید.",
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: _isLoadingSubmit
-                                    ? const SizedBox(
-                                        width: 22.0,
-                                        height: 22.0,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    : const Text("ثبت"),
+                                          );
+                                        }
+                                      },
+                                      child: _isLoadingSubmit
+                                          ? const SizedBox(
+                                              width: 22.0,
+                                              height: 22.0,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : const Text("ثبت"),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  label: const Text(
+                    "ثبت جدید",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                  );
-                },
-              );
-            },
-            label: const Text(
-              "ثبت جدید",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         body: SizedBox(
           child: Stack(
@@ -550,95 +640,97 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) =>
-                                                  Directionality(
-                                                textDirection:
-                                                    TextDirection.rtl,
-                                                child: StatefulBuilder(
-                                                  builder:
-                                                      (context, setState) =>
-                                                          AlertDialog(
-                                                    title: const Text(
-                                                      "هشدار",
-                                                      style: TextStyle(
-                                                        color: Colors.orange,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                    content: const Text(
-                                                      "آیا مطمئن هستید؟",
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: const Text(
-                                                          "خیر",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.red),
+                                      if (order['is_done'] == 0)
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    Directionality(
+                                                  textDirection:
+                                                      TextDirection.rtl,
+                                                  child: StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) =>
+                                                            AlertDialog(
+                                                      title: const Text(
+                                                        "هشدار",
+                                                        style: TextStyle(
+                                                          color: Colors.orange,
+                                                          fontSize: 18,
                                                         ),
                                                       ),
-                                                      TextButton(
-                                                        onPressed: () async {
-                                                          setState(() {
-                                                            _isLoadingDelete =
-                                                                true;
-                                                          });
-                                                          await dashboard
-                                                              .deleteOrderProduct(
-                                                                  dashboard
-                                                                          .orderProducts[
-                                                                      i]['id'])
-                                                              .then((value) => dashboard
-                                                                  .findSingleOrderProducts(
-                                                                      dashboard
-                                                                              .order[
-                                                                          'id']));
-                                                          setState(() {
-                                                            _isLoadingDelete =
-                                                                false;
-                                                          });
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: _isLoadingDelete
-                                                            ? const SizedBox(
-                                                                width: 22.0,
-                                                                height: 22.0,
-                                                                child:
-                                                                    CircularProgressIndicator(),
-                                                              )
-                                                            : const Text(
-                                                                "بله",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .green),
-                                                              ),
+                                                      content: const Text(
+                                                        "آیا مطمئن هستید؟",
                                                       ),
-                                                    ],
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: const Text(
+                                                            "خیر",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            setState(() {
+                                                              _isLoadingDelete =
+                                                                  true;
+                                                            });
+                                                            await dashboard
+                                                                .deleteOrderProduct(
+                                                                    dashboard.orderProducts[
+                                                                            i]
+                                                                        ['id'])
+                                                                .then((value) =>
+                                                                    dashboard.findSingleOrderProducts(
+                                                                        dashboard
+                                                                            .order['id']));
+                                                            setState(() {
+                                                              _isLoadingDelete =
+                                                                  false;
+                                                            });
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: _isLoadingDelete
+                                                              ? const SizedBox(
+                                                                  width: 22.0,
+                                                                  height: 22.0,
+                                                                  child:
+                                                                      CircularProgressIndicator(),
+                                                                )
+                                                              : const Text(
+                                                                  "بله",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .green),
+                                                                ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
+                                              );
+                                            },
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                Colors.red,
                                               ),
-                                            );
-                                          },
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                              Colors.red,
                                             ),
+                                            child: const Text("حذف"),
                                           ),
-                                          child: const Text("حذف"),
                                         ),
-                                      ),
                                     ],
                                   ),
                                 ),

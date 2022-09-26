@@ -166,6 +166,39 @@ class Dashboard with ChangeNotifier {
     }
   }
 
+  List _productCategories = [];
+
+  List get productCategories {
+    return [..._productCategories];
+  }
+
+  Future<void> fetchAndSetProductCategories() async {
+    final url = Uri.parse("http://10.0.2.2:8000/api/helpers/shop/products/categories");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.get(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      _productCategories = extractedData;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   List _orderProducts = [];
 
   List get orderProducts {
