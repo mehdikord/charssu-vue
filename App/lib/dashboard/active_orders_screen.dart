@@ -28,7 +28,7 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
 
   Future _obtainDashboardActiveOrdersFuture() {
     return Provider.of<Dashboard>(context, listen: false)
-        .fetchAndSetDashboardActiveOrders();
+        .fetchAndSetDashboardActiveOrder();
   }
 
   @override
@@ -224,7 +224,7 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                         } else {
                                           return Consumer<Dashboard>(
                                             builder: (ctx, dashbord, _) {
-                                              if (dashbord.orders.isNotEmpty) {
+                                              if (dashbord.activeOrder.isNotEmpty) {
                                                 return Column(
                                                   children: [
                                                     ServiceItem(
@@ -268,7 +268,7 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               0),
-                                                      itemCount: dashbord.orders
+                                                      itemCount: dashbord.activeOrder
                                                                   .length >
                                                               7
                                                           ? 7
@@ -280,14 +280,14 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                       itemBuilder:
                                                           (context, i) =>
                                                               ServiceItem(
-                                                        dashbord.orders[i]
+                                                        dashbord.activeOrder[i]
                                                                 ['order']['id']
                                                             .toString(),
-                                                        dashbord.orders[i]
+                                                        dashbord.activeOrder[i]
                                                                 ['order']
                                                                 ['code']
                                                             .toString(),
-                                                        dashbord.orders[i]
+                                                        dashbord.activeOrder[i]
                                                                 ['order']
                                                                 ['customer']
                                                                 ['name']

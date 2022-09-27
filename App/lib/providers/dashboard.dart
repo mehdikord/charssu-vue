@@ -173,7 +173,8 @@ class Dashboard with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProductCategories() async {
-    final url = Uri.parse("http://10.0.2.2:8000/api/helpers/shop/products/categories");
+    final url =
+        Uri.parse("http://10.0.2.2:8000/api/helpers/shop/products/categories");
     try {
       final prefs = await SharedPreferences.getInstance();
       if (!prefs.containsKey('userData')) {
@@ -292,13 +293,13 @@ class Dashboard with ChangeNotifier {
     }
   }
 
-  List _orders = [];
+  Map _activeOrder = {};
 
-  List get orders {
-    return [..._orders];
+  Map get activeOrder {
+    return {..._activeOrder};
   }
 
-  Future<void> fetchAndSetDashboardActiveOrders() async {
+  Future<void> fetchAndSetDashboardActiveOrder() async {
     final url =
         Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/active");
     try {
@@ -316,14 +317,21 @@ class Dashboard with ChangeNotifier {
         },
       );
       final extractedData = json.decode(response.body);
-      if (extractedData == null) {
-        return;
+      if (extractedData.isEmpty) {
+        _activeOrder = {};
+      } else {
+        _activeOrder = extractedData.first;
       }
-      _orders = extractedData;
       notifyListeners();
     } catch (error) {
       rethrow;
     }
+  }
+
+  List _orders = [];
+
+  List get orders {
+    return [..._orders];
   }
 
   Future<void> fetchAndSetDashboardDoneOrders() async {

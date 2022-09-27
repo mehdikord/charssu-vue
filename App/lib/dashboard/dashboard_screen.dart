@@ -25,10 +25,12 @@ class _DashboardScreenState extends State<DashboardScreen>
     with SingleTickerProviderStateMixin {
   late Future _dashboardOrdersFuture;
   late AnimationController _animationController;
+  var _isLoadingSingleOrder = false;
+  var _isLoadingChangeStatus = false;
 
   Future _obtainDashboardOrdersFuture() async {
     return Provider.of<Dashboard>(context, listen: false)
-        .fetchAndSetDashboardActiveOrders();
+        .fetchAndSetDashboardActiveOrder();
   }
 
   @override
@@ -75,41 +77,55 @@ class _DashboardScreenState extends State<DashboardScreen>
     return showDialog(
       context: context,
       builder: (c) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: AlertDialog(
-            title: const Text(
-              "تغییر وضعیت",
-              style: TextStyle(
-                color: Colors.orange,
+        return StatefulBuilder(
+          builder: (context, setState) => Directionality(
+            textDirection: TextDirection.rtl,
+            child: AlertDialog(
+              title: const Text(
+                "تغییر وضعیت",
+                style: TextStyle(
+                  color: Colors.orange,
+                ),
               ),
+              content:
+                  const Text("آیا وضعیت دریافت سفارش را می خواهید تغییر دهید؟"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(c).pop();
+                  },
+                  child: const Text(
+                    "خیر",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    setState(() {
+                      _isLoadingChangeStatus = true;
+                    });
+                    await changeOnline().then((value) => Navigator.of(c).pop());
+                    setState(() {
+                      _isLoadingChangeStatus = false;
+                    });
+                  },
+                  child: _isLoadingChangeStatus
+                      ? const SizedBox(
+                          width: 22.0,
+                          height: 22.0,
+                          child: CircularProgressIndicator(),
+                        )
+                      : const Text(
+                          "تایید",
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                ),
+              ],
             ),
-            content:
-                const Text("آیا وضعیت دریافت سفارش را می خواهید تغییر دهید؟"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(c).pop();
-                },
-                child: const Text(
-                  "خیر",
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await changeOnline().then((value) => Navigator.of(c).pop());
-                },
-                child: const Text(
-                  "تایید",
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
-                ),
-              ),
-            ],
           ),
         );
       },
@@ -341,7 +357,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                         } else {
                                           return Consumer<Dashboard>(
                                             builder: (ctx, dashbord, _) {
-                                              if (dashbord.orders.isNotEmpty) {
+                                              if (dashbord
+                                                  .activeOrder.isNotEmpty) {
                                                 return Container(
                                                   width: double.infinity,
                                                   decoration:
@@ -359,16 +376,15 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                     children: [
                                                       infoRow(
                                                         "شماره: ",
-                                                        dashbord.orders
-                                                                .first['order']
-                                                            ['code'],
+                                                        dashbord.activeOrder[
+                                                            'order']['code'],
                                                       ),
                                                       const Divider(
                                                         color: Colors.black,
                                                       ),
                                                       infoRow(
                                                         "نام مشتری: ",
-                                                        dashbord.orders.first[
+                                                        dashbord.activeOrder[
                                                                     'order']
                                                                 ['customer']
                                                             ['name'],
@@ -378,7 +394,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       ),
                                                       infoRow(
                                                         "شماره مشتری: ",
-                                                        dashbord.orders.first[
+                                                        dashbord.activeOrder[
                                                                     'order']
                                                                 ['customer']
                                                             ['phone'],
@@ -388,22 +404,27 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       ),
                                                       infoRow(
                                                         "توضیحات: ",
-                                                        dashbord.orders
-                                                                .first['order']
+                                                        dashbord.activeOrder[
+                                                                'order']
                                                             ['description'],
                                                       ),
                                                       SizedBox(
                                                         width: double.infinity,
                                                         child: ElevatedButton(
-                                                          onPressed: () {
-                                                            Provider.of<Dashboard>(
+                                                          onPressed: () async {
+                                                            setState(() {
+                                                              _isLoadingSingleOrder =
+                                                                  true;
+                                                            });
+                                                            await Provider.of<
+                                                                        Dashboard>(
                                                                     context,
                                                                     listen:
                                                                         false)
-                                                                .findSingleOrder(dashbord
-                                                                        .orders
-                                                                        .first[
-                                                                    'order']['id'])
+                                                                .findSingleOrder(
+                                                                    dashbord.activeOrder[
+                                                                            'order']
+                                                                        ['id'])
                                                                 .then(
                                                                   (value) => Navigator.of(
                                                                           context)
@@ -411,13 +432,29 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                                           OrderSingleScreen
                                                                               .routeName),
                                                                 );
+                                                            setState(() {
+                                                              _isLoadingSingleOrder =
+                                                                  false;
+                                                            });
                                                           },
-                                                          child: const Text(
-                                                            "نمایش جزئیات",
-                                                            style: TextStyle(
-                                                              fontSize: 18,
-                                                            ),
-                                                          ),
+                                                          child: _isLoadingSingleOrder
+                                                              ? const SizedBox(
+                                                                  width: 22.0,
+                                                                  height: 22.0,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                )
+                                                              : const Text(
+                                                                  "نمایش جزئیات",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                                ),
                                                         ),
                                                       ),
                                                     ],
