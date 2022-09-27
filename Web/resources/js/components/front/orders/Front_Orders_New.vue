@@ -200,22 +200,23 @@ export default {
     },
 
     created() {
+        this.GetBrands();
+        this.GetProblems();
+        this.GetProvinces();
         //check Auth
         if (!this.UserAuthCheck()){
             AppStorage.AppStorageSetItem('charssu_back_order','yes');
         }else {
             axios.get('/api/customer/profile').then(res => {
                 this.user = res.data
-                console.log(this.user)
+                if (this.user.province_id !== null){
+                    this.SelectCity();
+                }
             }).catch(e => {
                 Sweet.SweetServerErrorMessage();
             })
 
         }
-
-        this.GetBrands();
-        this.GetProblems();
-        this.GetProvinces();
     },
 
     data(){

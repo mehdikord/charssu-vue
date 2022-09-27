@@ -24,6 +24,7 @@ import Front_Template_Main_Navbar from "./components/front/template/Front_Templa
 import Front_Template_Main_Footer from "./components/front/template/Front_Template_Main_Footer";
 import DatePicker from "vue3-persian-datetime-picker";
 import Manage_Inc_Validation_Error from "./components/management/includes/Manage_Inc_Validation_Error";
+import moment from "moment-jalaali";
 
 
 
@@ -34,7 +35,6 @@ App.component('front_template_main_navbar',Front_Template_Main_Navbar);
 App.component('front_template_main_footer',Front_Template_Main_Footer);
 App.component('date-picker',DatePicker);
 App.component('validation_errors',Manage_Inc_Validation_Error);
-
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -107,7 +107,16 @@ App.mixin({
 
 })
 //----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+//Global Filters
+//----------------------------------------------------------------------------------------------------------------------
 
+//Global Filters
+App.config.globalProperties.$filters = {
+    date(value,format) {
+        return moment(value).format(format='jYYYY/jM/jD')
+    }
+}
 //Axios Config
 axios.defaults.headers.common['Authorization'] =  Auth.AuthGetToken();
 axios.interceptors.response.use(function (response) {

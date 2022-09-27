@@ -122,10 +122,12 @@ Route::prefix('customer')->group(function (){
 
         Route::prefix('profile')->group(function (){
             Route::get('',[\App\Http\Controllers\Api\Customer\ProfileController::class,'get_profile']);
+            Route::post('',[\App\Http\Controllers\Api\Customer\ProfileController::class,'update_profile']);
         });
         Route::prefix('orders')->group(function (){
             Route::post('new',[\App\Http\Controllers\Api\Customer\OrderController::class,'new']);
-
+            Route::get('running',[\App\Http\Controllers\Api\Customer\OrderController::class,'running']);
+            Route::get('details/{code}',[\App\Http\Controllers\Api\Customer\OrderController::class,'details']);
         });
 
 
