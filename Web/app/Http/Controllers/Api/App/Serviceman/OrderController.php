@@ -38,13 +38,13 @@ class OrderController extends Controller
             return response()->json(['error' => 'forbidden'],403);
         }
         if ($order->order->is_done){
-            return response()->json(['error' => 'این سفارش قبلا به پایان رسیده است'],409);
+            return response()->json(['error' => 'سفارش موردنظر قبلا به پایان رسیده است'],409);
         }
         if ($order->order->servicemans()->where('accepted',true)->exists()){
-            return response()->json(['error' => 'این سفارش توسط سرویس کار دیگری درحال انجام است'],409);
+            return response()->json(['error' => 'سفارش موردنظر توسط سرویس کار دیگری درحال انجام است'],409);
         }
         if ($order->canceled){
-            return response()->json(['error' => 'این سفارش قبلا رد شده است'],409);
+            return response()->json(['error' => 'سفارش موردنظر قبلا رد شده است'],409);
         }
 
         $order->update([
@@ -70,7 +70,7 @@ class OrderController extends Controller
             return response()->json(['error' => 'forbidden'],403);
         }
         if ($order->order->is_done){
-            return response()->json(['error' => 'این سفارش قبلا به پایان رسیده است'],409);
+            return response()->json(['error' => 'سفارش موردنظر قبلا به پایان رسیده است'],409);
         }
         $order->update([
             'accepted' => false,
@@ -96,10 +96,10 @@ class OrderController extends Controller
             return response()->json('forbidden',403);
         }
         if ($order->order->is_done){
-            return response()->json(['error' => 'این سفارش قبلا به پایان رسیده است'],409);
+            return response()->json(['error' => 'سفارش موردنظر قبلا به پایان رسیده است'],409);
         }
         if ($order->accepted){
-            return response()->json(['error' => 'این سفارش توسط شما درحال انجام است !'],409);
+            return response()->json(['error' => 'سفارش موردنظر توسط شما درحال انجام است !'],409);
         }
         $order->update(['cancel_reason' => $request->cancel_reason]);
         return response()->json(['message' => 'دلیل رد شدن سفارش باموفقیت ثبت شد']);
@@ -215,7 +215,7 @@ class OrderController extends Controller
         }
         //check order active
         if ($order->is_done || !$order->is_active){
-            return response()->json(['error' => 'این سفارش به پایان رسیده  است'],409);
+            return response()->json(['error' => 'سفارش موردنظر به پایان رسیده  است'],409);
         }
         $is_paid = 0;
         if ($request->paid == 'nobody'){
@@ -228,7 +228,7 @@ class OrderController extends Controller
             'quantity' => $request->quantity,
             'is_paid' => $is_paid,
         ]);
-        return response()->json(['message' => 'محصول مورد نظر باموفقیت به سفارش اضافه شد']);
+        return response()->json(['message' => 'محصول موردنظر باموفقیت به سفارش اضافه شد']);
     }
 
     public function delete_product(Order_Product $product)
@@ -248,7 +248,7 @@ class OrderController extends Controller
         }
         //check old invoice
         if ($order->invoice){
-            return response()->json(['error' => 'فاکتور قبلا برا این سفارش ثبت شده است'],409);
+            return response()->json(['error' => 'فاکتور قبلا برا سفارش موردنظر ثبت شده است'],409);
         }
 
         //start making invoice for order
@@ -353,10 +353,10 @@ class OrderController extends Controller
             return response()->json(['error' => 'forbidden'],403);
         }
         if ($order->is_done || !$order->is_active){
-            return response()->json(['error' => 'این سفارش به پایان رسیده است'],409);
+            return response()->json(['error' => 'سفارش موردنظر به پایان رسیده است'],409);
         }
         if (!$order->invoice){
-            return response()->json(['error' => 'فاکتوری برای این سفارش ثبت نشده است'],409);
+            return response()->json(['error' => 'فاکتوری برای سفارش موردنظر ثبت نشده است'],409);
         }
 
         //check paid invoice
@@ -384,17 +384,17 @@ class OrderController extends Controller
             return response()->json(['error' => 'forbidden'],403);
         }
         if ($order->is_done || !$order->is_active){
-            return response()->json(['error' => 'این سفارش به پایان رسیده است'],409);
+            return response()->json(['error' => 'سفارش موردنظر به پایان رسیده است'],409);
         }
         //check unpaid order invoices
         if ($order->invoices()->where('is_pay',false)->exists()){
-            return response()->json(['error' => 'این سفارش شامل فاکتور پرداخت نشده است'],409);
+            return response()->json(['error' => 'سفارش موردنظر شامل فاکتور پرداخت نشده است'],409);
         }
         //update order
         $order->update([
             'is_done' => true,
             'end_at' => Carbon::now(),
         ]);
-        return response()->json('order finished successful');
+        return response()->json('سفارش موردنظر باموفقیت به پایان رسید');
     }
 }
