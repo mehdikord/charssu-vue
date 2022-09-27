@@ -6,6 +6,7 @@ import 'package:charssu/dashboard/notes/order_notes_screen.dart';
 import 'package:charssu/dashboard/products/order_products_screen.dart';
 import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
+import 'package:charssu/providers/invoice.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
 import 'package:charssu/widget/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -838,17 +839,83 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                 width: MediaQuery.of(context).size.width * 0.6,
                                 margin: const EdgeInsets.only(bottom: 10),
                                 child: ElevatedButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      _isLoadingFactor = true;
-                                    });
-                                    await Navigator.of(context).pushNamed(
-                                      FactorScreen.routeName,
-                                    );
-                                    setState(() {
-                                      _isLoadingFactor = false;
-                                    });
-                                  },
+                                  onPressed: () => showDialog(
+                                    context: context,
+                                    builder: (context) => Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: StatefulBuilder(
+                                        builder: (context, setState) =>
+                                            AlertDialog(
+                                          title: const Text(
+                                            "صدور فاکتور",
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                          content: const Text(
+                                            "آیا مطمئن هستید؟",
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text(
+                                                "خیر",
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                setState(() {
+                                                  _isLoadingFactor = true;
+                                                });
+                                                await Provider.of<Invoice>(
+                                                        context,
+                                                        listen: false)
+                                                    .makeOrderInvoice(
+                                                        dashboard.order['id'])
+                                                    .then(
+                                                      (value) => Provider.of<
+                                                                  Invoice>(
+                                                              context,
+                                                              listen: false)
+                                                          .fetchAndSetOrderInvoice(
+                                                              dashboard
+                                                                  .order['id'])
+                                                          .then(
+                                                        (val) {
+                                                          Navigator.of(context)
+                                                              .pushReplacementNamed(
+                                                            FactorScreen
+                                                                .routeName,
+                                                          );
+                                                        },
+                                                      ),
+                                                    );
+                                                setState(() {
+                                                  _isLoadingFactor = false;
+                                                });
+                                              },
+                                              child: _isLoadingFactor
+                                                  ? const SizedBox(
+                                                      width: 22.0,
+                                                      height: 22.0,
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    )
+                                                  : const Text(
+                                                      "بله",
+                                                      style: TextStyle(
+                                                          color: Colors.green),
+                                                    ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                       const Color(0xff6ac04f),
