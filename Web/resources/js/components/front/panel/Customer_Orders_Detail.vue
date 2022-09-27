@@ -88,6 +88,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-4 mt-2">
+                                            <div class="card p-3">
+                                                <div>
+                                                    <span class="font-13 text-secondary ml-1">تاریخ ثبت سفارش : </span>
+                                                    <span class="text-dark font-14">{{this.$filters.date(order.created_at)}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12 mt-2">
                                             <div class="card p-3">
                                                 <div>
@@ -124,7 +132,7 @@
                                                     <div>
                                                         <img v-if="order.servicemans[0].serviceman.profile !== null"  class="serviceman-img" src="" alt="">
                                                         <img v-else  class="serviceman-img" src="/images/default/user.png" alt="">
-                                                        <span class="text-dark font-15 mr-2">{{order.servicemans[0].serviceman.name}}</span>
+                                                        <span class="text-dark font-16 mr-2">{{order.servicemans[0].serviceman.name}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -166,7 +174,75 @@
                                         اطلاعات فاکتور و قطعات خریداری شده
                                     </h6>
                                     <div class="mt-2 row">
+                                        <div class="col-md-12 mt-2">
+                                            <div class="card p-3">
+                                                <div>
+                                                    <div class="text-danger font-15">لیست قطعات خریداری شده برای سفارش</div>
+                                                    <template v-if="!order.products.length">
+                                                        <div class="mt-2 text-center img-fluid">
+                                                            <img src="/images/default/no-products.png" width="70" alt="">
 
+                                                            <div class="mt-1">هیچ محصولی برای این سفارش ثبت نشده است !</div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <div class="mt-4 table-responsive text-center">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr class="bg-dark text-light">
+                                                                        <th>محصول</th>
+                                                                        <th>قیمت</th>
+                                                                        <th>توسط</th>
+                                                                        <th>پرداخت</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="(product,index) in order.products">
+                                                                        <td>
+                                                                            <template v-if="product.products !== null">
+                                                                                <router-link :to="{name : 'front_shop_products_single',params : {code : product.products.code}}">
+                                                                                    {{product.products.name}}
+                                                                                </router-link>
+                                                                            </template>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="text-success font-15">
+                                                                                <template v-if="product.products.sale !== null">
+                                                                                    {{this.NumberFormatter(product.products.sale)}}
+                                                                                </template>
+                                                                                <template v-else>
+                                                                                    {{this.NumberFormatter(product.products.price)}}
+                                                                                </template>
+
+                                                                            </span>
+                                                                            <span class="mr-1 font-13">تومان</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <span class="badge badge-warning font-13 p-2" v-if="product.paid === 'customer' || product.paid === 'nobody' ">
+                                                                                مشتری
+                                                                            </span>
+                                                                            <span v-else class="badge badge-info font-13 p-2">
+                                                                                سرویس کار
+                                                                            </span>
+
+                                                                        </td>
+                                                                        <td>
+                                                                            <span v-if="product.is_paid" class="badge badge-success font-13">
+                                                                                پرداخت شده <i class="mdi mdi-check-circle font-18"></i>
+                                                                            </span>
+                                                                            <span v-else class="badge badge-danger font-13">
+                                                                                پرداخت نشده <i class="mdi mdi-close font-18"></i>
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

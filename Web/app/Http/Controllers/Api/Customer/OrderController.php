@@ -94,6 +94,10 @@ class OrderController extends Controller
             ->with(['servicemans' => function($servicemans){
                 $servicemans->where('accepted',true)->select(['id','order_id','serviceman_id'])->first();
             }])
+            ->with(['products.products' => function($product){
+                $product->select(['id','name','price','sale','code'])->get();
+            }])
+            ->with('products')
             ->firstorfail();
         return response()->json($order);
 

@@ -69,6 +69,10 @@
                                                 <template v-else-if="order.invoice">
                                                     <span class="badge badge-warning text-dark p-2 font-13">در انتطار پرداخت فاکتور <i class="mdi mdi-clock"></i></span>
                                                 </template>
+                                                <template v-else>
+                                                    <span class="badge badge-success p-2 font-13">درحال انجام <i class="mdi mdi-check-circle"></i></span>
+
+                                                </template>
                                             </td>
                                             <td>
                                                 <template v-if="order.servicemans.length">
@@ -79,7 +83,7 @@
                                                 </template>
                                             </td>
                                             <td>
-                                                <router-link :to="{name : 'customer_orders_details',params : {code : order.code}}" class="btn btn-success font-14">
+                                                <router-link :to="{name : 'customer_orders_details',params : {code : order.code}}" class="btn btn-info font-14">
                                                     مشاهده جزئیات
                                                 </router-link>
                                             </td>
