@@ -10,6 +10,7 @@ import 'package:charssu/dashboard/products/order_products_screen.dart';
 import 'package:charssu/information/information_screen.dart';
 import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
+import 'package:charssu/providers/invoice.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart' show NumberFormat;
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Dashboard(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Invoice(),
         ),
       ],
       child: Consumer<Auth>(
