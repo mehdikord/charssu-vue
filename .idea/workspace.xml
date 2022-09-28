@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="584e3a56-a6ec-45b6-ba66-8c28bcfd795d" name="Changes" comment="update api orders for servicemans">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_22_22,_7_25_AM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_22_22__7_25_AM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Main.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Profile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/charssu-vue.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/charssu-vue.iml" afterDir="false" />
+    <list default="true" id="584e3a56-a6ec-45b6-ba66-8c28bcfd795d" name="Changes" comment="Create customer panel">
+      <change afterPath="$PROJECT_DIR$/Web/public/images/default/no-products.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Customer/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Customer/OrderController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/index/Front_Index_Topbanner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/index/Front_Index_Topbanner.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/orders/Front_Orders_New.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/orders/Front_Orders_New.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/template/Front_Template_Main_Navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/js/routes/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/routes/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/views/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Detail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Running.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Running.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,19 +152,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/cloner/Projects/charssu-vue",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/cloner/Projects/abrama&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Web/public/images/default" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -186,6 +184,12 @@
       <workItem from="1663850952265" duration="5184000" />
       <workItem from="1663876299935" duration="9775000" />
       <workItem from="1663896695122" duration="8610000" />
+      <workItem from="1663949282498" duration="12235000" />
+      <workItem from="1664039798281" duration="1970000" />
+      <workItem from="1664131419239" duration="3262000" />
+      <workItem from="1664120576805" duration="7601000" />
+      <workItem from="1664173066331" duration="13262000" />
+      <workItem from="1664280935187" duration="8907000" />
     </task>
     <task id="LOCAL-00001" summary="update api">
       <created>1663818892292</created>
@@ -201,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663885282439</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Create customer panel">
+      <created>1664283428422</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1664283428423</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,7 +235,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="update api" />
     <MESSAGE value="update api orders for servicemans" />
-    <option name="LAST_COMMIT_MESSAGE" value="update api orders for servicemans" />
+    <MESSAGE value="Create customer panel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create customer panel" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

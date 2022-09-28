@@ -5,8 +5,9 @@ import Front_Auth from "../components/front/auth/Front_Auth";
 import Front_Shop_Index from "../components/front/shop/Front_Shop_Index";
 import Front_Shop_Products_Single from "../components/front/shop/Front_Shop_Products_Single";
 import Front_Shop_Checkout from "../components/front/shop/Front_Shop_Checkout";
-import Customer_Main from "../components/front/panel/Customer_Main";
 import Customer_Profile from "../components/front/panel/Customer_Profile";
+import Customer_Orders_Running from "../components/front/panel/Customer_Orders_Running";
+import Customer_Orders_Detail from "../components/front/panel/Customer_Orders_Detail";
 
 
 const routes = [
@@ -50,14 +51,26 @@ const routes = [
     //Customer Panel Routes
     {
         path : '/panel',
-        component : Customer_Main,
         children : [
             {
                 path : 'profile',
                 component : Customer_Profile,
                 name : 'customer_profile',
 
+            },
+            {
+                path : 'orders/running',
+                component : Customer_Orders_Running,
+                name : 'customer_orders_running',
+
+            },
+            {
+                path : 'orders/details/:code',
+                component : Customer_Orders_Detail,
+                name : 'customer_orders_details',
+
             }
+
         ]
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +49,7 @@ class OrderController extends Controller
         ]);
 
         //generate order code
-        $order->update(['code' => engine_random_code($order->id,14)]);
+        $order->update(['code' => engine_random_code($order->id)]);
 
         //update Customer information
         $customer->update([
@@ -63,6 +64,43 @@ class OrderController extends Controller
         api_order_set_serviceman($order->id);
 
         return response()->json('done');
+
+    }
+
+    //get running customer order
+    public function running()
+    {
+        $result = customer_auth_get()->orders()->where('is_done',false)->with('device_brand')->with('device')
+
+            ->with(['servicemans.serviceman' => function($serviceman){
+                $serviceman->select(['id','name'])->get();
+            }])
+            ->with(['servicemans' => function($servicemans){
+                $servicemans->where('accepted',true)->select(['id','order_id','serviceman_id'])->first();
+            }])
+            ->get();
+        return response()->json($result);
+    }
+
+    public function details($code)
+    {
+        $order = Order::where('code',$code)->where('customer_id',customer_auth_get()->id)
+            ->with('device_brand')
+            ->with('device')
+            ->with('problem')
+            ->with(['servicemans.serviceman' => function($serviceman){
+                $serviceman->select(['id','name','phone','profile','code'])->get();
+            }])
+            ->with(['servicemans' => function($servicemans){
+                $servicemans->where('accepted',true)->select(['id','order_id','serviceman_id'])->first();
+            }])
+            ->with(['products.products' => function($product){
+                $product->select(['id','name','price','sale','code'])->get();
+            }])
+            ->with('products')
+            ->firstorfail();
+        return response()->json($order);
+
 
     }
 }
