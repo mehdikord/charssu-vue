@@ -224,7 +224,8 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                         } else {
                                           return Consumer<Dashboard>(
                                             builder: (ctx, dashbord, _) {
-                                              if (dashbord.activeOrder.isNotEmpty) {
+                                              if (dashbord
+                                                  .activeOrder.isNotEmpty) {
                                                 return Column(
                                                   children: [
                                                     ServiceItem(
@@ -268,7 +269,8 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               0),
-                                                      itemCount: dashbord.activeOrder
+                                                      itemCount: dashbord
+                                                                  .activeOrder
                                                                   .length >
                                                               7
                                                           ? 7
@@ -280,15 +282,14 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                       itemBuilder:
                                                           (context, i) =>
                                                               ServiceItem(
-                                                        dashbord.activeOrder[i]
-                                                                ['order']['id']
+                                                        dashbord.activeOrder[
+                                                                'order']['id']
                                                             .toString(),
-                                                        dashbord.activeOrder[i]
-                                                                ['order']
-                                                                ['code']
+                                                        dashbord.activeOrder[
+                                                                'order']['code']
                                                             .toString(),
-                                                        dashbord.activeOrder[i]
-                                                                ['order']
+                                                        dashbord.activeOrder[
+                                                                'order']
                                                                 ['customer']
                                                                 ['name']
                                                             .toString(),

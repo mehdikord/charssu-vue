@@ -15,7 +15,13 @@ class NewOrderScreen extends StatefulWidget {
 }
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
-  var _isLoadingAccept = false;
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +230,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                                         ),
                                                       ),
                                                       TextFormField(
-                                                        // controller: _controller,
+                                                        controller: _controller,
                                                         decoration:
                                                             const InputDecoration(
                                                           enabledBorder:
@@ -239,31 +245,51 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                                             TextInputType
                                                                 .multiline,
                                                         maxLines: 5,
-                                                        // onChanged: (value) {
-                                                        //   setState(() {
-                                                        //     reasonText = value.toString();
-                                                        //   });
-                                                        // },
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                                 actions: [
                                                   TextButton(
-                                                    onPressed: () async {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                      Navigator.of(context)
-                                                          .pushReplacementNamed(
-                                                        DashboardScreen
-                                                            .routeName,
-                                                      );
-                                                      await Provider.of<Auth>(
-                                                        context,
-                                                        listen: false,
-                                                      ).setNewOrderCancel(
-                                                          auth.orderServiceman[
-                                                              'id']);
+                                                    onPressed: () {
+                                                      if (_controller.value.text
+                                                          .isNotEmpty) {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        Navigator.of(context)
+                                                            .pushReplacementNamed(
+                                                                DashboardScreen
+                                                                    .routeName);
+                                                        auth.setNewOrderCancel(
+                                                            auth.orderServiceman[
+                                                                'id'],
+                                                            _controller
+                                                                .value.text);
+                                                      } else {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              const Directionality(
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                            child: AlertDialog(
+                                                              title: Text(
+                                                                "خطا",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                              content: Text(
+                                                                "لطفا دلیل لغو سفارش را وارد کنید.",
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
                                                     },
                                                     child: const Text(
                                                       "ثبت",
@@ -303,25 +329,12 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.4,
                                     child: ElevatedButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          _isLoadingAccept = true;
-                                        });
-                                        await Provider.of<Auth>(
-                                          context,
-                                          listen: false,
-                                        )
-                                            .setNewOrderAccept(
-                                                auth.orderServiceman['id'])
-                                            .then(
-                                              (value) => Navigator.of(context)
-                                                  .pushReplacementNamed(
-                                                DashboardScreen.routeName,
-                                              ),
-                                            );
-                                        setState(() {
-                                          _isLoadingAccept = false;
-                                        });
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pushReplacementNamed(
+                                                DashboardScreen.routeName);
+                                        auth.setNewOrderAccept(
+                                            auth.orderServiceman['id']);
                                       },
                                       style: ButtonStyle(
                                         backgroundColor:
@@ -335,20 +348,12 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                           ),
                                         ),
                                       ),
-                                      child: _isLoadingAccept
-                                          ? const SizedBox(
-                                              width: 22.0,
-                                              height: 22.0,
-                                              child: CircularProgressIndicator(
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          : const Text(
-                                              "بله",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                              ),
-                                            ),
+                                      child: const Text(
+                                        "بله",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],

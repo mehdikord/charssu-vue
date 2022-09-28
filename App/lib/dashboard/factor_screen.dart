@@ -26,22 +26,22 @@ class FactorScreen extends StatefulWidget {
 class _FactorScreenState extends State<FactorScreen> {
   var _isLoadingSubmitFactor = false;
 
-  @override
-  void initState() {
-    super.initState();
-    startTime();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   startTime();
+  // }
 
-  startTime() async {
-    var duration = const Duration(seconds: 1);
-    return Timer(duration, route);
-  }
+  // startTime() async {
+  //   var duration = const Duration(seconds: 1);
+  //   return Timer(duration, route);
+  // }
 
-  route() {
-    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
-      Navigator.pushReplacementNamed(context, NewOrderScreen.routeName);
-    }
-  }
+  // route() {
+  //   if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+  //     Navigator.pushReplacementNamed(context, NewOrderScreen.routeName);
+  //   }
+  // }
 
   Future<dynamic> dialog(title) {
     return showDialog(

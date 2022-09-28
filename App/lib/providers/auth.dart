@@ -387,6 +387,10 @@ class Auth with ChangeNotifier {
     return _newOrder != null;
   }
 
+  void setNewOrderNull() {
+    _newOrder = null;
+  }
+
   Future<void> fetchAndSetOrderServiceman() async {
     final urlOrderServiceman =
         Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/new");
@@ -434,7 +438,7 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> setNewOrderAccept(orderServicemanId) async {
+  Future<dynamic> setNewOrderAccept(orderServicemanId) async {
     final url =
         Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/accept");
     try {
@@ -458,14 +462,16 @@ class Auth with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      _newOrder = null;
       await fetchAndSetOrderServiceman();
       notifyListeners();
+      return extractedData;
     } catch (error) {
       rethrow;
     }
   }
 
-  Future<void> setNewOrderCancel(orderServicemanId) async {
+  Future<void> setNewOrderCancel(orderServicemanId, cancelReason) async {
     final url =
         Uri.parse("http://10.0.2.2:8000/api/app/serviceman/orders/cancel");
     try {
@@ -489,6 +495,8 @@ class Auth with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      _newOrder = null;
+      await fetchAndSetOrderServiceman();
       // =======================
       final urlReason = Uri.parse(
           "http://10.0.2.2:8000/api/app/serviceman/orders/cancel-reason");
@@ -500,7 +508,7 @@ class Auth with ChangeNotifier {
         },
         body: json.encode({
           'order_serviceman_id': orderServicemanId,
-          'cancel_reason': "test cancel reason",
+          'cancel_reason': cancelReason,
         }),
       );
       final extractedDataReason = json.decode(responseReason.body);
@@ -508,7 +516,6 @@ class Auth with ChangeNotifier {
         return;
       }
       // =======================
-      await fetchAndSetOrderServiceman();
       notifyListeners();
     } catch (error) {
       rethrow;
