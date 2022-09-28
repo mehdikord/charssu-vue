@@ -54,7 +54,7 @@ class OrderController extends Controller
         $order->order()->update([
             'start_at' => Carbon::now(),
         ]);
-        return response()->json(['message' => 'سفارش باموفقیت پذیرفته شد']);
+        return response()->json('سفارش باموفقیت پذیرفته شد');
     }
 
     public function cancel(Request $request)
@@ -78,7 +78,7 @@ class OrderController extends Controller
             'canceled_at' => Carbon::now(),
         ]);
 
-        return response()->json(['message' => 'سفارش باموفقیت کنسل شد']);
+        return response()->json('سفارش باموفقیت کنسل شد');
 
     }
 
@@ -102,7 +102,7 @@ class OrderController extends Controller
             return response()->json(['error' => 'سفارش موردنظر توسط شما درحال انجام است !'],409);
         }
         $order->update(['cancel_reason' => $request->cancel_reason]);
-        return response()->json(['message' => 'دلیل رد شدن سفارش باموفقیت ثبت شد']);
+        return response()->json('دلیل رد شدن سفارش باموفقیت ثبت شد');
     }
 
     public function single(Order $order)
