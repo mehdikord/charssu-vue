@@ -375,7 +375,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                   child: Column(
                                                     children: [
                                                       infoRow(
-                                                        "شماره: ",
+                                                        "کد سفارش: ",
                                                         dashbord.activeOrder[
                                                             'order']['code'],
                                                       ),
@@ -393,7 +393,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                         color: Colors.black,
                                                       ),
                                                       infoRow(
-                                                        "شماره مشتری: ",
+                                                        "شماره موبایل مشتری: ",
                                                         dashbord.activeOrder[
                                                                     'order']
                                                                 ['customer']

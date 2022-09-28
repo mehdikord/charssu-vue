@@ -56,7 +56,7 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         drawer: const MainDrawer(),
-        floatingActionButton: order['is_done'] == 1
+        floatingActionButton: order['is_done'] == 1 || order['invoice'] == 1
             ? null
             : Padding(
                 padding: EdgeInsets.only(
@@ -331,7 +331,8 @@ class _OrderNotesScreenState extends State<OrderNotesScreen> {
                                             color: Colors.white,
                                           ),
                                         ),
-                                        if (order['is_done'] == 0)
+                                        if (order['is_done'] == 0 &&
+                                            order['invoice'] == 0)
                                           Align(
                                             alignment: Alignment.centerLeft,
                                             child: ElevatedButton(

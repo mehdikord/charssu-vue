@@ -128,7 +128,7 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         drawer: const MainDrawer(),
-        floatingActionButton: order['is_done'] == 1
+        floatingActionButton: order['is_done'] == 1 || order['invoice'] == 1
             ? null
             : Container(
                 padding: EdgeInsets.only(
@@ -206,10 +206,6 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
                                                         const SizedBox(
                                                           height: 20,
                                                         ),
-                                                        // ==================================
-                                                        // ==================================
-                                                        // ==================================
-                                                        // ==================================
                                                         SelectFormField(
                                                           decoration:
                                                               const InputDecoration(
@@ -240,29 +236,7 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
                                                                             category['name'],
                                                                       })
                                                               .toList(),
-                                                          // [
-                                                          //   {
-                                                          //     'value':
-                                                          //         'serviceman',
-                                                          //     'label':
-                                                          //         'سرویس کار',
-                                                          //   },
-                                                          //   {
-                                                          //     'value':
-                                                          //         'customer',
-                                                          //     'label': 'مشتری',
-                                                          //   },
-                                                          //   {
-                                                          //     'value': 'nobody',
-                                                          //     'label':
-                                                          //         'هیچکدام',
-                                                          //   },
-                                                          // ],
                                                         ),
-                                                        // ==================================
-                                                        // ==================================
-                                                        // ==================================
-                                                        // ==================================
                                                         const SizedBox(
                                                           height: 20,
                                                         ),
@@ -640,7 +614,8 @@ class _OrderProductsScreenState extends State<OrderProductsScreen> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      if (order['is_done'] == 0)
+                                      if (order['is_done'] == 0 &&
+                                          order['invoice'] == 0)
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: ElevatedButton(

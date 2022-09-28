@@ -420,62 +420,67 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                           ),
                                         ),
                                         // Warranty Date
-                                        Container(
-                                          width: double.infinity,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.05,
-                                          padding:
-                                              const EdgeInsets.only(right: 5),
-                                          margin:
-                                              const EdgeInsets.only(bottom: 10),
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xffd8c662),
-                                            borderRadius:
-                                                BorderRadius.horizontal(
-                                              left: Radius.circular(30),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const Text(
-                                                "تاریخ گارانتی",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                        if (dashboard.order['warranty'] == "1")
+                                          Container(
+                                            width: double.infinity,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.05,
+                                            padding:
+                                                const EdgeInsets.only(right: 5),
+                                            margin: const EdgeInsets.only(
+                                                bottom: 10),
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xffd8c662),
+                                              borderRadius:
+                                                  BorderRadius.horizontal(
+                                                left: Radius.circular(30),
                                               ),
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.65,
-                                                height: double.infinity,
-                                                padding: const EdgeInsets.only(
-                                                    right: 5),
-                                                margin: const EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  "تاریخ گارانتی",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                                child: Center(
-                                                  child: Text(
-                                                    dashboard
-                                                        .order['warranty_date'],
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.65,
+                                                  height: double.infinity,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 5),
+                                                  margin:
+                                                      const EdgeInsets.all(5),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      dashboard.order[
+                                                          'warranty_date'],
+                                                      style: const TextStyle(
+                                                        fontSize: 16,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
                                         // Description
                                         Container(
                                           width: double.infinity,
@@ -839,83 +844,111 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                 width: MediaQuery.of(context).size.width * 0.6,
                                 margin: const EdgeInsets.only(bottom: 10),
                                 child: ElevatedButton(
-                                  onPressed: () => showDialog(
-                                    context: context,
-                                    builder: (context) => Directionality(
-                                      textDirection: TextDirection.rtl,
-                                      child: StatefulBuilder(
-                                        builder: (context, setState) =>
-                                            AlertDialog(
-                                          title: const Text(
-                                            "صدور فاکتور",
-                                            style: TextStyle(
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                          content: const Text(
-                                            "آیا مطمئن هستید؟",
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text(
-                                                "خیر",
+                                  onPressed: () async {
+                                    if (dashboard.order['is_done'] == 1 ||
+                                        dashboard.order['invoice'] == 1) {
+                                      setState(() {
+                                        _isLoadingFactor = true;
+                                      });
+                                      await Provider.of<Invoice>(context,
+                                              listen: false)
+                                          .fetchAndSetOrderInvoice(
+                                              dashboard.order['id'])
+                                          .then(
+                                        (val) {
+                                          Navigator.of(context).pushNamed(
+                                            FactorScreen.routeName,
+                                          );
+                                        },
+                                      );
+                                      setState(() {
+                                        _isLoadingFactor = false;
+                                      });
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: StatefulBuilder(
+                                            builder: (context, setState) =>
+                                                AlertDialog(
+                                              title: const Text(
+                                                "صدور فاکتور",
                                                 style: TextStyle(
-                                                    color: Colors.red),
+                                                  color: Colors.green,
+                                                ),
                                               ),
+                                              content: const Text(
+                                                "آیا مطمئن هستید؟",
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text(
+                                                    "خیر",
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    setState(() {
+                                                      _isLoadingFactor = true;
+                                                    });
+                                                    await Provider.of<Invoice>(
+                                                            context,
+                                                            listen: false)
+                                                        .makeOrderInvoice(
+                                                            dashboard
+                                                                .order['id'])
+                                                        .then(
+                                                          (value) => Provider
+                                                                  .of<Invoice>(
+                                                                      context,
+                                                                      listen:
+                                                                          false)
+                                                              .fetchAndSetOrderInvoice(
+                                                                  dashboard
+                                                                          .order[
+                                                                      'id'])
+                                                              .then(
+                                                            (val) {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pushNamed(
+                                                                FactorScreen
+                                                                    .routeName,
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                    setState(() {
+                                                      _isLoadingFactor = false;
+                                                    });
+                                                  },
+                                                  child: _isLoadingFactor
+                                                      ? const SizedBox(
+                                                          width: 22.0,
+                                                          height: 22.0,
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        )
+                                                      : const Text(
+                                                          "بله",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.green),
+                                                        ),
+                                                ),
+                                              ],
                                             ),
-                                            TextButton(
-                                              onPressed: () async {
-                                                setState(() {
-                                                  _isLoadingFactor = true;
-                                                });
-                                                await Provider.of<Invoice>(
-                                                        context,
-                                                        listen: false)
-                                                    .makeOrderInvoice(
-                                                        dashboard.order['id'])
-                                                    .then(
-                                                      (value) => Provider.of<
-                                                                  Invoice>(
-                                                              context,
-                                                              listen: false)
-                                                          .fetchAndSetOrderInvoice(
-                                                              dashboard
-                                                                  .order['id'])
-                                                          .then(
-                                                        (val) {
-                                                          Navigator.of(context)
-                                                              .pushReplacementNamed(
-                                                            FactorScreen
-                                                                .routeName,
-                                                          );
-                                                        },
-                                                      ),
-                                                    );
-                                                setState(() {
-                                                  _isLoadingFactor = false;
-                                                });
-                                              },
-                                              child: _isLoadingFactor
-                                                  ? const SizedBox(
-                                                      width: 22.0,
-                                                      height: 22.0,
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    )
-                                                  : const Text(
-                                                      "بله",
-                                                      style: TextStyle(
-                                                          color: Colors.green),
-                                                    ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
+                                      );
+                                    }
+                                  },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                       const Color(0xff6ac04f),
@@ -935,7 +968,9 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                           ),
                                         )
                                       : Text(
-                                          dashboard.order['is_done'] == 1
+                                          dashboard.order['is_done'] == 1 ||
+                                                  dashboard.order['invoice'] ==
+                                                      1
                                               ? "نمایش فاکتور"
                                               : "صدور فاکتور و اتمام سرویس",
                                           style: const TextStyle(
