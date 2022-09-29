@@ -374,7 +374,7 @@ class OrderController extends Controller
         $order->invoices()->delete();
         //update order invoice bool
         $order->update(['invoice' => false]);
-        return response()->json('invoice removed successful');
+        return response()->json('فاکتور موردنظر باموفقیت حذف شد');
 
     }
 
