@@ -200,219 +200,235 @@ class _FactorScreenState extends State<FactorScreen> {
                         ),
                       ),
                       child: Consumer<Invoice>(
-                        builder: (context, invoice, _) => SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Column(
-                                children: [
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: invoice.items.length,
-                                    itemBuilder: (ctx, i) =>
-                                        FactorItem(invoice.items[i]),
-                                  ),
-                                ],
+                        builder: (context, invoice, _) => Column(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.55,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: invoice.items.length,
+                                      itemBuilder: (ctx, i) =>
+                                          FactorItem(invoice.items[i]),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              // Buttons
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  // Report Button
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => Directionality(
-                                            textDirection: TextDirection.rtl,
-                                            child: StatefulBuilder(
-                                              builder: (context, setState) =>
-                                                  AlertDialog(
-                                                title: const Text(
-                                                  "هشدار",
-                                                  style: TextStyle(
-                                                    color: Colors.orange,
-                                                  ),
-                                                ),
-                                                content: const Text(
-                                                    "آیا مطمئن هستید؟"),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.of(context)
-                                                            .pop(),
-                                                    child: const Text(
-                                                      "خیر",
-                                                      style: TextStyle(
-                                                        color: Colors.red,
-                                                      ),
+                            ),
+                            // Buttons
+                            Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    // Report Button
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                Directionality(
+                                              textDirection: TextDirection.rtl,
+                                              child: StatefulBuilder(
+                                                builder: (context, setState) =>
+                                                    AlertDialog(
+                                                  title: const Text(
+                                                    "هشدار",
+                                                    style: TextStyle(
+                                                      color: Colors.orange,
                                                     ),
                                                   ),
-                                                  TextButton(
-                                                    onPressed: () async {
-                                                      setState(() {
-                                                        _isLoadingDelete = true;
-                                                      });
-                                                      await Provider.of<
-                                                                  Invoice>(
-                                                              context,
-                                                              listen: false)
-                                                          .deleteOrderInvoice(
-                                                              dashboard
-                                                                  .order['id'])
-                                                          .then(
-                                                        (result) {
+                                                  content: const Text(
+                                                      "آیا مطمئن هستید؟"),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
                                                           Navigator.of(context)
-                                                              .pop();
-                                                          if (result
-                                                                  .runtimeType ==
-                                                              String) {
+                                                              .pop(),
+                                                      child: const Text(
+                                                        "خیر",
+                                                        style: TextStyle(
+                                                          color: Colors.red,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        setState(() {
+                                                          _isLoadingDelete =
+                                                              true;
+                                                        });
+                                                        await Provider.of<
+                                                                    Invoice>(
+                                                                context,
+                                                                listen: false)
+                                                            .deleteOrderInvoice(
+                                                                dashboard.order[
+                                                                    'id'])
+                                                            .then(
+                                                          (result) {
                                                             Navigator.of(
                                                                     context)
                                                                 .pop();
-                                                          }
-                                                          dialog(result);
-                                                        },
-                                                      );
-                                                      setState(() {
-                                                        _isLoadingDelete =
-                                                            false;
-                                                      });
-                                                    },
-                                                    child: _isLoadingDelete
-                                                        ? const SizedBox(
-                                                            width: 22.0,
-                                                            height: 22.0,
-                                                            child:
-                                                                CircularProgressIndicator())
-                                                        : const Text("بله"),
-                                                  ),
-                                                ],
+                                                            if (result
+                                                                    .runtimeType ==
+                                                                String) {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            }
+                                                            dialog(result);
+                                                          },
+                                                        );
+                                                        setState(() {
+                                                          _isLoadingDelete =
+                                                              false;
+                                                        });
+                                                      },
+                                                      child: _isLoadingDelete
+                                                          ? const SizedBox(
+                                                              width: 22.0,
+                                                              height: 22.0,
+                                                              child:
+                                                                  CircularProgressIndicator())
+                                                          : const Text("بله"),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
+                                          );
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                            const Color(0xffd86262),
                                           ),
-                                        );
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                          const Color(0xffd86262),
-                                        ),
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                        ),
-                                      ),
-                                      child: const Text(
-                                        "حذف",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // Part Button
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          _isLoadingDone = true;
-                                        });
-                                        await Provider.of<Invoice>(context,
-                                                listen: false)
-                                            .setDoneOrderInvoice(
-                                                dashboard.order['id'])
-                                            .then(
-                                          (result) {
-                                            if (result.runtimeType == String) {
-                                              Navigator.of(context)
-                                                  .pushReplacementNamed(
-                                                      DoneOrdersScreen
-                                                          .routeName);
-                                            }
-                                            dialog(result);
-                                          },
-                                        );
-                                        setState(() {
-                                          _isLoadingDone = false;
-                                        });
-                                      },
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                        ),
-                                      ),
-                                      child: _isLoadingDone
-                                          ? const SizedBox(
-                                              width: 22.0,
-                                              height: 22.0,
-                                              child: CircularProgressIndicator(
-                                                color: Colors.white,
-                                              ),
-                                            )
-                                          : const Text(
-                                              "اتمام سرویس",
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                              ),
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
                                             ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // Submit Button
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                margin: const EdgeInsets.only(bottom: 10),
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      _isLoadingPayment = true;
-                                    });
-                                    setState(() {
-                                      _isLoadingPayment = false;
-                                    });
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xff6ac04f),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                    ),
-                                  ),
-                                  child: _isLoadingPayment
-                                      ? const SizedBox(
-                                          width: 22.0,
-                                          height: 22.0,
-                                          child: CircularProgressIndicator(
-                                            color: Colors.white,
                                           ),
-                                        )
-                                      : const Text(
-                                          "پرداخت",
+                                        ),
+                                        child: const Text(
+                                          "حذف",
                                           style: TextStyle(
                                             fontSize: 18,
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                    // Part Button
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: ElevatedButton(
+                                        onPressed: () async {
+                                          setState(() {
+                                            _isLoadingDone = true;
+                                          });
+                                          await Provider.of<Invoice>(context,
+                                                  listen: false)
+                                              .setDoneOrderInvoice(
+                                                  dashboard.order['id'])
+                                              .then(
+                                            (result) {
+                                              if (result.runtimeType ==
+                                                  String) {
+                                                Navigator.of(context)
+                                                    .pushReplacementNamed(
+                                                        DoneOrdersScreen
+                                                            .routeName);
+                                              }
+                                              dialog(result);
+                                            },
+                                          );
+                                          setState(() {
+                                            _isLoadingDone = false;
+                                          });
+                                        },
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                          ),
+                                        ),
+                                        child: _isLoadingDone
+                                            ? const SizedBox(
+                                                width: 22.0,
+                                                height: 22.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                            : const Text(
+                                                "اتمام سرویس",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
+                                // Submit Button
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        _isLoadingPayment = true;
+                                      });
+                                      setState(() {
+                                        _isLoadingPayment = false;
+                                      });
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        const Color(0xff6ac04f),
+                                      ),
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                      ),
+                                    ),
+                                    child: _isLoadingPayment
+                                        ? const SizedBox(
+                                            width: 22.0,
+                                            height: 22.0,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : const Text(
+                                            "پرداخت",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),
