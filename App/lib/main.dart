@@ -2,7 +2,7 @@ import 'package:charssu/auth/sms_code_screen.dart';
 import 'package:charssu/dashboard/active_orders_screen.dart';
 import 'package:charssu/dashboard/dashboard_screen.dart';
 import 'package:charssu/dashboard/done_orders_screen.dart';
-import 'package:charssu/dashboard/factor_screen.dart';
+import 'package:charssu/dashboard/invoices/factor_screen.dart';
 import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/notes/order_notes_screen.dart';
 import 'package:charssu/dashboard/order_single_screen.dart';

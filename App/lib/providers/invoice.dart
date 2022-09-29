@@ -35,10 +35,10 @@ class Invoice with ChangeNotifier {
     }
   }
 
-  List _item = [];
+  List _items = [];
 
-  List get item {
-    return [..._item];
+  List get items {
+    return [..._items];
   }
 
   Future<void> fetchAndSetOrderInvoice(orderId) async {
@@ -62,14 +62,42 @@ class Invoice with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
-      _item = extractedData;
+      _items = extractedData;
       notifyListeners();
     } catch (error) {
       rethrow;
     }
   }
 
-  Future<dynamic> setDoneOrderInvoice(orderId, context) async {
+  Future<dynamic> deleteOrderInvoice(orderId) async {
+    final url = Uri.parse(
+        "http://10.0.2.2:8000/api/app/serviceman/orders/delete-invoice/$orderId");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('userData')) {
+        return;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData').toString());
+      final response = await http.get(
+        url,
+        headers: {
+          "authorization": extractedUserData['token'],
+          'Content-type': 'application/json',
+        },
+      );
+      final extractedData = json.decode(response.body);
+      if (extractedData == null) {
+        return;
+      }
+      notifyListeners();
+      return extractedData;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> setDoneOrderInvoice(orderId) async {
     final url = Uri.parse(
         "http://10.0.2.2:8000/api/app/serviceman/orders/set/done/$orderId");
     try {

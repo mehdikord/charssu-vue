@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:charssu/dashboard/factor_screen.dart';
+import 'package:charssu/dashboard/invoices/factor_screen.dart';
 import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/notes/order_notes_screen.dart';
 import 'package:charssu/dashboard/products/order_products_screen.dart';
@@ -917,7 +917,7 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                                             (val) {
                                                               Navigator.of(
                                                                       context)
-                                                                  .pushNamed(
+                                                                  .popAndPushNamed(
                                                                 FactorScreen
                                                                     .routeName,
                                                               );

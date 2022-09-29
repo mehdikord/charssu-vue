@@ -269,13 +269,7 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               0),
-                                                      itemCount: dashbord
-                                                                  .activeOrder
-                                                                  .length >
-                                                              7
-                                                          ? 7
-                                                          : dashbord
-                                                              .orders.length,
+                                                      itemCount: 1,
                                                       shrinkWrap: true,
                                                       physics:
                                                           const NeverScrollableScrollPhysics(),
