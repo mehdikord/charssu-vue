@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/order_single_screen.dart';
 import 'package:charssu/dashboard/service_item.dart';
 import 'package:charssu/main.dart';
@@ -32,6 +35,18 @@ class DoneOrdersScreenState extends State<DoneOrdersScreen> {
   void initState() {
     _dashboardDoneOrdersFuture = _obtainDashboardDoneOrdersFuture();
     super.initState();
+    startTime();
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
+  }
+
+  route() {
+    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+      Navigator.of(context).pushReplacementNamed(NewOrderScreen.routeName);
+    }
   }
 
   @override

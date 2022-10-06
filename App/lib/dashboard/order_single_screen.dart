@@ -1,7 +1,12 @@
-import 'package:charssu/dashboard/factor_screen.dart';
+import 'dart:async';
+
+import 'package:charssu/dashboard/invoices/factor_screen.dart';
+import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/notes/order_notes_screen.dart';
 import 'package:charssu/dashboard/products/order_products_screen.dart';
+import 'package:charssu/providers/auth.dart';
 import 'package:charssu/providers/dashboard.dart';
+import 'package:charssu/providers/invoice.dart';
 import 'package:charssu/widget/bottom_navbar.dart';
 import 'package:charssu/widget/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +25,26 @@ class OrderSingleScreen extends StatefulWidget {
 
 class _OrderSingleScreenState extends State<OrderSingleScreen> {
   final _controller = TextEditingController();
-  String noteText = "";
-  var _isLoading = false;
+  var _isLoadingProduct = false;
+  var _isLoadingNote = false;
+  var _isLoadingFactor = false;
+
+  @override
+  void initState() {
+    super.initState();
+    startTime();
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
+  }
+
+  route() {
+    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+      Navigator.pushReplacementNamed(context, NewOrderScreen.routeName);
+    }
+  }
 
   @override
   void dispose() {
@@ -397,62 +420,67 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                           ),
                                         ),
                                         // Warranty Date
-                                        Container(
-                                          width: double.infinity,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.05,
-                                          padding:
-                                              const EdgeInsets.only(right: 5),
-                                          margin:
-                                              const EdgeInsets.only(bottom: 10),
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xffd8c662),
-                                            borderRadius:
-                                                BorderRadius.horizontal(
-                                              left: Radius.circular(30),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              const Text(
-                                                "تاریخ گارانتی",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                        if (dashboard.order['warranty'] == "1")
+                                          Container(
+                                            width: double.infinity,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.05,
+                                            padding:
+                                                const EdgeInsets.only(right: 5),
+                                            margin: const EdgeInsets.only(
+                                                bottom: 10),
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xffd8c662),
+                                              borderRadius:
+                                                  BorderRadius.horizontal(
+                                                left: Radius.circular(30),
                                               ),
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.65,
-                                                height: double.infinity,
-                                                padding: const EdgeInsets.only(
-                                                    right: 5),
-                                                margin: const EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  "تاریخ گارانتی",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                                child: Center(
-                                                  child: Text(
-                                                    dashboard
-                                                        .order['warranty_date'],
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.65,
+                                                  height: double.infinity,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 5),
+                                                  margin:
+                                                      const EdgeInsets.all(5),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      dashboard.order[
+                                                          'warranty_date'],
+                                                      style: const TextStyle(
+                                                        fontSize: 16,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
                                         // Description
                                         Container(
                                           width: double.infinity,
@@ -719,12 +747,19 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.4,
                                     child: ElevatedButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pushNamed(
-                                        OrderNotesScreen.routeName,
-                                        arguments:
-                                            dashboard.order['id'].toString(),
-                                      ),
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isLoadingNote = true;
+                                        });
+                                        await Navigator.of(context).pushNamed(
+                                          OrderNotesScreen.routeName,
+                                          arguments:
+                                              dashboard.order['id'].toString(),
+                                        );
+                                        setState(() {
+                                          _isLoadingNote = false;
+                                        });
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all(
@@ -737,12 +772,20 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                           ),
                                         ),
                                       ),
-                                      child: const Text(
-                                        "گزارش",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
+                                      child: _isLoadingNote
+                                          ? const SizedBox(
+                                              width: 22.0,
+                                              height: 22.0,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : const Text(
+                                              "گزارش",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
                                     ),
                                   ),
                                   // Part Button
@@ -750,17 +793,26 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.4,
                                     child: ElevatedButton(
-                                      onPressed: () => Provider.of<Dashboard>(
-                                        context,
-                                        listen: false,
-                                      ).fetchAndSetProducts().then(
-                                            (value) =>
-                                                Navigator.of(context).pushNamed(
-                                              OrderProductsScreen.routeName,
-                                              arguments: dashboard.order['id']
-                                                  .toString(),
-                                            ),
-                                          ),
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isLoadingProduct = true;
+                                        });
+                                        await dashboard
+                                            .fetchAndSetProducts()
+                                            .then((value) => dashboard
+                                                .fetchAndSetProductCategories())
+                                            .then(
+                                              (val) => Navigator.of(context)
+                                                  .pushNamed(
+                                                OrderProductsScreen.routeName,
+                                                arguments: dashboard.order['id']
+                                                    .toString(),
+                                              ),
+                                            );
+                                        setState(() {
+                                          _isLoadingProduct = false;
+                                        });
+                                      },
                                       style: ButtonStyle(
                                         shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
@@ -769,12 +821,20 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                           ),
                                         ),
                                       ),
-                                      child: const Text(
-                                        "قطعه",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
+                                      child: _isLoadingProduct
+                                          ? const SizedBox(
+                                              width: 22.0,
+                                              height: 22.0,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : const Text(
+                                              "قطعه",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                              ),
+                                            ),
                                     ),
                                   ),
                                 ],
@@ -784,10 +844,111 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                 width: MediaQuery.of(context).size.width * 0.6,
                                 margin: const EdgeInsets.only(bottom: 10),
                                 child: ElevatedButton(
-                                  onPressed: () =>
-                                      Navigator.of(context).pushNamed(
-                                    FactorScreen.routeName,
-                                  ),
+                                  onPressed: () async {
+                                    if (dashboard.order['is_done'] == 1 ||
+                                        dashboard.order['invoice'] == 1) {
+                                      setState(() {
+                                        _isLoadingFactor = true;
+                                      });
+                                      await Provider.of<Invoice>(context,
+                                              listen: false)
+                                          .fetchAndSetOrderInvoice(
+                                              dashboard.order['id'])
+                                          .then(
+                                        (val) {
+                                          Navigator.of(context).pushNamed(
+                                            FactorScreen.routeName,
+                                          );
+                                        },
+                                      );
+                                      setState(() {
+                                        _isLoadingFactor = false;
+                                      });
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: StatefulBuilder(
+                                            builder: (context, setState) =>
+                                                AlertDialog(
+                                              title: const Text(
+                                                "صدور فاکتور",
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                              content: const Text(
+                                                "آیا مطمئن هستید؟",
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text(
+                                                    "خیر",
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    setState(() {
+                                                      _isLoadingFactor = true;
+                                                    });
+                                                    await Provider.of<Invoice>(
+                                                            context,
+                                                            listen: false)
+                                                        .makeOrderInvoice(
+                                                            dashboard
+                                                                .order['id'])
+                                                        .then(
+                                                          (value) => Provider
+                                                                  .of<Invoice>(
+                                                                      context,
+                                                                      listen:
+                                                                          false)
+                                                              .fetchAndSetOrderInvoice(
+                                                                  dashboard
+                                                                          .order[
+                                                                      'id'])
+                                                              .then(
+                                                            (val) {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .popAndPushNamed(
+                                                                FactorScreen
+                                                                    .routeName,
+                                                              );
+                                                            },
+                                                          ),
+                                                        );
+                                                    setState(() {
+                                                      _isLoadingFactor = false;
+                                                    });
+                                                  },
+                                                  child: _isLoadingFactor
+                                                      ? const SizedBox(
+                                                          width: 22.0,
+                                                          height: 22.0,
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        )
+                                                      : const Text(
+                                                          "بله",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.green),
+                                                        ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                       const Color(0xff6ac04f),
@@ -798,12 +959,24 @@ class _OrderSingleScreenState extends State<OrderSingleScreen> {
                                       ),
                                     ),
                                   ),
-                                  child: const Text(
-                                    "صدور فاکتور و اتمام سرویس",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                                  child: _isLoadingFactor
+                                      ? const SizedBox(
+                                          width: 22.0,
+                                          height: 22.0,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : Text(
+                                          dashboard.order['is_done'] == 1 ||
+                                                  dashboard.order['invoice'] ==
+                                                      1
+                                              ? "نمایش فاکتور"
+                                              : "صدور فاکتور و اتمام سرویس",
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ],

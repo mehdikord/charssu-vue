@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:charssu/dashboard/new_order_screen.dart';
 import 'package:charssu/dashboard/order_single_screen.dart';
 import 'package:charssu/dashboard/service_item.dart';
 import 'package:charssu/main.dart';
@@ -25,13 +28,25 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
 
   Future _obtainDashboardActiveOrdersFuture() {
     return Provider.of<Dashboard>(context, listen: false)
-        .fetchAndSetDashboardActiveOrders();
+        .fetchAndSetDashboardActiveOrder();
   }
 
   @override
   void initState() {
     _dashboardActiveOrdersFuture = _obtainDashboardActiveOrdersFuture();
     super.initState();
+    startTime();
+  }
+
+  startTime() async {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
+  }
+
+  route() {
+    if (Provider.of<Auth>(context, listen: false).hasNewOrder) {
+      Navigator.pushReplacementNamed(context, NewOrderScreen.routeName);
+    }
   }
 
   @override
@@ -209,7 +224,8 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                         } else {
                                           return Consumer<Dashboard>(
                                             builder: (ctx, dashbord, _) {
-                                              if (dashbord.orders.isNotEmpty) {
+                                              if (dashbord
+                                                  .activeOrder.isNotEmpty) {
                                                 return Column(
                                                   children: [
                                                     ServiceItem(
@@ -253,27 +269,21 @@ class ActiveOrdersScreenState extends State<ActiveOrdersScreen> {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               0),
-                                                      itemCount: dashbord.orders
-                                                                  .length >
-                                                              7
-                                                          ? 7
-                                                          : dashbord
-                                                              .orders.length,
+                                                      itemCount: 1,
                                                       shrinkWrap: true,
                                                       physics:
                                                           const NeverScrollableScrollPhysics(),
                                                       itemBuilder:
                                                           (context, i) =>
                                                               ServiceItem(
-                                                        dashbord.orders[i]
-                                                                ['order']['id']
+                                                        dashbord.activeOrder[
+                                                                'order']['id']
                                                             .toString(),
-                                                        dashbord.orders[i]
-                                                                ['order']
-                                                                ['code']
+                                                        dashbord.activeOrder[
+                                                                'order']['code']
                                                             .toString(),
-                                                        dashbord.orders[i]
-                                                                ['order']
+                                                        dashbord.activeOrder[
+                                                                'order']
                                                                 ['customer']
                                                                 ['name']
                                                             .toString(),

@@ -372,9 +372,11 @@ class _AuthScreenState extends State<AuthScreen> {
                               textColor: const Color(0xfff5f5f5),
                               child: _isLoading
                                   ? const SizedBox(
-                                      width: 25,
-                                      height: 25,
-                                      child: CircularProgressIndicator(),
+                                      width: 22,
+                                      height: 22,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
                                     )
                                   : const Text(
                                       "ثبت",
