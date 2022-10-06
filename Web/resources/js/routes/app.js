@@ -8,6 +8,8 @@ import Front_Shop_Checkout from "../components/front/shop/Front_Shop_Checkout";
 import Customer_Profile from "../components/front/panel/Customer_Profile";
 import Customer_Orders_Running from "../components/front/panel/Customer_Orders_Running";
 import Customer_Orders_Detail from "../components/front/panel/Customer_Orders_Detail";
+import Customer_Invoices_Detail from "../components/front/panel/Customer_Invoices_Detail";
+import Customer_Invoices from "../components/front/panel/Customer_Invoices";
 
 
 const routes = [
@@ -68,7 +70,16 @@ const routes = [
                 path : 'orders/details/:code',
                 component : Customer_Orders_Detail,
                 name : 'customer_orders_details',
-
+            },
+            {
+                path : 'invoices',
+                component : Customer_Invoices,
+                name : 'customer_invoices',
+            },
+            {
+                path : 'invoices/details/:id',
+                component : Customer_Invoices_Detail,
+                name : 'customer_invoices_details',
             }
 
         ]

@@ -20,8 +20,9 @@
                 </router-link>
             </div>
             <div class="mb-4">
-                <router-link to="" class="btn btn-dark w-100 font-15 p-3">
-                    اطلاعات حساب کاربری
+                <router-link :to="{name : 'customer_invoices'}" class="btn w-100 font-15 p-2" :class="{'btn-info' : this.$route.name === 'customer_invoices','btn-dark' : this.$route.name !== 'customer_invoices'}">
+                    <i class="mdi mdi-cash-check font-24 ml-1"></i>
+                    امور مالی و فاکتورها
                 </router-link>
             </div>
 

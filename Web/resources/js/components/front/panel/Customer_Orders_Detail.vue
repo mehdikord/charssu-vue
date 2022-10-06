@@ -16,6 +16,14 @@
                                     <h6 class="font-15 text-primary">
                                         اطلاعات سفارش
                                     </h6>
+                                    <div v-if="order.is_done" class="col-md-12 mt-3">
+                                        <div class="alert alert-success bg-success text-center">
+                                            <p class="font-16 text-light font-weight-bold">
+                                                این سفارش به پایان رسیده است
+                                            </p>
+                                        </div>
+
+                                    </div>
                                     <div class="mt-2 row">
                                         <div class="col-md-4 mt-2">
                                             <div class="card p-3">
@@ -156,6 +164,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 mt-2">
+                                                <div class="card p-3">
+                                                    <div>
+                                                        <span class="font-13 text-secondary ml-1">تاریخ شروع کار : </span>
+                                                        <span class=" font-14 ">
+                                                            {{this.$filters.date(order.servicemans[0].created_at)}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </template>
                                         <template v-else>
@@ -243,6 +261,83 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12 mt-2">
+                                            <div class="card p-3">
+                                                <div>
+                                                    <div class="text-danger font-16">مبلغ نهایی قابل پرداخت</div>
+                                                    <template v-if="!order.invoice">
+                                                        <div class="mt-3">
+                                                            <div class="alert alert-primary text-center">
+                                                                هنوز فاکتوری برای این سفارش صادر نشده است .
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <div class="mt-3 row justify-content-center">
+
+                                                            <div v-if="order.invoices.length" class="col-md-6">
+                                                                <div class="card p-3">
+                                                                    <div class="text-center">
+                                                                        <span class="font-18 text-success font-weight-bold">
+                                                                            {{this.NumberFormatter(order.invoices[0].price)}}
+                                                                        </span>
+                                                                        <span class="text-secondary mr-2">تومان</span>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <h6 class="text-center text-danger font-16">جزئیات فاکتور</h6>
+                                                                    <table class="table table-bordered mt-2">
+                                                                        <thead>
+                                                                        <tr  class="font-14 bg-dark text-light">
+                                                                            <th>عنوان</th>
+                                                                            <th>هزینه</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr v-for="(detail,index) in order.invoices[0].details">
+                                                                                <td>
+                                                                                    {{detail.title}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span class="text-danger font-weight-bold">
+                                                                                        {{this.NumberFormatter(detail.price)}}
+                                                                                    </span>
+                                                                                    <span class="text-secondary mr-2">تومان</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <span class="font-weight-bold font-15">جمع کل مبالغ</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span class="font-weight-bold font-17 text-success">
+                                                                                         {{this.NumberFormatter(order.invoices[0].price)}}
+                                                                                    </span>
+                                                                                    <span class="text-secondary mr-2">تومان</span>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <tfoot>
+                                                                        <tr>
+                                                                            <td colspan="2" class="p-1 text-center">
+
+                                                                                <button @click="StartPayment" v-if="!order.invoices[0].is_pay" class="btn btn-success w-100 text-center font-weight-bold">پرداخت آنلاین فاکتور</button>
+                                                                                <span v-else class="badge badge-success p-2 font-14 w-100">
+                                                                                    پرداخت شده است <i class="mdi mdi-check-circle font-20"></i>
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tfoot>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -257,6 +352,7 @@
 
 <script>
 import Customer_Main_Menu from "./Customer_Main_Menu";
+import Swal from "sweetalert2";
 
 export default {
     name: "Customer_Orders_Detail",
@@ -269,16 +365,43 @@ export default {
     data(){
         return {
             order : null,
-
         }
     },
     methods : {
         GetOrder(){
             axios.get('/api/customer/orders/details/'+this.$route.params.code).then(res => {
                 this.order = res.data;
+                console.log(this.order);
             }).catch(error => {
                 return Sweet.SweetServerErrorMessage();
             })
+
+        },
+        StartPayment(){
+            if (this.order !== null && this.order.invoices.length){
+                Swal.fire({
+                    html: '<p class="font-18 text-dark">در حال اتصال به درگاه پرداخت </p>',
+                    timer: 3200,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        axios.post('/api/customer/invoices/payment/start',{invoice_id : this.order.invoices[0].id}).then(res => {
+                            window.open(res.data.link,'_self')
+                        }).catch(error => {
+                            Sweet.SweetServerErrorMessage();
+                        })
+
+                    },
+                    willClose: () => {
+
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+
+                    }
+                })
+            }
 
         }
     }

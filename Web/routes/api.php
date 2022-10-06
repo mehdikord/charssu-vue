@@ -129,8 +129,22 @@ Route::prefix('customer')->group(function (){
             Route::get('running',[\App\Http\Controllers\Api\Customer\OrderController::class,'running']);
             Route::get('details/{code}',[\App\Http\Controllers\Api\Customer\OrderController::class,'details']);
         });
+        Route::prefix('invoices')->group(function (){
+            Route::get('',[\App\Http\Controllers\Api\Customer\InvoiceController::class,'all']);
+            Route::get('/{invoice}',[\App\Http\Controllers\Api\Customer\InvoiceController::class,'show']);
+
+            Route::prefix('payment')->group(function (){
+                Route::post('start',[\App\Http\Controllers\Api\Customer\InvoiceController::class,'start_payment']);
+            });
+        });
 
 
+    });
+
+    Route::prefix('invoices')->group(function (){
+        Route::prefix('payment')->group(function (){
+            Route::post('callback',[\App\Http\Controllers\Api\Customer\InvoiceController::class,'callback_payment']);
+        });
     });
 
 

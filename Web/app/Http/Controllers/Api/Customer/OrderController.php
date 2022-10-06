@@ -98,9 +98,13 @@ class OrderController extends Controller
                 $product->select(['id','name','price','sale','code'])->get();
             }])
             ->with('products')
+            ->with('invoices.details')
+            ->with(['invoices' => function($invoice){
+//                $invoice->where('type','customer')->get();
+            }])
             ->firstorfail();
         return response()->json($order);
 
-
     }
+
 }

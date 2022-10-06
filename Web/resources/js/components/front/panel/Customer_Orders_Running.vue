@@ -12,6 +12,12 @@
                     <div class="card-body">
                         <h6 class="text-danger">لیست سفاراشات در حال اجرا</h6>
                         <hr>
+                        <div class="alert alert-primary">
+                            <h6 class="font-14">نکته :</h6>
+                            <p class="text-justify">
+                                برای پرداخت فاکتور و مشاهده همه جزئیات سفارش ، با کلیک روی دکمه <span class="btn btn-info font-12 mr-1 ml-1">مشاهده جزئیات</span> وارد صفحه جزئیات سفارش شوید.
+                            </p>
+                        </div>
                         <div class="mt-5 mb-3">
                             <template v-if="!orders.length">
                                 <div class="mt-5">

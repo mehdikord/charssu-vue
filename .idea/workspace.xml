@@ -2,12 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="584e3a56-a6ec-45b6-ba66-8c28bcfd795d" name="Changes" comment="Create customer panel">
-      <change afterPath="$PROJECT_DIR$/Web/public/images/default/no-products.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Customer/InvoiceController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_10_01_223235_add_field_into_invoices.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/database/migrations/2022_10_07_015929_add_field_card_number_into_invoices.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Invoices.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Invoices_Detail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Web/resources/views/errors/customer_payment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_22_22,_7_25_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_22_22__7_25_AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Customer/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Http/Controllers/Api/Customer/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/app/Models/Order_Invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/app/Models/Order_Invoice.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Main_Menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Main_Menu.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Detail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Detail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Running.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/components/front/panel/Customer_Orders_Running.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/resources/js/routes/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Web/resources/js/routes/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +170,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cloner/Projects/abrama&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/cloner/Projects/charssu-vue&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -189,7 +200,21 @@
       <workItem from="1664131419239" duration="3262000" />
       <workItem from="1664120576805" duration="7601000" />
       <workItem from="1664173066331" duration="13262000" />
-      <workItem from="1664280935187" duration="8907000" />
+      <workItem from="1664280935187" duration="9592000" />
+      <workItem from="1664347572008" duration="3201000" />
+      <workItem from="1664368768721" duration="2708000" />
+      <workItem from="1664392019574" duration="1601000" />
+      <workItem from="1664442094730" duration="5706000" />
+      <workItem from="1664541642692" duration="4957000" />
+      <workItem from="1664607360418" duration="3436000" />
+      <workItem from="1664650324638" duration="1809000" />
+      <workItem from="1664706502165" duration="4678000" />
+      <workItem from="1664789918924" duration="3241000" />
+      <workItem from="1664874108826" duration="599000" />
+      <workItem from="1664968088409" duration="677000" />
+      <workItem from="1664983097927" duration="2805000" />
+      <workItem from="1665042661857" duration="1603000" />
+      <workItem from="1665083262162" duration="9307000" />
     </task>
     <task id="LOCAL-00001" summary="update api">
       <created>1663818892292</created>
@@ -212,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664283428423</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Create customer panel">
+      <created>1664312631091</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664312631091</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
