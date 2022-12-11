@@ -1,0 +1,3383 @@
+{
+	"info": {
+		"_postman_id": "8aa96e09-203f-4721-88a5-f237a9a3f9cf",
+		"name": "mini-games",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "4405847-8aa96e09-203f-4721-88a5-f237a9a3f9cf"
+	},
+	"item": [
+		{
+			"name": "Admins",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "login",
+							"id": "dbdc1345-2e4f-4b90-b59a-240653f7a694",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/auth/login?email=minigames@admin.com&password=123456",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"auth",
+										"login"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "minigames@admin.com"
+										},
+										{
+											"key": "password",
+											"value": "123456"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"id": "2889c4b4-969e-4dd1-bd64-47c5a47a071b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/auth/logout",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh",
+							"id": "a6917335-eb49-4766-8861-7afe0a8e211e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/auth/refresh",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"auth",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "8f11d2b2-e2cb-4523-bb98-35279c34a190"
+				},
+				{
+					"name": "Admins",
+					"item": [
+						{
+							"name": "get all",
+							"id": "18a6f9c9-b5d6-4eda-8d83-6f52b0f1b336",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/admins",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"admins"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"id": "4208d422-d4d2-475f-b836-f0e369087811",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/admins?name=admin name&email=test@gmail.com&phone=123456789&password=123456&password_confirmation=123456",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"admins"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "admin name"
+										},
+										{
+											"key": "email",
+											"value": "test@gmail.com"
+										},
+										{
+											"key": "phone",
+											"value": "123456789"
+										},
+										{
+											"key": "password",
+											"value": "123456"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "123456"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edit",
+							"id": "b92572cc-e407-4868-aeee-3f1dd1be97bb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/admins/1?name=admin name&email=test@gmail.com&password=123456&password_confirmation=123456",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"admins",
+										"1"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "admin name"
+										},
+										{
+											"key": "email",
+											"value": "test@gmail.com"
+										},
+										{
+											"key": "password",
+											"value": "123456"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "123456"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"id": "39034cf0-23a3-4fcd-9dcb-c72a16d6f762",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/admins/7",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"admins",
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "09943df4-6f55-4aa7-b26e-b6a49f5c65a8"
+				},
+				{
+					"name": "Tournaments",
+					"item": [
+						{
+							"name": "get all",
+							"id": "c5b45cec-7b94-4b85-8d1d-990331491e09",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/administrator/tournaments?per_page=20",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tournaments"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"id": "7e9e9a53-f9e9-4ce9-9fe9-f48a4abda706",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/administrator/tournaments/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tournaments",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"id": "43da9665-9977-489d-a42e-1e4d8fb029bc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "game_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "test 3",
+											"type": "text"
+										},
+										{
+											"key": "start_time",
+											"value": "2022-08-16",
+											"type": "text"
+										},
+										{
+											"key": "finish_time",
+											"value": "2022-08-29",
+											"type": "text"
+										},
+										{
+											"key": "entry_price",
+											"value": "{\"ecg\":{\"coin\":\"ecg\",\"price\":0,\"coin_id\":2},\"usdt\":{\"coin_id\":1,\"coin\":\"usdt\",\"price\":291}}",
+											"description": "JSON",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "this is description",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"value": "",
+											"description": "image file",
+											"type": "text"
+										},
+										{
+											"key": "rewards",
+											"value": "{\"1\":100, \"2\":50, \"3\":20}",
+											"description": "JSON",
+											"type": "text"
+										},
+										{
+											"key": "config",
+											"value": "",
+											"description": "JSON",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/administrator/tournaments",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tournaments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edit",
+							"id": "069dec04-ff06-4ba9-a298-8f1f1120f26c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/administrator/tournaments/5?game_id=1&name=test&start_time=2022-08-16&finish_time=2022-08-28&entry_price={\"ecg\":{\"coin\":\"ecg\",\"price\":0,\"coin_id\":2},\"usdt\":{\"coin_id\":1,\"coin\":\"usdt\",\"price\":291}}&description=this is description&rewards={\"1\":100, \"2\":50, \"3\":20}&config",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tournaments",
+										"5"
+									],
+									"query": [
+										{
+											"key": "game_id",
+											"value": "1"
+										},
+										{
+											"key": "name",
+											"value": "test"
+										},
+										{
+											"key": "start_time",
+											"value": "2022-08-16"
+										},
+										{
+											"key": "finish_time",
+											"value": "2022-08-28"
+										},
+										{
+											"key": "entry_price",
+											"value": "{\"ecg\":{\"coin\":\"ecg\",\"price\":0,\"coin_id\":2},\"usdt\":{\"coin_id\":1,\"coin\":\"usdt\",\"price\":291}}"
+										},
+										{
+											"key": "description",
+											"value": "this is description"
+										},
+										{
+											"key": "rewards",
+											"value": "{\"1\":100, \"2\":50, \"3\":20}",
+											"description": "JSON"
+										},
+										{
+											"key": "config",
+											"value": null,
+											"description": "JSON"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"id": "8053929e-3a12-4dc3-96f2-3753cb8e4476",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/tournaments/7",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tournaments",
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "60ab2123-1df9-4a47-9bb5-053d9eac6705"
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "get all",
+							"id": "a5be78e6-6aee-479d-b423-c45dbffb00cd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/administrator/users?page=1&per_page=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": " If not entered, its default value is 10",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "show",
+							"id": "4832ea34-2539-4b01-852e-6faee82f0ea3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/administrator/users/5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"users",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"id": "8d45b199-611f-4879-8ca5-6855d30f6b79",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "usere0mail@email.com",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "username",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/administrator/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update profile",
+							"id": "63acc80f-de80-4c34-8c01-aa084e667746",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "test",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "usere0mail@email.com",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "username",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/administrator/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edit",
+							"id": "a468eef2-3aa3-48fb-b985-e059def31b8a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/administrator/users/5?name=edited&username=edited12&email=edited_email@domain.com",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"users",
+										"5"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "edited"
+										},
+										{
+											"key": "username",
+											"value": "edited12"
+										},
+										{
+											"key": "email",
+											"value": "edited_email@domain.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"id": "1830e78a-f2d8-48e9-9733-e69609a44985",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/users/5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"users",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "206af1d6-5fd3-4d58-be7e-0bc8c4df3e2a"
+				},
+				{
+					"name": "Games",
+					"item": [
+						{
+							"name": "games",
+							"item": [
+								{
+									"name": "get all",
+									"id": "022c1072-bf86-4425-a084-402fbd3735f8",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/administrator/games",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"games"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "store",
+									"id": "719f8566-050e-44f1-a79a-6ca5585b6d87",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "game_category_id",
+													"value": "2",
+													"type": "text"
+												},
+												{
+													"key": "name",
+													"value": "game one",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "this is description ",
+													"type": "text"
+												},
+												{
+													"key": "rank",
+													"value": "2",
+													"type": "text"
+												},
+												{
+													"key": "is_special",
+													"value": "0",
+													"description": "special or not -> booolean",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/administrator/games",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"games"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "edit",
+									"id": "2f5fe19c-a413-42e8-8fb0-45a539bb274c",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "game_category_id",
+													"value": "2",
+													"type": "text"
+												},
+												{
+													"key": "name",
+													"value": "edited name",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "edited description",
+													"type": "text"
+												},
+												{
+													"key": "rank",
+													"value": "3",
+													"type": "text"
+												},
+												{
+													"key": "is_special",
+													"value": "0",
+													"description": "special or not -> booolean",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/administrator/games/1",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"games",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"id": "0a54c632-cf75-4357-902d-20cb105395b8",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/administrator/games/1",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"games",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update image",
+									"id": "8426338b-f393-456e-9600-d4d4e9328f48",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "image",
+													"type": "file",
+													"src": "/home/cloner/Downloads/321515.jpg"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/administrator/games/image/1",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"games",
+												"image",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete image",
+									"id": "eae60933-9331-449a-a3b1-ed2ebeb557c0",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/administrator/games/image/1",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"games",
+												"image",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "d151a7ac-1914-48b1-9bd7-c3b6d4ce0f5b"
+						},
+						{
+							"name": "categories",
+							"item": [
+								{
+									"name": "get all",
+									"id": "03fdcbad-93ce-4183-bf07-ecce50f98a1b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/administrator/game-categories",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"game-categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "store",
+									"id": "0e7428bc-98fd-4885-827a-2f348aacb4ba",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "name",
+													"value": "test2",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "description is not required",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/administrator/game-categories",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"game-categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "edit",
+									"id": "6fca3ea5-8ad0-4311-8d77-dd7c61406dd8",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "name",
+													"value": "test3",
+													"type": "text"
+												},
+												{
+													"key": "description",
+													"value": "description is not required",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/administrator/game-categories/1",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"game-categories",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"id": "c8065aa6-741b-41b5-85f7-dc4fe90f9133",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/administrator/game-categories/1",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"administrator",
+												"game-categories",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"id": "9b5ce95a-ed7f-4ba0-b6c5-f9a282626522"
+						}
+					],
+					"id": "edf4657d-094e-48f7-84ae-8a58c3824691"
+				},
+				{
+					"name": "Tickets",
+					"item": [
+						{
+							"name": "New Tickets (with search and filters )",
+							"id": "1b5f4f53-25ed-4644-a94a-dcfb60954fda",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/tickets/new?per_page=10&department=&title=",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"new"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "department",
+											"value": ""
+										},
+										{
+											"key": "title",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Active (Open) Tickets (with search and filters )",
+							"id": "58beadc8-232a-4085-906f-445876a85245",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/tickets/active?per_page=10&department=&title=",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"active"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "department",
+											"value": "",
+											"description": "(support - technical - sales - financial) * null = return all data"
+										},
+										{
+											"key": "title",
+											"value": "",
+											"description": "search with ticket title"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Inactive (Close) Tickets (with search and filters )",
+							"id": "ab78a7d4-3e4c-4c4b-a5d0-c37926ab4cf3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/tickets/inactive?per_page=10&department=financial&title=test",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"inactive"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "department",
+											"value": "financial",
+											"description": "(support - technical - sales - financial) * null = return all data"
+										},
+										{
+											"key": "title",
+											"value": "test",
+											"description": "search with ticket title"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Messages",
+							"id": "52f0384b-ac8b-4356-883a-11e4d9e7bc5e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/tickets/messages/3?per_page=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"messages",
+										"3"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store Messages",
+							"id": "762a835b-9ee3-46d8-bd0e-d253d8097fe7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "message",
+											"value": "this is message from admin",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/administrator/tickets/messages/3",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"messages",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set Close",
+							"id": "6c8e2b44-12b3-414b-b19e-cecdfdf9d9ea",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/tickets/set/close/3                            ",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"set",
+										"close",
+										"3                            "
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set Open",
+							"id": "2d65d5a7-36b8-4bff-a372-7d305e665927",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/tickets/set/open/3                            ",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"set",
+										"open",
+										"3                            "
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change department",
+							"id": "94799514-3658-43a3-ac7b-cb592e74523a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "department",
+											"value": "support",
+											"description": "available departments : technical - sales - financial - support",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/administrator/tickets/set/department/3                            ",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"tickets",
+										"set",
+										"department",
+										"3                            "
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "aa332ef4-7c63-4889-b715-5cc95dbeef9a"
+				},
+				{
+					"name": "Dashboard",
+					"item": [
+						{
+							"name": "Main Report",
+							"id": "17f6c291-7d77-4ac5-ab35-0e5c1365d154",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/administrator/dashboard/main-report",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"administrator",
+										"dashboard",
+										"main-report"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "1e451116-897d-4be7-b1d5-1b42228592ea"
+				}
+			],
+			"id": "3fcf7b45-8960-4da5-9979-1c6b2177c2b6"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "login",
+							"id": "84c094e0-4911-47d4-9e22-63245794d994",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "saeedalipana55@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/auth/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"auth",
+										"login"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "saeedalipanah55@gmail.com",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register",
+							"id": "0836e1df-264b-4326-8001-aac19237d6ee",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/auth/register?name=john&email=email@domain.com&password=123456&password_confirmation=123456",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"auth",
+										"register"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "john"
+										},
+										{
+											"key": "email",
+											"value": "email@domain.com"
+										},
+										{
+											"key": "password",
+											"value": "123456"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "123456"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"id": "bfecd924-48f4-4565-95c9-5ea170b7c55f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/auth/logout",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh",
+							"id": "c9587a83-6510-4755-93ce-95f6573d4a8b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/auth/refresh",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"auth",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login as guest",
+							"id": "7b5028a4-9d54-4bc9-aee7-6a30ad8caf61",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/auth/guest",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"auth",
+										"guest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Request email verified",
+							"id": "1db536a5-01b5-4080-9986-edd22c232dcf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/auth/verify-request",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"auth",
+										"verify-request"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login with Google",
+							"id": "6b88a3fa-ac61-4155-8264-9eba1df9de9b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "access_token",
+											"value": "googl_access_token",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/auth/google",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"auth",
+										"google"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "9719f28b-9544-4281-af46-5676dee54632"
+				},
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "get me",
+							"id": "02c80f38-db9c-40fe-94ae-08b58a430008",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/profile/me",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"id": "890e9ede-2e41-4f82-b9d6-e478d37e5056",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/profile/update?name=saeed&email=saeedalipanah55@gmail.com&username=ssaaeedd",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										"update"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "saeed"
+										},
+										{
+											"key": "email",
+											"value": "saeedalipanah55@gmail.com"
+										},
+										{
+											"key": "username",
+											"value": "ssaaeedd"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get info",
+							"id": "897cce35-074e-480c-91a0-0f21e7954562",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/profile/info",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update info",
+							"id": "3d68a1de-7bfb-4ef6-96fc-4e7ba70f353d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvdXNlcnMvYXV0aC9sb2dpbiIsImlhdCI6MTY2MTE0MDkwNCwiZXhwIjoxNjYxMTQ0NTA0LCJuYmYiOjE2NjExNDA5MDQsImp0aSI6IllQbFk3WVRTWEZtVHRDdkoiLCJzdWIiOiI3IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.rH5eQAP8wAkAcGK6g8ZqUZRvHD5TjWHnJBHAKLuL31M",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/profile/info?value1=test1&value2=test2&valuen=test n",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										"info"
+									],
+									"query": [
+										{
+											"key": "value1",
+											"value": "test1"
+										},
+										{
+											"key": "value2",
+											"value": "test2"
+										},
+										{
+											"key": "valuen",
+											"value": "test n"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update password",
+							"id": "785d35c0-c58c-4a2f-9a04-d0869a66bd32",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvdXNlcnMvYXV0aC9sb2dpbiIsImlhdCI6MTY2MTE0MDkwNCwiZXhwIjoxNjYxMTQ0NTA0LCJuYmYiOjE2NjExNDA5MDQsImp0aSI6IllQbFk3WVRTWEZtVHRDdkoiLCJzdWIiOiI3IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.rH5eQAP8wAkAcGK6g8ZqUZRvHD5TjWHnJBHAKLuL31M",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/profile/reset-password?old=123456&password=123123&password_confirmation=123123",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"profile",
+										"reset-password"
+									],
+									"query": [
+										{
+											"key": "old",
+											"value": "123456"
+										},
+										{
+											"key": "password",
+											"value": "123123"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "123123"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "db76f1cf-fca9-421e-87e4-2e482c6a6e55"
+				},
+				{
+					"name": "Tournaments",
+					"item": [
+						{
+							"name": "All ( with search )",
+							"id": "5f7fd262-1436-40e8-b7fa-041bd82d87b8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tournaments/all?per_page=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"all"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "search name",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "new ( Running tournaments )",
+							"id": "f5ac6948-309c-40d3-9e8b-f868fabeb2f6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tournaments/new",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"new"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "5",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "single",
+							"id": "4e1bb74a-4ee5-47cf-9725-cd67f6823c86",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tournaments/10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "join",
+							"id": "3d67e533-4370-43b9-8415-cb7269b057ca",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url}}/users/tournaments/5/join",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"5",
+										"join"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "leaderboards",
+							"id": "2fad042b-f48e-4b0f-9edf-87890f3fb8eb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tournaments/2/leaderboards",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"2",
+										"leaderboards"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "33842330-5293-4fb0-b3b0-52f90f0afa6f"
+				},
+				{
+					"name": "Wallet",
+					"item": [
+						{
+							"name": "get",
+							"id": "d40bd793-5fed-42b4-b54c-7fef7b9c3d6e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/wallet",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"id": "764d9c9e-62ba-4284-8c6f-50c63c516ead",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "my wallet",
+											"type": "text"
+										},
+										{
+											"key": "coin_id",
+											"value": "1",
+											"description": "get coins list from helpers",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/wallet",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edit",
+							"id": "8ef778da-92d6-4b2c-a8db-a5a45df3901c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "edited name",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/wallet/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"wallet",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "50cc76fa-b310-4b06-8fdb-05ce4622375c"
+				},
+				{
+					"name": "Wallet Payment",
+					"item": [
+						{
+							"name": "new payment",
+							"id": "71c29c61-a30d-4476-95f6-47bad1e0f718",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "amount",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "gateway",
+											"value": "easybitpay",
+											"description": "gateway key",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/wallet/2/payments/new",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"wallet",
+										"2",
+										"payments",
+										"new"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "15ba1448-60f2-457b-8d2f-9979506cc07a"
+				},
+				{
+					"name": "Wallet Withdraws",
+					"item": [
+						{
+							"name": "add withdraw",
+							"id": "309e5b96-e9ee-4a21-a601-99500118e493",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "amount",
+											"value": "6",
+											"description": "required",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "user_wallet_address",
+											"description": "required",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "description about withdraws",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/wallet/1/withdraws",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"wallet",
+										"1",
+										"withdraws"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get withdraws",
+							"id": "563f0757-2a04-4645-a577-9ad8393b1dcc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/wallet/1/withdraws?per_page=5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"wallet",
+										"1",
+										"withdraws"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "5",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "42af44e0-3cd0-4c96-8d09-9bc5dcfc2db5"
+				},
+				{
+					"name": "Joined Tournaments",
+					"item": [
+						{
+							"name": "active tournaments",
+							"id": "76904199-f94a-4f70-8835-394ffa5ae752",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tournaments/own/active",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"own",
+										"active"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "finished tournaments",
+							"id": "ca92c3fb-7a3c-4933-99b3-d676bd82eed9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tournaments/own/finished",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"own",
+										"finished"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "set score",
+							"id": "7d11220e-e09f-4817-abbf-f42f3e7cf041",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tournament_id",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "score",
+											"value": "65",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/tournaments/own/set-score",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"own",
+										"set-score"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get score",
+							"id": "25b8a31c-ebca-4369-a0ee-f491cdb23ab9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "tournament_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/tournaments/own/get-score",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tournaments",
+										"own",
+										"get-score"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Last Score id",
+							"id": "4bd1b97b-e410-409f-b7ac-f8c2ce9f40cf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "ff23df21-dce9-4f42-8fe4-4d066399bbc1"
+				},
+				{
+					"name": "Ticketing",
+					"item": [
+						{
+							"name": "all",
+							"id": "20911094-94bb-4b4d-b312-19d2dcb05cb2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tickets?pre_page=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tickets"
+									],
+									"query": [
+										{
+											"key": "pre_page",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store",
+							"id": "b8d37bf8-c159-4ce2-b39a-0293f59b1fd9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "ticket title",
+											"type": "text"
+										},
+										{
+											"key": "department",
+											"value": "support",
+											"description": "available departments : technical - sales - financial - support",
+											"type": "text"
+										},
+										{
+											"key": "message",
+											"value": "message not required",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/tickets",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tickets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get messages",
+							"id": "26edced9-a8c2-4a8b-be9f-19963414022b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/tickets/messages/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tickets",
+										"messages",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "store message",
+							"id": "96dde463-e263-4395-97f2-77c34b2c99dc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "message",
+											"value": "this is new message",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/users/tickets/messages/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"tickets",
+										"messages",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "e3015ebc-1841-41ab-81f4-6ec4dd40c7ac"
+				},
+				{
+					"name": "Payments",
+					"item": [
+						{
+							"name": "all payments",
+							"id": "f0e5af59-39b8-4db0-bdd4-bd0b589d8d5b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/payments?per_page=10&wallet_id=",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"payments"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "wallet_id",
+											"value": "",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "payments histories",
+							"id": "24d1ec7c-ab73-4900-9f5d-0054b958877e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/payments/histories?per_page=10&wallet_id=2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"payments",
+										"histories"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "wallet_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "616fbecf-2453-433f-8715-7e0b074bcdac"
+				},
+				{
+					"name": "Dashboard",
+					"item": [
+						{
+							"name": "Main Report",
+							"id": "9ec09c51-35cb-4c22-b4e2-9ccec90e529e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{user_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/dashboard/main-report",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"dashboard",
+										"main-report"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "ef124f0f-4623-499f-85bf-076f15c75bfa"
+				}
+			],
+			"id": "e6b86640-361f-4311-ba3e-32e4aea97529"
+		},
+		{
+			"name": "Helpers",
+			"item": [
+				{
+					"name": "gateways",
+					"id": "d09c4a93-e5bc-4a72-9b93-44bcc1d5ae91",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/helper/gateways",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"helper",
+								"gateways"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Coins",
+					"id": "664c7d12-8c89-4491-9ef3-65a202b75be3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/helper/coins",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"helper",
+								"coins"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "66d1aca1-bc6c-430e-b04a-544fabaf157b"
+		},
+		{
+			"name": "Front",
+			"item": [
+				{
+					"name": "Games",
+					"item": [
+						{
+							"name": "get categories",
+							"id": "d76cad67-e156-49e2-a988-10aa09c925fc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/games/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"games",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all games with search",
+							"id": "33c21550-3600-4b41-b0b7-b63e7a7d8564",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/games?name=name search",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"games"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "name search",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "single game",
+							"id": "8fed5535-d956-417b-8633-bb54e4b3ad75",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/games/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"games",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "all games tournaments",
+							"id": "a46d104f-276b-415f-9b7b-1cb408beeb50",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/games/1/tournaments/all?per_page=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"games",
+										"1",
+										"tournaments",
+										"all"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "all running games tournaments Copy",
+							"id": "aeb37170-f1e0-4c07-8ca7-332d62f79af1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/games/1/tournaments/running?per_page=10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"games",
+										"1",
+										"tournaments",
+										"running"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "3f359c57-d853-45cb-9777-88bf33ec8a0d"
+				},
+				{
+					"name": "Tournamets",
+					"item": [
+						{
+							"name": "single",
+							"id": "6c07dff5-2ef7-4494-a35e-0d7a1b304ea4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/tournaments/2",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"tournaments",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "leaderbords",
+							"id": "8075da45-7c60-4778-8a89-f60201ca9e4a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/tournaments/2/leaderboards",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"tournaments",
+										"2",
+										"leaderboards"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All running tournaments with search",
+							"id": "07b7dc4c-075b-4691-bfa9-94f723facdb0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/tournaments/running?per_page=10&name=",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"tournaments",
+										"running"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "name",
+											"value": "",
+											"description": "search by name"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "fd58a55b-817d-47dd-b01b-89e3c2b049ee"
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Top Winners",
+							"id": "8b8eaa76-ca04-4738-a44b-146a4273c519",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/front/users/top/winners",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"front",
+										"users",
+										"top",
+										"winners"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "6c3bcab8-4efc-43f4-8b33-42168931d069"
+				}
+			],
+			"id": "88649fa1-52d2-42ec-9f4a-434c0156c168"
+		}
+	]
+}
